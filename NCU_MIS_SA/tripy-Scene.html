@@ -147,8 +147,8 @@
 	<!-- Title page -->
 	<section class="bg-img1 " style="background-image: url(images/台北.jpg);">
 		<div class="container size-h-3 p-tb-30 flex-col-c-c">
-			<h2 class="t1-b-1 text-uppercase cl-0 txt-center m-b-25" style="font-weight: bold;">
-				台北 旅遊指南
+			<h2 id = "title" class="t1-b-1 text-uppercase cl-0 txt-center m-b-25" style="font-weight: bold;">
+				
 			</h2>
 
 			<div class="flex-wr-c-c">
@@ -186,7 +186,7 @@
 			</div>
             
 			
-			<div class="row isotope-grid">
+			<div id = "panel" class="row isotope-grid">
                 
 				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item business-n">
 					<div class="flex-col-s-c">
@@ -259,42 +259,7 @@
 						</a>
 					</div>
 				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16" height= "280px">
-							<img src="images/project-08.jpg" alt="IMG">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="projects-detail-01.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									看評論
-								</a>
-							</div>
-						</div>
-
-						<a href="projects-detail-01.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							淡水老街
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item security-n">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16" height= "280px">
-							<img src="images/project-09.jpg" alt="IMG">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="projects-detail-01.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									看評論
-								</a>
-							</div>
-						</div>
-
-						<a href="projects-detail-01.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							淡水老街
-						</a>
-					</div>
-				</div>
+			
 
 				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item security-n market-n">
 					<div class="flex-col-s-c">
@@ -568,28 +533,65 @@
 	<script src="js/main.js"></script>
 	
 	<script type="text/javascript">
-	 	var url_string = window.location.href;
+		var url_string = window.location.href;
   		var url = new URL(url_string);
   		var city_id = url.searchParams.get("city_id");	
-  		function getOrderData() {
-	  	$.ajax({
-          type: "GET",
-          url: "api/scene.do",
-          data: "id=" + city_id,
-          crossDomain: true,
-          cache: false,
-          dataType: 'json',
-          timeout: 5000,
-          success: function (response) {
-              if(response.status == 200){
-            	  updateHTML(response.response.data);
-              }
-          },
-          error: function () {
-              alert("無法連線到伺服器！");
-          }
-    	});
-  }
+  		
+  		function getCitySceneData() {
+		  	$.ajax({
+	          type: "GET",
+	          url: "api/city.do",
+	          data: "id=" + city_id,
+	          crossDomain: true,
+	          cache: false,
+	          dataType: 'json',
+	          timeout: 5000,
+	          success: function (response) {
+	              if(response.status == 200){
+	            	  updateHTML(response.response.data);
+	              }
+	          },
+	          error: function () {
+	              alert("無法連線到伺服器！");
+	          }
+	    	});
+	  	}
+	  	getOrderData();
+  
+		function updateHTML(data) {
+			$("#title").html(data['city_info']['name']+"旅遊指南");
+			
+			  
+			var inner_html = "";
+			  
+			$.each(data.scene_info, function (k, v) {
+				inner_html += updateOrderProductTable(v['name']);
+			});
+			 
+			$("#panel").append(inner_html);
+		
+		  }
+		  
+		function updateOrderProductTable(data) {
+			var table_html = "";
+			table_html +=  '<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">'
+			table_html +=	'<div class="flex-col-s-c">'
+			table_html +=	'<div class="w-full pos-relative wrap-pic-w m-b-16">'
+			table_html +=	'<img src="images/project-07.jpg" alt="IMG" height= "280px">'
+			table_html +=	'<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">'
+			table_html +=	'<a href="projects-detail-01.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">'
+			table_html +=	'看評論'
+			table_html +=	'</a>'
+			table_html +=	'</div>'
+			table_html +=	'</div>'
+			table_html +=	'<a href="projects-detail-01.html" class="t1-m-1 cl-3 hov-link2 trans-02">'
+			table_html +=	data
+			table_html +=	'</a>'
+			table_html +=	'</div>'
+			table_html +=	'</div>'
+			return table_html;
+			  
+		  }
 	</script>
 </body>
 </html>
