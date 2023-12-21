@@ -566,6 +566,30 @@
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-
+	
+	<script type="text/javascript">
+	 	var url_string = window.location.href;
+  		var url = new URL(url_string);
+  		var city_id = url.searchParams.get("city_id");	
+  		function getOrderData() {
+	  	$.ajax({
+          type: "GET",
+          url: "api/scene.do",
+          data: "id=" + city_id,
+          crossDomain: true,
+          cache: false,
+          dataType: 'json',
+          timeout: 5000,
+          success: function (response) {
+              if(response.status == 200){
+            	  updateHTML(response.response.data);
+              }
+          },
+          error: function () {
+              alert("無法連線到伺服器！");
+          }
+    	});
+  }
+	</script>
 </body>
 </html>

@@ -47,7 +47,7 @@ public class City {
 	public JSONObject getCityData() {
 		JSONObject jso = new JSONObject();
         jso.put("id", getId());
-        jso.put("first_name", getName());
+        jso.put("name", getName());
         return jso;
 	}
 	
@@ -63,8 +63,8 @@ public class City {
 	
 	public JSONObject getCityAllInfo() {
         JSONObject jso = new JSONObject();
-        jso.put("order_info", getCityData());
-        jso.put("product_info", getCitySceneData());
+        jso.put("city_info", getCityData());
+        jso.put("scene_info", getCitySceneData());
 
         return jso;
     }
