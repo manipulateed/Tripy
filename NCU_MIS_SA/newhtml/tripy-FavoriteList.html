@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>檢視會員介面</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/css-hamburgers/hamburgers.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/animsition/css/animsition.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/layers.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/navigation.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/settings.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/MagnificPopup/magnific-popup.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.min.css" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!--===============================================================================================-->
+  </head>
+  <body class="animsition">
+    <!-- Header -->
+    <header>
+      <!-- Header desktop -->
+      <nav class="container-header-desktop">
+        <div class="wrap-menu-desktop">
+          <div class="limiter-menu-desktop container">
+            <!-- Logo desktop -->
+            <div class="logo">
+              <a href="index.html"
+                ><img src="images/icons/newlogo.png" alt="LOGO"
+              /></a>
+            </div>
+
+            <!-- Menu desktop -->
+            <div class="menu-desktop">
+              <ul class="main-menu respon-sub-menu">
+                <li>
+                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
+                </li>
+
+                <li>
+                  <a href="tripy-StartPlanning.html" style="font-weight: bold">觀光行程</a>
+                </li>
+
+                <li>
+                  <a href="tripy-FavoriteList.html" style="font-weight: bold">我的收藏</a>
+                </li>
+
+                <li>
+                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <style>
+        .kit-underline1 {
+          position: relative;
+        }
+
+        .kit-underline1::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #ddd;
+          border-left: 70px solid #05233a;
+        }
+
+        .size-a-105 {
+          width: 100%;
+          height: 2px;
+        }
+      </style>
+    </header>
+
+    <section class="bg-0 p-b-40">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-sm-10 col-md-4 col-lg-10 p-b-30">
+            <!-- 清單div -->
+            <div id="Try">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-auto p-b-50" name="back">
+                  <a
+                    href="tripy-City.html"
+                    class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
+                  >
+                    返回
+                    <i class="fa fa-long-arrow-left m-l-15"></i>
+                  </a>
+                </div>
+                <div
+                  class="col-auto flex-col-c-c p-b-50"
+                  style="position: absolute; left: 360px"
+                >
+                  <h3 class="t1-b-1 cl-3 txt-center m-b-11">我的收藏清單</h3>
+                  <div class="size-a-2 bg-3"></div>
+                </div>
+              </div>
+
+              <!-- 新增清單 -->
+              <div class="CollectList" id="CL">
+                <button onclick="createCList();">
+                  <i class="fs-14 cl-7 fa fa-plus m-r-2"> 新增清單</i>
+                </button>
+              </div>
+
+              <!-- 台南好玩的 -->
+              <div class="CollectList" id="list_tainan">
+                <b>
+                  <a
+                    href="tripy-FavoriteList-detail.html"
+                    class="collectionlist"
+                    style="color: black"
+                    id="list_name_1"
+                    >台南好玩的</a
+                  >
+                </b>
+                <br /><br />
+                <button onclick="editCList();">
+                  <i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
+                </button>
+                <button onclick="deleteCList()">
+                  <i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .CollectList {
+        border-radius: 15px;
+        background: #e7dbc7;
+        color: black;
+        padding: 20px;
+        width: 150px;
+        height: 100px;
+        text-align: center;
+        align-items: center;
+        float: left;
+        margin-right: 15px;
+      }
+
+      #CL {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="vendor/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.video.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="vendor/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="js/revo-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/parallax100/parallax100.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/waypoint/jquery.waypoints.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countterup/jquery.counterup.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/slick/slick.min.js"></script>
+    <script src="js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+    <!--===============================================================================================-->
+    <!-- SweetAlert的JS套件 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- 新增清單 -->
+    <script>
+      var createCList = function () {
+        swal({
+          title: "新增清單",
+          content: {
+            element: "input",
+            attributes: {
+              placeholder: "輸入清單名稱",
+              type: "text",
+            },
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+            // 檢查使用者是否按下確認按鈕
+            if (value !== "" && value !== null) {
+              // 動態新增一個帶有 class 和 id 的 div 元素到指定的父元素中
+              createDiv(value, "Try");
+            } else {
+              swal("您未輸入任何文字");
+            }
+          } else {
+            // 使用者按下取消按鈕
+            swal.close();
+          }
+        });
+      };
+
+      // 動態新增 div 的函數
+      function createDiv(value, parentID) {
+        // 獲取指定的父元素
+        var parentElement = document.getElementById(parentID);
+
+        // 檢查父元素是否存在
+        if (parentElement) {
+          // 創建一個新的 div 元素
+          var newDiv = document.createElement("div");
+          newDiv.className = "CollectList";
+          newDiv.id = "list_tainan"; // 設定 id
+          //newDiv.style.display = "inline-block"; // 設定為 inline-block
+
+          newDiv.innerHTML = `<b><a href="tripy-FavoriteList.html" class="collectionlist" style="color: black">${value}</a></b><br /><br />
+                              <button onclick="editCList();"><i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i></button>
+                              <button onclick="deleteCList()"><i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i></button>`;
+
+          // 將新的 div 元素添加到指定的父元素中
+          parentElement.appendChild(newDiv);
+        } else {
+          console.error("找不到指定的父元素");
+        }
+      }
+    </script>
+
+    <!-- 編輯清單 -->
+    <script>
+      var editCList = function () {
+        var list = document.getElementById("list_tainan");
+        var name = document.getElementById("list_name_1");
+        swal("編輯清單名稱", {
+          content: {
+            element: "input",
+            attributes: {
+              placeholder: `${name.innerText}`,
+              type: "text",
+            },
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+            // 檢查使用者是否按下確認按鈕
+            if (value !== "" && value !== null) {
+              // 取得要更新的元素
+              var newname = document.getElementById("list_name_1");
+              // 更新元素的內容
+              newname.innerHTML = `${value}`;
+            } else {
+              swal("您未輸入任何文字");
+            }
+          } else {
+            // 使用者按下取消按鈕
+            swal.close();
+          }
+        });
+      };
+    </script>
+
+    <!-- 刪除收藏清單 -->
+    <script>
+      // JavaScript 函数，用于处理删除按钮点击事件
+      function deleteCList() {
+        var list = document.getElementById("list_tainan");
+        var name = document.getElementById("list_name_1");
+        swal({
+          title: `確認要刪除「${name.innerText}」嗎`,
+          icon: "warning",
+          dangerMode: true,
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          // 獲取要删除的清單元素
+          if (value !== null && value) {
+            list.parentNode.removeChild(list);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
