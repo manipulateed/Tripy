@@ -3,7 +3,6 @@ package ncu.im3069.demo.app;
 import java.util.*;
 
 import org.json.*;
-
 public class City {
 	
 	private int id;
