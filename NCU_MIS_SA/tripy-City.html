@@ -54,9 +54,12 @@
 							<li>
 								<a href="tripy-FavoriteList.html" style="font-weight: bold;">我的收藏</a>
 							</li>
-
 							<li>
-								<a href="tripy-login.html" style="font-weight: bold;">登入</a>
+								<a href="tripy-login.html" class="hide-menu" style="font-weight: bold;">登入</a>
+								
+							</li>
+							<li>
+								<a href="tripy-login.html" style="font-weight: bold;">我的帳號</a>
 								<ul class="sub-menu bold-chinese-text">
 									<li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
 									<li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
@@ -90,30 +93,29 @@
 		<div class="p-rl-50 p-rl-15-sr1199">
 			<div class="p-b-45">
 				<div class="flex-wr-c-c filter-tope-group">
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5 active-2" data-filter="*">
+					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5 active-2" id="all" >
 						所有目的地
 					</button>
 
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".north">
+					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
 						北部
 					</button>
 
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".mid">
+					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
 						中部
 					</button>
 
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".south">
+					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
 						南部
 					</button>
 
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".east">
+					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
 						東部
 					</button>
 				</div>
 			</div>
-			
-			<div class="row isotope-grid">
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item north">
+			<div class="row isotope-grid" id="City_panel">
+				<div class="col-sm-6 col-lg-4 p-b-45 ">
 					<div class="flex-col-s-c">
 						<div class="w-full pos-relative wrap-pic-w m-b-16">
 							<img src="images/東京3.jpg" alt="IMG" height= "280px">
@@ -131,7 +133,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item mid">
+				<div class="col-sm-6 col-lg-4 p-b-45">
 					<div class="flex-col-s-c">
 						<div class="w-full pos-relative wrap-pic-w m-b-16">
 							<img src="images/台南.jpg" alt="IMG" height= "280px">
@@ -148,323 +150,122 @@
 						</a>
 					</div>
 				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item south">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/京都.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							臺南
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item east">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/大阪.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							花蓮
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item south">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/高雄.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							高雄
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item north">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/桃園.webp" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							桃園
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item security-n market-n">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/project-10.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							雪梨
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item training-n">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/project-11.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							紐約
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45 isotope-item training-n">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/project-12.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							洛杉磯
-						</a>
-					</div>
-				</div>
+				
 			</div>
 		</div>
+		<script>
+
+			function getAllCity() {
+				$.ajax({
+				  type: "GET",
+				  url: "api/City.do",
+				  crossDomain: true,
+				  cache: false,
+				  dataType: 'json',
+				  timeout: 5000,
+				  success: function (response) {
+					if (response.status == 200) {
+					  var city_panel = '';
+					  
+					  $.each(response.response.data, function (){
+						  city_panel += addAllCity(this);
+					  })
+					  
+					  $("#City_panel").append(city_panel);
+					  
+					}
+				  },
+				  error: function () {
+					alert("無法連線到伺服器！");
+				  }
+				});
+			  }
+			  document.getElementById('all').addEventListener('click', getAllCity);
+
+
+			//把all city 轉成html進去
+			function addAllCity(data) {
+    			let inner_html = '';
+    			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 ">';
+   				inner_html += '<div class="flex-col-s-c">';
+				inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
+ 				inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
+				inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
+				inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
+				inner_html += '找景點';
+				inner_html += '</a>';
+				inner_html += '</div></div>';
+				inner_html += '<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">';
+				inner_html += data.name;
+				//data.name = cityName eg.台北
+				inner_html += '</a>';
+				inner_html += '</div></div>';
+				
+    	
+				return inner_html;
+ 		  	}
+
+
+			function getCityByDistrictId() {
+				$.ajax({
+				  type: "GET",
+				  url: "api/City.do",
+				  crossDomain: true,
+				  cache: false,
+				  dataType: 'json',
+				  timeout: 5000,
+				  success: function (response) {
+					if (response.status == 200) {
+					  var city_panel = '';
+					  
+					  $.each(response.response.data, function (){
+						  city_panel += addCityByDistrictId(this);
+					  })
+					  
+					  $("#city_panel").append(city_panel);
+					  
+					}
+				  },
+				  error: function () {
+					alert("無法連線到伺服器！");
+				  }
+				});
+			}
+			document.getElementById('all').addEventListener('click', getCityByDistrictId);
+			
+			//把district中的 city 轉成html進去
+			function addAllCity(data) {
+    			let inner_html = '';
+    			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 ">';
+   				inner_html += '<div class="flex-col-s-c">';
+				inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
+ 				inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
+				inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
+				inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
+				inner_html += '找景點';
+				inner_html += '</a>';
+				inner_html += '</div></div>';
+				inner_html += '<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">';
+				inner_html += data.name;
+				//data.name = cityName eg.台北
+				inner_html += '</a>';
+				inner_html += '</div></div>';
+				
+    	
+				return inner_html;
+
+
+				
+
+
+			</script>	
+
+			
+			
 	</div>
 	
 	
-	<!-- Footer -->
-	<footer>
-		<div class="parallax100 kit-overlay1 p-t-35 p-b-15" style="background-image: url(images/bg-03.jpg);">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e p-b-6 m-b-18">
-							<a href="#">
-								<img class="max-s-full" src="images/icons/logo-02.png" alt="IMG">
-							</a>
-						</div>
-
-						<div>
-							<p class="t1-s-2 cl-13 p-b-9">
-								On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized   the charms of pleasure of.
-							</p>
-						</div>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Contact us
-							</h4>
-						</div>
-
-						<ul>
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-home" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									379 5Th Ave New York, Nyc 10018
-								</span>
-							</li>
-
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									contac@gmail.com
-								</span>
-							</li>
-
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-phone" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									(+1) 96 716 6879
-									<br>
-									(+1) 96 716 6897
-								</span>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Company
-							</h4>
-						</div>
-
-						<div class="flex-wr-s-s">
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="index.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Home
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="projects-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Projects
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="services-list.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Services
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="about.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										About us
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="contact.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Contact
-									</a>
-								</li>
-							</ul>
-
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Blogs
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										404 Page
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="shop-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Shop
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Elements
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="typography.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Typography
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								subscribe
-							</h4>
-						</div>
-
-						<div class="p-t-6">
-							<form class="flex-wr-c-c m-b-15">
-								<input class="size-a-17 bg-0 t1-s-2 plh-6 cl-6 p-rl-20" type="text" name="email" placeholder="Your E-mail">
-
-								<button class="flex-c-c size-a-16 bg-11 fs-18 cl-10 hov-btn3 trans-02">
-									<i class="fa fa-envelope-o"></i>
-								</button>
-							</form>
-
-							<div class="flex-wr-s-c p-t-10">
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-facebook"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-twitter"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-google-plus"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-instagram"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-linkedin"></i>	
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="bg-10">
-			<div class="container txt-center p-tb-15">
-				<span class="t1-s-2 cl-14">
-					Copyright @ 2018 Designed by pencilblue. All rights reserved. 
-				</span>
-			</div>
-		</div>
-	</footer>
+	
 
 
 <!--===============================================================================================-->	
