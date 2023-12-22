@@ -113,7 +113,7 @@
 			
 			$(document).ready(function () {
     			Districts();
-    			$('#all').trigger('click');
+    			//$('#all').trigger('click');
 			});
 
 			function Districts() {
@@ -131,13 +131,13 @@
                         $.each(response.response.data, function () {
 							//console.log("All Districts: ", response.response.data)
                             districtButtons += '<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-district-id="' + this.id + '">' +
-                                this.first_name +
+                                this.name +
                                 '</button>';
                         });
 
                         $(".filter-tope-group").append(districtButtons);
 
-						districtButtons = document.querySelectorAll('.districtButtons');
+						//districtButtons = document.querySelectorAll('.districtButtons');
 
 						/*獲得所有具有 'districtButtons' 類別的元素
 						districtButtons = document.querySelectorAll('.districtButtons');
@@ -155,11 +155,10 @@
 						})*/
                         
                         
-                
                     }
                 },
                 error: function () {
-                    alert("無法連線到伺服器！");
+                    alert("無法連線到伺服器！!");
                 }
             });
         }
@@ -167,7 +166,7 @@
 
 
         
-		$(".data-district-id").on("click", function () {
+		/*$(".data-district-id").on("click", function () {
 			console.log("YES");									
             var districtId = $(this).data("district-id");
             
@@ -176,9 +175,9 @@
             // 直接呼叫獲取城市的函式
             getCitiesByDistrictId(districtId);
                     	
-        });
+        });*/
         
-			//所有目的地
+			/*所有目的地
 			document.getElementById('all').addEventListener('click', getAllCity);
 
 			function getAllCity() {
@@ -209,7 +208,7 @@
 					alert("無法連線到伺服器！");
 				  }
 				});
-			  }
+			  }*/
 
 
 			function addAllCity(data) {

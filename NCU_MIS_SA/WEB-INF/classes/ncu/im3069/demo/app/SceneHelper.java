@@ -205,11 +205,11 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-<<<<<<< HEAD
+
             String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` where `Scene_City` = ? LIMIT 1";
-=======
-            String sql = "SELECT * FROM `Tripy`.`tbl_Scene_info` where `Scene_City` = ? LIMIT 1";
->>>>>>> d89574e1021510e46b7954723d9712f3037fe94f
+
+
+
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
