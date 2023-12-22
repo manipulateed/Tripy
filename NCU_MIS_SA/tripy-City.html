@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>tripy</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -97,68 +98,95 @@
 						所有目的地
 					</button>
 
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
-						北部
-					</button>
-
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
-						中部
-					</button>
-
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
-						南部
-					</button>
-
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" >
-						東部
-					</button>
+					
 				</div>
 			</div>
 			<div class="row isotope-grid" id="City_panel">
-				<div class="col-sm-6 col-lg-4 p-b-45 ">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/東京3.jpg" alt="IMG" height= "280px">
+				
 
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html?city_id=2" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html?city_id=2" class="t1-m-1 cl-3 hov-link2 trans-02">
-							台北
-						</a>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-45">
-					<div class="flex-col-s-c">
-						<div class="w-full pos-relative wrap-pic-w m-b-16">
-							<img src="images/台南.jpg" alt="IMG" height= "280px">
-
-							<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">
-								<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">
-									找景點
-								</a>
-							</div>
-						</div>
-
-						<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-							台中
-						</a>
-					</div>
-				</div>
+				
 				
 			</div>
 		</div>
+
 		<script>
+			
+			$(document).ready(function () {
+    			Districts();
+    			$('#all').trigger('click');
+			});
+
+			function Districts() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8090/NCU_MIS_SA/api/district.do",
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                    if (response.status == 200) {
+                        var districtButtons = '';
+
+                        $.each(response.response.data, function () {
+							//console.log("All Districts: ", response.response.data)
+                            districtButtons += '<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-district-id="' + this.id + '">' +
+                                this.first_name +
+                                '</button>';
+                        });
+
+                        $(".filter-tope-group").append(districtButtons);
+
+						districtButtons = document.querySelectorAll('.districtButtons');
+
+						/*獲得所有具有 'districtButtons' 類別的元素
+						districtButtons = document.querySelectorAll('.districtButtons');
+						console.log("YES");
+						// 對每個元素設置 click 事件監聽器
+						districtButtons.forEach(function(button) {
+    						button.addEventListener('click', function() {
+        					// 獲取被點擊的 button 的 district-id
+        					var districtId = this.getAttribute('data-district-id');
+        	
+        					// 呼叫函式並傳遞 districtId
+        					getCitiesByDistrictId(districtId);
+      
+    						});
+						})*/
+                        
+                        
+                
+                    }
+                },
+                error: function () {
+                    alert("無法連線到伺服器！");
+                }
+            });
+        }
+        
+
+
+        
+		$(".data-district-id").on("click", function () {
+			console.log("YES");									
+            var districtId = $(this).data("district-id");
+            
+
+
+            // 直接呼叫獲取城市的函式
+            getCitiesByDistrictId(districtId);
+                    	
+        });
+        
+			//所有目的地
+			document.getElementById('all').addEventListener('click', getAllCity);
 
 			function getAllCity() {
+				$("#City_panel").empty();
 				$.ajax({
+					
 				  type: "GET",
-				  url: "api/City.do",
+				  url: "http://localhost:8090/NCU_MIS_SA/api/city.do",
 				  crossDomain: true,
 				  cache: false,
 				  dataType: 'json',
@@ -168,10 +196,12 @@
 					  var city_panel = '';
 					  
 					  $.each(response.response.data, function (){
+						  //console.log(response.response.data);
 						  city_panel += addAllCity(this);
 					  })
 					  
 					  $("#City_panel").append(city_panel);
+
 					  
 					}
 				  },
@@ -180,36 +210,36 @@
 				  }
 				});
 			  }
-			  document.getElementById('all').addEventListener('click', getAllCity);
 
 
-			//把all city 轉成html進去
 			function addAllCity(data) {
+				
     			let inner_html = '';
     			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 ">';
    				inner_html += '<div class="flex-col-s-c">';
 				inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
- 				inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
+ 				//inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
 				inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
 				inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
 				inner_html += '找景點';
 				inner_html += '</a>';
 				inner_html += '</div></div>';
 				inner_html += '<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">';
-				inner_html += data.name;
-				//data.name = cityName eg.台北
+				inner_html += data.order_info.first_name;
 				inner_html += '</a>';
 				inner_html += '</div></div>';
 				
     	
 				return inner_html;
  		  	}
+ 		  	
+ 		  	
 
-
-			function getCityByDistrictId() {
+			//get各區city
+			function getCitiesByDistrictId() {
 				$.ajax({
 				  type: "GET",
-				  url: "api/City.do",
+				  url: "http://localhost:8090/NCU_MIS_SA/api/city.do",
 				  crossDomain: true,
 				  cache: false,
 				  dataType: 'json',
@@ -231,34 +261,32 @@
 				  }
 				});
 			}
-			document.getElementById('all').addEventListener('click', getCityByDistrictId);
 			
 			//把district中的 city 轉成html進去
-			function addAllCity(data) {
+			function addCityByDistrictId(data) {
     			let inner_html = '';
     			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 ">';
    				inner_html += '<div class="flex-col-s-c">';
 				inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
- 				inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
+ 				//inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
 				inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
 				inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
 				inner_html += '找景點';
 				inner_html += '</a>';
 				inner_html += '</div></div>';
 				inner_html += '<a href="tripy-Scene.html" class="t1-m-1 cl-3 hov-link2 trans-02">';
-				inner_html += data.name;
-				//data.name = cityName eg.台北
+				inner_html += data.order_info.first_name;
 				inner_html += '</a>';
 				inner_html += '</div></div>';
 				
     	
 				return inner_html;
-
+			}
 
 				
 
 
-			</script>	
+		</script>	
 
 			
 			
