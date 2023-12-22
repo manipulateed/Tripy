@@ -410,15 +410,18 @@
 	<script src="js/main.js"></script>
 	
 	<script type="text/javascript">
-		var url_string = window.location.href;
-  		var url = new URL(url_string);
-  		var city_id = url.searchParams.get("city_id");	
-  		
+
+  		var id = "2";
+  		var data_object = {
+           "city_id": id,
+         };
+                        // 將JSON格式轉換成字串
+        var data_string = JSON.stringify(data_object);
   		function getCitySceneData() {
 		  	$.ajax({
 	          type: "GET",
 	          url: "api/city.do",
-	          data: "city_id=" + city_id,
+	          data: data_string,
 	          crossDomain: true,
 	          cache: false,
 	          dataType: 'json',
