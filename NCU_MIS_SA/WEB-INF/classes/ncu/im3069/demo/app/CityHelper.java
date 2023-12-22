@@ -49,7 +49,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` where `City_District` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_City` where `City_District` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -101,7 +101,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` where `City_Name` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_city` where `City_Name` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -158,7 +158,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` WHERE `City_Id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_city` WHERE `City_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -236,7 +236,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City`";
+            String sql = "SELECT * FROM `tripy`.`tbl_city`";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

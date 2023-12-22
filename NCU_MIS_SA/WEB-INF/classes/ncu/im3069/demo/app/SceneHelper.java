@@ -57,7 +57,7 @@ public class SceneHelper {
             conn = DBMgr.getConnection();
             
             /** SQL指令 */
-            String sql = "DELETE FROM `Tripy`.`tbl_Scene` WHERE `Scene_Id` = ? LIMIT 1";
+            String sql = "DELETE FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -117,7 +117,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_Scene`";
+            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info`";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -197,7 +197,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_Scene` where `Scene_City` = ? LIMIT 1";
+            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` where `Scene_City` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -269,7 +269,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_Scene` WHERE `Scene_Id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -357,7 +357,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_Scene` WHERE `Scene_Name` LIKE '%?%' ";
+            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Name` LIKE '%?%' ";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -438,7 +438,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT count(*) FROM `Tripy`.`tbl_Scene` WHERE `Scene_Name` = ?";
+            String sql = "SELECT count(*) FROM `Tripy`.`tbl_Scene_info` WHERE `Scene_Name` = ?";
             
             /** 取得所需之參數 */
             String name = s.getName();
@@ -490,7 +490,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `Tripy`.`tbl_Scene`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`,`Scene_Image)"+
+            String sql = "INSERT INTO `Tripy`.`tbl_Scene_info`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`,`Scene_Image)"+
             		"VALUES(?, ?, ?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -563,7 +563,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `Tripy`.`tbl_Scene` SET `Scene_Name` = ? ,`Scene_Address` = ? ,`Scene_Detail` = ?, `Scene_Phone` = ? ,`Scene_OpenTime` = ? , `Scene_Image` = ? WHERE `Scene_Id` = ?";
+            String sql = "Update `Tripy`.`tbl_Scene_info` SET `Scene_Name` = ? ,`Scene_Address` = ? ,`Scene_Detail` = ?, `Scene_Phone` = ? ,`Scene_OpenTime` = ? , `Scene_Image` = ? WHERE `Scene_Id` = ?";
             /** 取得所需之參數 */
             String name = s.getName();
             String address = s.getAddress();

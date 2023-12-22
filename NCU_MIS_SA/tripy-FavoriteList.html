@@ -90,11 +90,15 @@
                 </li>
 
                 <li>
-                  <a href="tripy-StartPlanning.html" style="font-weight: bold">觀光行程</a>
+                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
+                    >觀光行程</a
+                  >
                 </li>
 
                 <li>
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold">我的收藏</a>
+                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
+                    >我的收藏</a
+                  >
                 </li>
 
                 <li>
@@ -152,33 +156,43 @@
                   <h3 class="t1-b-1 cl-3 txt-center m-b-11">我的收藏清單</h3>
                   <div class="size-a-2 bg-3"></div>
                 </div>
+                <div class="col-auto p-b-50" name="back">
+                  <button
+                    class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
+                    onclick="AddCollecList()"
+                  >
+                    <i class="fa fa-plus m-r-2"> 新增收藏清單</i>
+                  </button>
+                </div>
               </div>
 
               <!-- 新增清單 -->
-              <div class="CollectList" id="CL">
-                <button onclick="createCList();">
-                  <i class="fs-14 cl-7 fa fa-plus m-r-2"> 新增清單</i>
-                </button>
-              </div>
+              <div id="collectlist">
+                <div class="CollectList" id="CL">
+                  <button onclick="createCList();">
+                    <i class="fs-14 cl-7 fa fa-plus m-r-2"> 新增清單</i>
+                  </button>
+                </div>
 
-              <!-- 台南好玩的 -->
-              <div class="CollectList" id="list_tainan">
-                <b>
-                  <a
-                    href="tripy-FavoriteList-detail.html"
-                    class="collectionlist"
-                    style="color: black"
-                    id="list_name_1"
-                    >台南好玩的</a
-                  >
-                </b>
-                <br /><br />
-                <button onclick="editCList();">
-                  <i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
-                </button>
-                <button onclick="deleteCList()">
-                  <i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i>
-                </button>
+                <!-- 台南好玩的 -->
+                <div class="CollectList" id="list_tainan">
+                  <b>
+                    <a
+                      href="tripy-FavoriteList-detail.html"
+                      class="collectionlist"
+                      style="color: black"
+                      id="list_name_1"
+                      >台南好玩的</a
+                    >
+                  </b>
+                  <br /><br />
+                  <button onclick="editCList();">
+                    <i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
+                  </button>
+                  <button onclick="deleteCList()">
+                    <i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -245,121 +259,13 @@
     <!-- SweetAlert的JS套件 -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- 新增清單 -->
-    <script>
-      var createCList = function () {
+    <script type="text/javascript">
+      var sql_num = 0;
+      //刪除收藏清單
+
+      function deleteCList(id) {
         swal({
-          title: "新增清單",
-          content: {
-            element: "input",
-            attributes: {
-              placeholder: "輸入清單名稱",
-              type: "text",
-            },
-          },
-          buttons: {
-            Btn: false,
-            confirm: {
-              text: "確認",
-              visible: true,
-            },
-            cancel: {
-              text: "取消",
-              visible: true,
-            },
-          },
-        }).then((value) => {
-          if (value !== null) {
-            // 檢查使用者是否按下確認按鈕
-            if (value !== "" && value !== null) {
-              // 動態新增一個帶有 class 和 id 的 div 元素到指定的父元素中
-              createDiv(value, "Try");
-            } else {
-              swal("您未輸入任何文字");
-            }
-          } else {
-            // 使用者按下取消按鈕
-            swal.close();
-          }
-        });
-      };
-
-      // 動態新增 div 的函數
-      function createDiv(value, parentID) {
-        // 獲取指定的父元素
-        var parentElement = document.getElementById(parentID);
-
-        // 檢查父元素是否存在
-        if (parentElement) {
-          // 創建一個新的 div 元素
-          var newDiv = document.createElement("div");
-          newDiv.className = "CollectList";
-          newDiv.id = "list_tainan"; // 設定 id
-          //newDiv.style.display = "inline-block"; // 設定為 inline-block
-
-          newDiv.innerHTML = `<b><a href="tripy-FavoriteList.html" class="collectionlist" style="color: black">${value}</a></b><br /><br />
-                              <button onclick="editCList();"><i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i></button>
-                              <button onclick="deleteCList()"><i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i></button>`;
-
-          // 將新的 div 元素添加到指定的父元素中
-          parentElement.appendChild(newDiv);
-        } else {
-          console.error("找不到指定的父元素");
-        }
-      }
-    </script>
-
-    <!-- 編輯清單 -->
-    <script>
-      var editCList = function () {
-        var list = document.getElementById("list_tainan");
-        var name = document.getElementById("list_name_1");
-        swal("編輯清單名稱", {
-          content: {
-            element: "input",
-            attributes: {
-              placeholder: `${name.innerText}`,
-              type: "text",
-            },
-          },
-          buttons: {
-            Btn: false,
-            confirm: {
-              text: "確認",
-              visible: true,
-            },
-            cancel: {
-              text: "取消",
-              visible: true,
-            },
-          },
-        }).then((value) => {
-          if (value !== null) {
-            // 檢查使用者是否按下確認按鈕
-            if (value !== "" && value !== null) {
-              // 取得要更新的元素
-              var newname = document.getElementById("list_name_1");
-              // 更新元素的內容
-              newname.innerHTML = `${value}`;
-            } else {
-              swal("您未輸入任何文字");
-            }
-          } else {
-            // 使用者按下取消按鈕
-            swal.close();
-          }
-        });
-      };
-    </script>
-
-    <!-- 刪除收藏清單 -->
-    <script>
-      // JavaScript 函数，用于处理删除按钮点击事件
-      function deleteCList() {
-        var list = document.getElementById("list_tainan");
-        var name = document.getElementById("list_name_1");
-        swal({
-          title: `確認要刪除「${name.innerText}」嗎`,
+          title: `確認要刪除該收藏清單嗎`,
           icon: "warning",
           dangerMode: true,
           buttons: {
@@ -374,12 +280,112 @@
             },
           },
         }).then((value) => {
-          // 獲取要删除的清單元素
-          if (value !== null && value) {
-            list.parentNode.removeChild(list);
+          if (value != null) {
+            console.log("You pressed OK!");
+            var request = { id: id };
+            var data_string = JSON.stringify(request); //把id變string
+            $.ajax({
+              type: "DELETE",
+              url: "http://localhost:8090/NCU_MIS_SA/api/Collect_List.do",
+              crossDomain: true,
+              data: data_string,
+              cache: false,
+              dataType: "json",
+              timeout: 5000,
+              success: function (response) {
+                //跟後端連線成功
+                if (response.status == 200) {
+                  console.log(response.response.data);
+                  swal(`已成功刪除`);
+                  getAllCL();
+                }
+                console.log(response);
+              },
+              error: function () {
+                swal(`無法連到伺服器`);
+              },
+            });
+          } else {
+            console.log("You pressed cancle!");
+            swal.close();
           }
         });
       }
+
+		var test_id = 1; 
+      //取得所有收藏清單
+      function getAllCL() {
+        // 發出POST的GET請求取得所有會員列表
+        $.ajax({
+          type: "GET", //注意！！
+          url: "http://localhost:8090/NCU_MIS_SA/api/Collect_List.do",
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          timeout: 10000,
+          success: function (response) {
+            if (response.status == 200) {
+              updateTable(response.response.data);
+              updateSQLTable(response.response);
+            }
+            console.log(response);
+          },
+          error: function () {
+            swal("無法連線到伺服器!！");
+          },
+        });
+      }
+	
+      getAllCL(test_id);
+
+      // 更新收藏清單表格
+      function updateTable(data) {
+        $("#collectlist").empty();
+        var collectlist_html = "";
+        $.each(data, function (index, value) {
+          collectlist_html +=
+            "<div>" +
+            "<b>" +
+            "<a href='tripy-FavoriteList-detail.html' class='collectionlist' style='color: black'>" +
+            value["name"] +
+            "</a>" +
+            "</b>" +
+            "<br />" +
+            "<br />" +
+            "<a href='javascript: deleteCList(" +
+            value["id"] +
+            ");'><i class='fs-14 cl-7 fa fa-trash m-r-2'> 刪除</i></a>" +
+            " </div>";
+        });
+
+        $("#collectlist").append(collectlist_html);
+      }
+
+      function updateSQLTable(data) {
+        $("#sql_log > tbody").empty();
+        var time = (data.time / 1000000).toFixed(2);
+        var table_html = "";
+
+        sql_num = 0;
+        sql_num += 1;
+
+        table_html += "<tr>";
+        table_html += "<td>" + sql_num + "</td>";
+        table_html += "<td>" + data.sql + "</td>";
+        table_html += '<td style="text-align: right">' + "0" + "</td>";
+        table_html += '<td style="text-align: right">' + data.row + "</td>";
+        table_html += '<td style="text-align: right">' + data.row + "</td>";
+        table_html += '<td style="text-align: right">' + time + "</td>";
+        table_html += "</tr>";
+        $("#sql_log > tbody").append(table_html);
+        $("#sql_summary").html(
+          "(default) " + data.row + " queries took " + time + " ms"
+        );
+      }
+
+      $(document).ready(function () {
+        getAllCL();
+      });
     </script>
   </body>
 </html>
