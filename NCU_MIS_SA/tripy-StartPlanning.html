@@ -41,7 +41,7 @@
 					</div>
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
-						<ul class="main-menu respon-sub-menu">
+						<ul class="main-menu respon-sub-menu" id="menu">
 							<li>
 								<a href="tripy-City.html" style="font-weight: bold;">景點</a>
 							</li>
@@ -68,47 +68,49 @@
 			</div>	
 		</nav>
 
+		<style>
+			.size-a-7 {
+				width: 50px;
+				height: 50px;
+			}
+		</style>
+
 		
 	</header>
+	<div class="col-lg-4 p-b-50 isotope-item self">
+		<div class="flex-wr-s-c">
+			<div id="CP">
+				<button onclick="createPlan();" class="flex-c-c size-a-7 borad-50per bg-11 fs-20 cl-0 hov-btn2 trans-02 m-r-10">
+					<i class="fa fa-plus"></i>	
+				</button>
+			</div>
+		</div>
+	</div>
 
 	<!-- Content -->
 	<div class="bg-0 p-t-95 p-b-50">
 		<div class="container">
-			<div class="p-b-45">
-				<div class="flex-wr-c-c filter-tope-group">
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5 active-2" data-filter="*">
-						所有行程
-					</button>
-
-                    <button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".self">
-						我的行程
-					</button>
-
-					<button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5" data-filter=".together">
-						旅遊行程
-					</button>
-				</div>
-			</div>
-			
-			<div class="row isotope-grid">
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item self">
+			<div class="isotope-grid" id ="Addplan">
+					<!-- 行程 -->		
+				
+				<div class="col-lg-4 p-b-50 isotope-item self">
 					<div class="bg-0 h-full">
 						<a href="Itinerary.html" class="hov-img0 of-hidden">
 							<img src="images/台南.jpg" alt="IMG" height= "200px">
 						</a>
 
-						<div class="bg-0 p-t-26">
+						<div class="bg-0 p-t-20">
 							<h4 class="p-b-12">
 								<a href="Itinerary.html" class="t1-m-1 cl-3 hov-link2 trans-02">
 									規劃臺南兩天一夜
 								</a>
 							</h4>
-                            
-							<div class="flex-wr-s-c p-b-9">
+							
+							<div class="flex-wr-s-c p-b-15">
 								<div class="p-r-20">
 									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
 
-                                    <a href="#" class="t1-s-2 cl-11 hov-link3">
+									<a href="#" class="t1-s-2 cl-11 hov-link3">
 										2023/12/4 - 2023/12/5
 									</a>
 								</div>
@@ -120,23 +122,19 @@
 										管理
 									</a>
 								</div>
-                                <div>
+								<div>
 
-                                </div>
+								</div>
 
-                                <div class="p-l-20 bo-l-1 bcl-12">
-                                    <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
+								<div class="p-l-20 bo-l-1 bcl-12">
+									<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
 
-                                    <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                        編輯
-                                    </a>
-                                </div>
+									<a href="#" class="t1-s-2 cl-11 hov-link3">
+										編輯
+									</a>
+								</div>
 
 							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								慶祝老爸升值加薪
-							</p>
 
 							<a href="Itinerary.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
 								開始規劃
@@ -144,342 +142,8 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item together">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-02.jpg" alt="IMG" height= "200px">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Construction Investment Plan
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Nov 22 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Lorem ipsum dolor sit amet, consectetur adipis ing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item together">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-03.jpg" alt="IMG" height= "200px">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									System Security Upgrade
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Nov 30 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus...
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item market-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-04.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Plan To Expand The Market
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Oct 25 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequ atur, vel illum qui dolorem eum fugiat...
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item market-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-05.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Marketing Campaign
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Oct 20 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias conse quatur aut perferendis... 
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item security-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-06.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Recruitment Network Security
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Oct 15 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt... 
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item security-n market-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-07.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Stock Prices Rose
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Oct 05 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								To take a trivial example, which of us ever und takes laborious physical exercise, except to obtain some advantage from it...
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item training-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-08.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Company Link
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Sep 28 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excep teur sint occaecat cupidatat... 
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50 isotope-item training-n">
-					<div class="bg-0 h-full">
-						<a href="news-detail.html" class="hov-img0 of-hidden">
-							<img src="images/news-09.jpg" alt="IMG">
-						</a>
-
-						<div class="bg-0 p-t-26">
-							<h4 class="p-b-12">
-								<a href="news-detail.html" class="t1-m-1 cl-3 hov-link2 trans-02">
-									Press Conference
-								</a>
-							</h4>
-
-							<div class="flex-wr-s-c p-b-9">
-								<div class="p-r-20">
-									<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>
-
-									<span class="t1-s-2 cl-7">
-										Sep 17 , 2017
-									</span>
-								</div>
-
-								<div class="p-l-20 bo-l-1 bcl-12">
-									<i class="fs-14 cl-7 fa fa-user m-r-2"></i>
-
-									<a href="#" class="t1-s-2 cl-11 hov-link3">
-										Admin
-									</a>
-								</div>
-							</div>
-
-							<p class="t1-s-2 cl-6 p-b-20">
-								Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally...
-							</p>
-
-							<a href="news-detail.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-								Read More
-							</a>
-						</div>
-					</div>
-				</div>
+				
+					
 			</div>
 		</div>
 	</div>
@@ -487,189 +151,7 @@
 	
 	<!-- Footer -->
 	<footer>
-		<div class="parallax100 kit-overlay1 p-t-35 p-b-15" style="background-image: url(images/bg-03.jpg);">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e p-b-6 m-b-18">
-							<a href="#">
-								<img class="max-s-full" src="images/icons/logo-02.png" alt="IMG">
-							</a>
-						</div>
-
-						<div>
-							<p class="t1-s-2 cl-13 p-b-9">
-								On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized   the charms of pleasure of.
-							</p>
-						</div>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Contact us
-							</h4>
-						</div>
-
-						<ul>
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-home" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									379 5Th Ave New York, Nyc 10018
-								</span>
-							</li>
-
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									contac@gmail.com
-								</span>
-							</li>
-
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-phone" aria-hidden="true"></i>
-								</span>
-
-								<span class="size-w-4">
-									(+1) 96 716 6879
-									<br>
-									(+1) 96 716 6897
-								</span>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Company
-							</h4>
-						</div>
-
-						<div class="flex-wr-s-s">
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="index.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Home
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="projects-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Projects
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="services-list.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Services
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="about.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										About us
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="contact.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Contact
-									</a>
-								</li>
-							</ul>
-
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Blogs
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										404 Page
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="shop-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Shop
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Elements
-									</a>
-								</li>
-
-								<li class="kit-list1 p-b-9">
-									<a href="typography.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Typography
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								subscribe
-							</h4>
-						</div>
-
-						<div class="p-t-6">
-							<form class="flex-wr-c-c m-b-15">
-								<input class="size-a-17 bg-0 t1-s-2 plh-6 cl-6 p-rl-20" type="text" name="email" placeholder="Your E-mail">
-
-								<button class="flex-c-c size-a-16 bg-11 fs-18 cl-10 hov-btn3 trans-02">
-									<i class="fa fa-envelope-o"></i>
-								</button>
-							</form>
-
-							<div class="flex-wr-s-c p-t-10">
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-facebook"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-twitter"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-google-plus"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-instagram"></i>	
-								</a>
-
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-linkedin"></i>	
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="bg-10">
-			<div class="container txt-center p-tb-15">
-				<span class="t1-s-2 cl-14">
-					Copyright @ 2018 Designed by pencilblue. All rights reserved. 
-				</span>
-			</div>
-		</div>
+		
 	</footer>
 
 
@@ -697,6 +179,172 @@
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+    <!-- SweetAlert的JS套件 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	 <!-- 新增清單 -->
+	 <script type="text/javascript">
+		$(document).ready(function () {
+			var $topeContainer;
+
+			// 初始化 Isotope
+			$topeContainer = $('#Addplan');
+			$topeContainer.isotope({
+				itemSelector: '.isotope-item',
+				layoutMode: 'fitRows',
+				percentPosition: true,
+				animationEngine: 'best-available',
+				masonry: {
+					columnWidth: '.isotope-item'
+				}
+			});
+
+			// 其他代碼...
+		});
+
+
+		var createPlan = function () {
+		  swal({
+			title: "新增旅遊計畫",
+			content: {
+			  element: "input",
+			  attributes: {
+				placeholder: "輸入計畫名稱",
+				type: "text",
+			  },
+			},
+			buttons: {
+			  Btn: false,
+			  confirm: {
+				text: "確認",
+				visible: true,
+			  },
+			  cancel: {
+				text: "取消",
+				visible: true,
+			  },
+			},
+		  }).then((value) => {
+			if (value !== null) {
+			  // 檢查使用者是否按下確認按鈕
+			  if (value !== "" && value !== null) {
+				// 動態新增一個帶有 class 和 id 的 div 元素到指定的父元素中
+				createDiv(value, "Addplan");
+			  } else {
+				swal("您未輸入任何文字");
+			  }
+			} else {
+			  // 使用者按下取消按鈕
+			  swal.close();
+			}
+		  });
+		};
+  
+		// 動態新增 div 的函數
+		function createDiv(value, parentID) {
+		  // 獲取指定的父元素
+		  var parentElement = document.getElementById(parentID);
+  
+		  // 檢查父元素是否存在
+		  if (parentElement) {
+			// 創建一個新的 div 元素
+			var newDiv = document.createElement("li");
+			newDiv,style = "font-weight: bold;"
+			//newDiv.className = "CollectList";
+			//newDiv.id = "list_tainan"; // 設定 id
+			//newDiv.style.display = "inline-block"; // 設定為 inline-block
+  
+			newDiv.innerHTML = `
+			<a href="tripy-FavoriteList.html" style="font-weight: bold;">${value}</a>
+
+			`;
+			
+			// 將新的 div 元素添加到指定的父元素中
+			parentElement.appendChild(newDiv);
+			$topeContainer.isotope('layout');
+		  } else {
+			console.error("找不到指定的父元素");
+		  }
+		}
+   
+		
+		var url_string = window.location.href;
+  		var url = new URL(url_string);
+  		var city_id = url.searchParams.get("user_id");	
+  		
+  		function getStartPlanningData() {
+		  	$.ajax({
+	          type: "GET",
+	          url: "api/ItineraryList.do",
+	          data: "user_id=" + user_id,
+	          crossDomain: true,
+	          cache: false,
+	          dataType: 'json',
+	          timeout: 5000,
+	          success: function (response) {
+	              if(response.status == 200){
+	            	  updateHTML(response.response.data);
+	              }
+	          },
+	          error: function () {
+	              alert("無法連線到伺服器！");
+	          }
+	    	});
+	  	}
+	  	getStartPlanningData();
+  
+		function updateHTML(data) {
+
+			var inner_html = "";
+			  
+			$.each(data.scene_info, function (k, v) {
+				inner_html += updateStartPlanningTable(v);
+			});
+			 
+			$("#Addplan").append(inner_html);
+		
+		  }
+		  
+		function updateStartPlanningTable(data) {
+			var table_html = "";
+			table_html +=   '<div class="col-lg-4 p-b-50 isotope-item self">'
+			table_html +=	'<div class="bg-0 h-full">'
+			table_html +=	'<a href="Itinerary.html" class="hov-img0 of-hidden">'
+			table_html +=	'<img src="images/台南.jpg" alt="IMG" height= "200px">'
+			table_html +=	'</a>'
+			table_html +=	'<div class="bg-0 p-t-20">'
+			table_html +=	'<h4 class="p-b-12">'
+			table_html +=	'<a href="Itinerary.html" class="t1-m-1 cl-3 hov-link2 trans-02">'
+			table_html +=	data['name']
+			table_html +=	'</a>'
+			table_html +=	'</h4>'
+			table_html +=	'<div class="flex-wr-s-c p-b-15">'
+			table_html +=	'<div class="p-r-20">'
+			table_html +=	'<i class="fs-14 cl-7 fa fa-calendar m-r-2"></i>'
+			table_html +=	'<a href="#" class="t1-s-2 cl-11 hov-link3">'
+			table_html +=	data['start']				
+			table_html +=   data['end']
+			table_html +=	'</a>'
+			table_html +=	'</div>'
+			table_html +=	'<div class="p-rl-20 bo-l-1 bcl-12">'
+			table_html +=	'<i class="fs-14 cl-7 fa fa-user m-r-2"></i>'
+			table_html +=	'<a href="#" class="t1-s-2 cl-11 hov-link3">管理</a>'
+			table_html +=	'</div>'
+			table_html +=	'<div>'	
+			table_html +=	'</div>'
+			table_html +=	'<div class="p-l-20 bo-l-1 bcl-12">'
+			table_html +=	'<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>'
+			table_html +=	'<a href="#" class="t1-s-2 cl-11 hov-link3">編輯</a>'		
+			table_html +=	'</div>'		
+			table_html +=	'</div>'	
+			table_html +=	'<a href="Itinerary.html" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">開始規劃</a>'
+			table_html +=	'</div>'		
+			table_html +=	'</div>'
+			table_html +=	'</div>'
+
+			return table_html;		  
+		  }
+	</script>
 
 </body>
 </html>
