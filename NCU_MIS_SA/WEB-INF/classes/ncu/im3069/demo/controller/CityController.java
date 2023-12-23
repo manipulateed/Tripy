@@ -33,9 +33,8 @@ public class CityController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /** 透過 JsonReader 類別將 Request 之 JSON 格式資料解析並取回 */
 		JsonReader jsr = new JsonReader(request);
-        JSONObject jso = jsr.getObject();
         /** 取出經解析到 JsonReader 之 Request 參數 */
-        String id = String.valueOf(jso.getInt("city_id"));
+        String id = jsr.getParameter("id");
 
         /** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

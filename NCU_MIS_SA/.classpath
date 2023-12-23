@@ -13,6 +13,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Desktop/中央大學課程/大三上/SA/專題/Tripy/mysql-connector-java-8.0.29.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Desktop/中央大學課程/大三上/SA/專題/Tripy/NCU_MIS_SA/WEB-INF/lib/json-20180813.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Desktop/中央大學課程/大三上/SA/專題/Tripy/NCU_MIS_SA/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
