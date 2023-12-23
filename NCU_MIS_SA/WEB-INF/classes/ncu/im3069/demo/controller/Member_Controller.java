@@ -43,7 +43,7 @@ public class Member_Controller extends HttpServlet{
         String password = jso.getString("password");
         String name = jso.getString("name");
         String sex = jso.getString("sex");
-        String idcard = jso.getString("idcare");
+        String idcard = jso.getString("idcard");
         
         /** 建立一個新的會員物件 */
         Member_ m = new Member_(name, email, password, sex, idcard);
@@ -171,7 +171,7 @@ public class Member_Controller extends HttpServlet{
         String password = jso.getString("password");
         String name = jso.getString("name");
         String sex = jso.getString("sex");
-        String idcard = jso.getString("idcare");
+        String idcard = jso.getString("idcard");
 
         /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
         Member_ m = new Member_(id, name, email, password, sex, idcard);
