@@ -104,7 +104,7 @@ public class CommentHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_Comment` where `Comment_Scene` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_Comment` where `Comment_Scene` = ? ";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -165,7 +165,7 @@ public class CommentHelper {
             conn = DBMgr.getConnection();
             
             /** SQL指令 */
-            String sql = "DELETE FROM `Tripy`.`tbl_Comment` WHERE `Comment_Scene` = ? LIMIT 1";
+            String sql = "DELETE FROM `Tripy`.`tbl_Comment` WHERE `Comment_Scene` = ? ";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

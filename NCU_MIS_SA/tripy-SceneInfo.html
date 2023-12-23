@@ -3,6 +3,9 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+  	<script src="statics/js/jquery-confirm.js"></script>
+  	<script src="statics/js/big.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
@@ -188,38 +191,38 @@
 						<div class="m-b-25">
 							<img class="m-b-45 max-s-full" src="images/南機場夜市.jpg" alt="IMG">
                            
-							<h4 class="t1-b-3 cl-10 m-b-11 bold-chinese-text">
-								南機場夜市
+							<h4 class="t1-b-3 cl-10 m-b-11 bold-chinese-text" id= "name">
+
 							</h4>
 
                             <div class="flex-wr-s-c m-b-11">
                                 <div class="p-r-20">
                                     <i class="fs-14 cl-7 fa fa-map-marker m-r-2"></i>
                             
-                                    <span class="t1-s-2 cl-7 bold-chinese-text">
-                                        台北市中正區中華路二段307巷 <!-- 地址 -->
+                                    <span class="t1-s-2 cl-7 bold-chinese-text" id= "address">
+ 
                                     </span>
                                 </div>
                             
                                 <div class="p-rl-20 bo-l-1 bcl-12">
                                     <i class="fs-14 cl-7 fa fa-clock-o m-r-2"></i>
                             
-                                    <span class="t1-s-2 cl-7 bold-chinese-text">
-                                        星期一 - 星期日 : 5 PM - 12 PM <!-- 開放時間 -->
+                                    <span class="t1-s-2 cl-7 bold-chinese-text" id= "opentime">
+
                                     </span>
                                 </div>
                             
                                 <div class="p-l-20 bo-l-1 bcl-12">
                                     <i class="fs-14 cl-7 fa fa-phone m-r-2"></i>
                             
-                                    <a href="tel:+123456789" class="t1-s-2 cl-11 hov-link3 bold-chinese-text">
-                                        (02) XXX-XXXX <!-- 電話 -->
+                                    <a href="tel:+123456789" class="t1-s-2 cl-11 hov-link3 bold-chinese-text" id= "phone">
+
                                     </a>
                                 </div>
                             </div>                            
 
-							<p class="t1-s-2 cl-3 m-b-9 bold-chinese-text">
-								熱鬧喧囂的夜市，四周林立著數十個美食攤位，供應台灣傳統街頭小吃。
+							<p class="t1-s-2 cl-3 m-b-9 bold-chinese-text" id= "detail">
+								
                             </p>
 
 						</div>
@@ -239,99 +242,11 @@
                         -->
 
 						<!-- Comment -->
-						<div class="m-b-16 bold-chinese-text">
+						<div class="m-b-16 bold-chinese-text" id="comment">
 							<h5 class="t1-m-1 text-uppercase cl-11 m-tb-5 ">
 								評論
 							</h5>
-							
-							<div class="wrap-cmt">
-								<!-- main comment -->
-								<div class="item-cmt main-cmt flex-wr-sb-s">
-									<div class="cmt-text">
-										<p class="t1-s-2 cl-3 m-b-9">
-											南機場夜市比其餘夜市小了點
-                                        </p>
-                                        <p class="t1-s-2 cl-3 m-b-9">
-                                            但美食居多都不雷
-                                        </p>
-                                        <p class="t1-s-2 cl-3 m-b-9">
-                                            幾乎都是吃的
-                                        </p>
-										
-										<div class="t1-s-2">
-											<span class="d-inline-block cl-7 p-r-5 m-tb-1">
-												林秋香
-											</span>
 
-											<span class="d-inline-block cl-7 bo-l-1 bcl-12 p-l-9 p-r-5 m-tb-1">
-												12/17 , 2023
-											</span>
-
-											<span class="d-inline-block bo-l-1 bcl-12 p-l-9 m-tb-1">
-												<i class="fa fa-mail-reply cl-7 m-r-5"></i>
-
-												<a href="#" class="t1-s-2 cl-11 hov-link3">
-													Reply
-												</a>
-											</span>
-										</div>
-									</div>
-								</div>
-								
-								<!-- Reply comment -->
-								<div class="item-cmt rep-cmt flex-wr-sb-s">
-									<div class="cmt-text">
-										<p class="t1-s-2 cl-3 m-b-9">
-											秀昌個人覺得水餃不行
-                                        </p>
-                                        <p class="t1-s-2 cl-3 m-b-9">
-                                            小菜不錯    
-                                        </p>
-                                        <p class="t1-s-2 cl-3 m-b-9">
-                                            牛肉麵便宜
-                                        </p>
-
-										<div class="t1-s-2">
-											<span class="d-inline-block cl-7 p-r-5 m-tb-1">
-												林秋冬
-											</span>
-
-											<span class="d-inline-block cl-7 bo-l-1 bcl-12 p-l-9 p-r-5 m-tb-1">
-												12/17 , 2023
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="wrap-cmt">
-								<!-- main comment -->
-								<div class="item-cmt main-cmt flex-wr-sb-s">
-									<div class="cmt-text">
-										<p class="t1-s-2 cl-3 m-b-9">
-											很大很好逛，人很多，多數店家有行動支付，少數沒有，山內雞肉飯跟美蘭阿姨果汁吧這兩家CP值高，推薦！馬蔥餅也不錯吃
-                                        </p>
-										
-										<div class="t1-s-2">
-											<span class="d-inline-block cl-7 p-r-5 m-tb-1">
-												Cary Patton
-											</span>
-
-											<span class="d-inline-block cl-7 bo-l-1 bcl-12 p-l-9 p-r-5 m-tb-1">
-												12/4 , 2023
-											</span>
-
-											<span class="d-inline-block bo-l-1 bcl-12 p-l-9 m-tb-1">
-												<i class="fa fa-mail-reply cl-7 m-r-5"></i>
-
-												<a href="#" class="t1-s-2 cl-11 hov-link3">
-													Reply
-												</a>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 
 						<!-- Leave Comment -->
@@ -355,6 +270,79 @@
 					</div>
 				</div>
 			</div>
+			<script type="text/javascript">
+					
+					// 取得網址參數
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+                var id = url.searchParams.get("scene_id");
+	
+		  		function getSceneData() {
+				  	$.ajax({
+			          type: "GET",
+			          url: "api/scene.do",
+			          data: "id=" + id,
+			          crossDomain: true,
+			          cache: false,
+			          dataType: 'json',
+			          timeout: 5000,
+			          success: function (response) {
+			              if(response.status == 200){
+			            	  updateHTML(response.response.data);
+			              }
+			          },
+			          error: function () {
+			              alert("無法連線到伺服器！");
+			          }
+			    	});
+			  	}
+			  	getSceneData();
+		  
+				function updateHTML(data) {
+					$("#name").html(data[0]['Scene_info']['name']);
+					$("#address").html(data[0]['Scene_info']['address']);
+					$("#phone").html(data[0]['Scene_info']['phone']);
+					$("#opentime").html(data[0]['Scene_info']['opentime']);
+					$("#detail").html(data[0]['Scene_info']['detail']);
+										  
+					var inner_html = "";
+					  
+					$.each(data[0].Scene_Comment_info, function (k, v) {
+						inner_html += updateOrderProductTable(v);
+					});
+					 
+					$("#comment").append(inner_html);
+				
+				  }
+				  
+				function updateOrderProductTable(data) {
+					var comment_html = "";
+					comment_html += '<div class="wrap-cmt">'
+					comment_html +=	'<div class="item-cmt main-cmt flex-wr-sb-s">'
+					comment_html +=	'<div class="cmt-text">'
+					comment_html +=	'<p class="t1-s-2 cl-3 m-b-9">'
+					comment_html +=	data.Context
+                    comment_html +=   '</p>'			
+					comment_html +=	'<div class="t1-s-2">'
+					comment_html +=	'<span class="d-inline-block cl-7 p-r-5 m-tb-1">'
+					comment_html +=	data.User.name
+					comment_html +=	'</span>'
+					comment_html +=	'<span class="d-inline-block cl-7 bo-l-1 bcl-12 p-l-9 p-r-5 m-tb-1">'
+					comment_html +=	'12/4 , 2023'
+					comment_html +=	'</span>'
+					comment_html +=	'<span class="d-inline-block bo-l-1 bcl-12 p-l-9 m-tb-1">'
+					comment_html +=	'<i class="fa fa-mail-reply cl-7 m-r-5"></i>'
+					comment_html +=	'<a href="#" class="t1-s-2 cl-11 hov-link3">'
+					comment_html +=	'Reply'
+					comment_html +=	'</a>'
+					comment_html +=	'</span>'
+					comment_html +=	'</div>'
+					comment_html +=	'</div>'
+					comment_html += '</div>'
+					comment_html += '</div>'
+					return comment_html;		  
+				  }
+			</script>
 		</div>
 	</div>
 	
@@ -365,8 +353,7 @@
 	</footer>
 
 
-<!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->

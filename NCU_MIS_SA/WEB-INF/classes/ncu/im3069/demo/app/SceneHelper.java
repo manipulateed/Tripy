@@ -58,7 +58,7 @@ public class SceneHelper {
             
             /** SQL指令 */
 
-            String sql = "DELETE FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
+            String sql = "DELETE FROM `tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
 
             
             /** 將參數回填至SQL指令當中 */
@@ -120,7 +120,7 @@ public class SceneHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
 
-            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info`";
+            String sql = "SELECT * FROM `tripy`.`tbl_scene_info`";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -144,16 +144,18 @@ public class SceneHelper {
                 String phone = rs.getString("Scene_Phone");
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
-                String[] images_ = image.split(",");
                 ArrayList<String> images = new ArrayList<String>();
-                for (int i = 0; i < images_.length; i++) {
-                	images.add(images_[i]);
-                }
+//              String[] images_ = 
+//              		image.split(",");
+//              ArrayList<String> images = new ArrayList<String>();
+//              for (int i = 0; i < images_.length; i++) {
+//              	images.add(images_[i]);
+//              }
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-                jsa.put(s.getSceneData());
+                jsa.put(s.getSceneAllInfo());
             }
 
         } catch (SQLException e) {
@@ -201,11 +203,7 @@ public class SceneHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
 
-            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` where `Scene_City` = ? ";
-
-
-
-            
+            String sql = "SELECT * FROM `tripy`.`tbl_scene_info` where `Scene_City` = ? ";         
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
             pres.setInt(1, id);
@@ -278,7 +276,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_scene_info` WHERE `Scene_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -304,12 +302,13 @@ public class SceneHelper {
                 String phone = rs.getString("Scene_Phone");
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
-                String[] images_ = image.split(",");
                 ArrayList<String> images = new ArrayList<String>();
-                for (int i = 0; i < images_.length; i++) {
-                	images.add(images_[i]);
-                }
-                
+//              String[] images_ = 
+//              		image.split(",");
+//              ArrayList<String> images = new ArrayList<String>();
+//              for (int i = 0; i < images_.length; i++) {
+//              	images.add(images_[i]);
+//              }
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
@@ -366,7 +365,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_scene_info` WHERE `Scene_Name` LIKE '%?%' ";
+            String sql = "SELECT * FROM `tripy`.`tbl_scene_info` WHERE `Scene_Name` LIKE '%?%' ";
          
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -392,11 +391,13 @@ public class SceneHelper {
                 String phone = rs.getString("Scene_Phone");
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
-                String[] images_ = image.split(",");
                 ArrayList<String> images = new ArrayList<String>();
-                for (int i = 0; i < images_.length; i++) {
-                	images.add(images_[i]);
-                }
+//              String[] images_ = 
+//              		image.split(",");
+//              ArrayList<String> images = new ArrayList<String>();
+//              for (int i = 0; i < images_.length; i++) {
+//              	images.add(images_[i]);
+//              }
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
@@ -447,7 +448,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT count(*) FROM `Tripy`.`tbl_Scene_info` WHERE `Scene_Name` = ?";
+            String sql = "SELECT count(*) FROM `tripy`.`tbl_scene_info` WHERE `Scene_Name` = ?";
             
             /** 取得所需之參數 */
             String name = s.getName();
@@ -499,7 +500,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `Tripy`.`tbl_Scene_info`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`,`Scene_Image)"+
+            String sql = "INSERT INTO `tripy`.`tbl_scene_info`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`,`Scene_Image)"+
             		"VALUES(?, ?, ?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -572,7 +573,7 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `Tripy`.`tbl_Scene_info` SET `Scene_Name` = ? ,`Scene_Address` = ? ,`Scene_Detail` = ?, `Scene_Phone` = ? ,`Scene_OpenTime` = ? , `Scene_Image` = ? WHERE `Scene_Id` = ?";
+            String sql = "Update `tripy`.`tbl_scene_info` SET `Scene_Name` = ? ,`Scene_Address` = ? ,`Scene_Detail` = ?, `Scene_Phone` = ? ,`Scene_OpenTime` = ? , `Scene_Image` = ? WHERE `Scene_Id` = ?";
             /** 取得所需之參數 */
             String name = s.getName();
             String address = s.getAddress();

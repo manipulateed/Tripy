@@ -201,11 +201,6 @@
                 var url_string = window.location.href;
                 var url = new URL(url_string);
                 var id = url.searchParams.get("id");
-				$(document).ready(function () {
-		    			getCitySceneData()
-		    			//$('#all').trigger('click');
-					});
-	
 		  		function getCitySceneData() {
 				  	$.ajax({
 			          type: "GET",
@@ -248,12 +243,12 @@
 					table_html +=	'<div class="w-full pos-relative wrap-pic-w m-b-16">'
 					table_html +=	'<img src="images/project-07.jpg" alt="IMG" height= "280px">'
 					table_html +=	'<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">'
-					table_html +=	'<a href="projects-detail-01.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">'
+					table_html +=	'<a href="tripy-SceneInfo.html?scene_id='+data.id+'" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">'
 					table_html +=	'看評論'
 					table_html +=	'</a>'
 					table_html +=	'</div>'
 					table_html +=	'</div>'
-					table_html +=	'<a href="projects-detail-01.html" class="t1-m-1 cl-3 hov-link2 trans-02">'
+					table_html +=	'<a href="tripy-SceneInfo.html?scene_id='+data.id+'" class="t1-m-1 cl-3 hov-link2 trans-02">'
 					table_html +=	data.name
 					table_html +=	'</a>'
 					table_html +=	'</div>'
