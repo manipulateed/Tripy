@@ -1,10 +1,13 @@
 package ncu.im3069.demo.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.json.*;
 
+import ncu.im3069.demo.app.City;
 import ncu.im3069.demo.app.CityHelper;
 import ncu.im3069.tools.JsonReader;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +38,8 @@ public class CityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
 
         /** 取出經解析到 JsonReader 之 Request 參數 */
-        String id = jsr.getParameter("city_id");
+        String id = jsr.getParameter("id");
+        String id_districtId = jsr.getParameter("districtId");
 
         /** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();
@@ -43,6 +47,17 @@ public class CityController extends HttpServlet {
         
 	        /** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
 	        JSONObject query = Cith.getById(Integer.parseInt(id));
+	      	resp.put("status", "200");
+	      	resp.put("message", "單一城市資料取得成功");
+	      	resp.put("response", query);
+	      	
+	        /** 透過 JsonReader 物件回傳到前端（以 JSONObject 方式） */
+	        jsr.response(resp, response);
+        }
+        else if(!id_districtId .isEmpty()) {       	
+            
+	        /** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
+	        ArrayList<City> query = Cith.getDistrictCityByDistrictId(Integer.parseInt(id_districtId));
 	      	resp.put("status", "200");
 	      	resp.put("message", "單一城市資料取得成功");
 	      	resp.put("response", query);
