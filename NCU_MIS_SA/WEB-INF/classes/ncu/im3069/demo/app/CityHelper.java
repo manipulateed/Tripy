@@ -49,7 +49,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_City` where `City_District` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_City` where `City_District` = ? ";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -184,7 +184,6 @@ public class CityHelper {
 	            /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
 	            jsa.put(city.getCityAllInfo());
             };
-            System.out.println(row);
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
