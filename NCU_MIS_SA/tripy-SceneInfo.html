@@ -3,6 +3,7 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
   	<script src="statics/js/jquery-confirm.js"></script>
   	<script src="statics/js/big.min.js"></script>
@@ -257,11 +258,11 @@
 
 							<form class="row">
 								<div class="col-12 p-b-25">
-									<textarea class="size-a-14 bo-1-rad-5 bcl-12 t1-m-2 cl-6 plh-6 p-rl-20 p-tb-13 focus-in1" name="cmt" placeholder="詳細說明你在這個地點的親身體驗"></textarea>
+									<textarea id="context"class="size-a-14 bo-1-rad-5 bcl-12 t1-m-2 cl-6 plh-6 p-rl-20 p-tb-13 focus-in1" name="cmt" placeholder="詳細說明你在這個地點的親身體驗"></textarea>
 								</div>
 
 								<div class="col-12">
-									<button class="d-inline-flex flex-c-c size-a-23 bg-11 p-rl-10 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 borderOne bold-chinese-text">
+									<button id="submit" class="d-inline-flex flex-c-c size-a-23 bg-11 p-rl-10 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 borderOne bold-chinese-text">
 										發布
 									</button>
 								</div>
@@ -275,13 +276,13 @@
 					// 取得網址參數
                 var url_string = window.location.href;
                 var url = new URL(url_string);
-                var id = url.searchParams.get("scene_id");
-	
+                var scene_id = url.searchParams.get("scene_id");
+				var user_id = url.searchParams.get("user_id");
 		  		function getSceneData() {
 				  	$.ajax({
 			          type: "GET",
 			          url: "api/scene.do",
-			          data: "id=" + id,
+			          data: "id=" + scene_id,
 			          crossDomain: true,
 			          cache: false,
 			          dataType: 'json',
@@ -297,7 +298,75 @@
 			    	});
 			  	}
 			  	getSceneData();
-		  
+			  	
+		  		$(document).ready(function() {
+                    // 處理表單點擊事件
+                    var $form = $('#submit');
+                    $form.click(function() {
+                        submit();
+                    });
+
+                    function submit() {
+                        var context = $('#context').val();
+
+                        if (context) {
+							Swal.fire({
+							  icon: "error",
+							  title: "Oops...",
+							  text: "評論內容不能為空!",
+							});
+                        }          
+                        else {
+                            // 將資料組成JSON格式
+                            var data_object = {
+                                "scene_id": scene_id,
+                                "user_id": user_id,
+                                "context": context
+                            };
+
+                            // 將JSON格式轉換成字串
+                            var data_string = JSON.stringify(data_object);
+
+                            // 發出POST的AJAX請求
+                            $.ajax({
+                                    type: "POST",
+                                    url: "api/comment.do",
+                                    data: data_string,
+                                    crossDomain: true,
+                                    cache: false,
+                                    dataType: 'json',
+                                    timeout: 5000,
+                                    success: function (response) {
+                                        $('#flashMessage').html(response.message);
+                                        $('#flashMessage').show();
+                                        if(response.status == 200){
+                                            updateSQLTable(response.response);
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("無法連線到伺服器！");
+                                    }
+                            });
+                        }
+                    }
+
+                    function updateSQLTable(data) {
+                        $("#sql_log > tbody").empty();
+                        var time = (data.time / 1000000).toFixed(2);
+                        var table_html = "";
+
+                        table_html += '<tr>';
+                        table_html += '<td>' + '1' + '</td>';
+                        table_html += '<td>' + data.sql + '</td>';
+                        table_html += '<td style="text-align: right">' + '0' + '</td>';
+                        table_html += '<td style="text-align: right">' + data.row + '</td>';
+                        table_html += '<td style="text-align: right">' + data.row + '</td>';
+                        table_html += '<td style="text-align: right">' + time + '</td>';
+                        table_html += '</tr>';
+                        $("#sql_log > tbody").append(table_html);
+                        $("#sql_summary").html("(default) " + data.row + " queries took " + time + " ms");
+                    }
+                });
 				function updateHTML(data) {
 					$("#name").html(data[0]['Scene_info']['name']);
 					$("#address").html(data[0]['Scene_info']['address']);
