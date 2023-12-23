@@ -144,7 +144,7 @@ public class Member_Helper {
                 String idcard = rs.getString("User_IDCard");
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member_(member_id, email, password, name, sex, idcard);
+                m = new Member_(member_id, name, email, password, sex, idcard);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getMemberData());
             }
