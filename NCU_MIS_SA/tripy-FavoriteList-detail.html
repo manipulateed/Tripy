@@ -86,7 +86,9 @@
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
                 <li>
-                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
+                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
+                    >景點</a
+                  >
                 </li>
 
                 <li>
@@ -96,7 +98,9 @@
                 </li>
 
                 <li>
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold">我的收藏</a>
+                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
+                    >我的收藏</a
+                  >
                 </li>
 
                 <li>
@@ -150,7 +154,10 @@
                   class="col-auto flex-col-c-c p-b-50"
                   style="position: absolute; left: 360px"
                 >
-                  <h3 class="t1-b-1 cl-3 txt-center m-b-11">台南好玩的</h3>
+                  <h3
+                    class="t1-b-1 cl-3 txt-center m-b-11"
+                    id="title_name"
+                  ></h3>
                   <div class="size-a-2 bg-3"></div>
                 </div>
               </div>
@@ -173,43 +180,44 @@
                   </h4>
                 </form>
                 <div class="size-a-105 bg-11"></div>
-
-                <ul class="p-t-22">
-                  <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18">
-                    <a
-                      href="tripy-SceneInfo.html"
-                      class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
-                    >
-                      <span name="left" style="margin-left: 20px"> </span>
-                      <span style="position: absolute; left: 200px">
-                        安平古堡
-                      </span>
-
-                      <span style="position: absolute; left: 530px">
-                        台南市安平區國勝路82號
-                      </span>
-                    </a>
-                  </li>
-                  <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18" id="tainan_2">
-                    <a
-                      href="tripy-SceneInfo.html"
-                      class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
-                    >
-                      <span name="left" style="margin-left: 20px"> </span>
-                      <span
-                        style="position: absolute; left: 200px"
-                        id="tainan_2_name"
+                <div id="CLScene">
+                  <ul class="p-t-22">
+                    <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18">
+                      <a
+                        href="tripy-SceneInfo.html"
+                        class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
                       >
-                        赤崁樓
-                      </span>
+                        <span name="left" style="margin-left: 20px"> </span>
+                        <span style="position: absolute; left: 200px">
+                          安平古堡
+                        </span>
 
-                      <span style="position: absolute; left: 530px">
-                        台南市中西區民族路二段212號
-                      </span>
-                    </a>
-                    <button onclick="handleDeleteClick()">刪除</button>
-                  </li>
-                </ul>
+                        <span style="position: absolute; left: 530px">
+                          台南市安平區國勝路82號
+                        </span>
+                      </a>
+                    </li>
+                    <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18" id="tainan_2">
+                      <a
+                        href="tripy-SceneInfo.html"
+                        class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
+                      >
+                        <span name="left" style="margin-left: 20px"> </span>
+                        <span
+                          style="position: absolute; left: 200px"
+                          id="tainan_2_name"
+                        >
+                          赤崁樓
+                        </span>
+
+                        <span style="position: absolute; left: 530px">
+                          台南市中西區民族路二段212號
+                        </span>
+                      </a>
+                      <button onclick="handleDeleteClick()">刪除</button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -255,34 +263,88 @@
     <!-- SweetAlert的JS套件 -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- 刪除收藏清單 -->
     <script>
-      // JavaScript 函数，用于处理删除按钮点击事件
-      function handleDeleteClick() {
-        var Scene = document.getElementById("tainan_2");
-        var name = document.getElementById("tainan_2_name");
-        swal({
-          title: `確認要刪除「${name.innerText}」嗎`,
-          icon: "warning",
-          dangerMode: true,
-          buttons: {
-            Btn: false,
-            confirm: {
-              text: "確認",
-              visible: true,
-            },
-            cancel: {
-              text: "取消",
-              visible: true,
-            },
+      //取得網址參數
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+      var id = url.searchParams.get("id");
+
+      function getCLItem(id) {
+        // 發出POST的GET請求取得所有會員列表
+        $.ajax({
+          type: "GET", //注意！！
+          url: "http://localhost:8090/NCU_MIS_SA/api/collectionItem.do",
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          data: { list_id: id },
+          timeout: 10000,
+          success: function (response) {
+            if (response.status == 200) {
+              console.log(response.response.data);
+              updateTable(response.response.data.scene_info);
+              updateSQLTable(response);
+            }
+            console.log(response);
+            console.log(response.data);
+            console.log(response.response.data);
           },
-        }).then((value) => {
-          // 獲取要删除的清單元素
-          if (value !== null && value) {
-            Scene.parentNode.removeChild(Scene);
-          }
+          error: function () {
+            swal("無法連線到伺服器！");
+          },
         });
       }
+
+      getCLItem(id);
+
+      function updateTable(data) {
+        $("#CLScene").empty();
+        var CLScene_html = "";
+        $.each(data, function (index, value) {
+          CLScene_html +=
+            "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18' id='tainan_2'>" +
+            "<a href='tripy-SceneInfo.html?id=" +
+            value["id"] +
+            "' class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
+            "<span name='left' style='margin-left: 20px'> </span>" +
+            "<span style='position: absolute; left: 200px'>" +
+            value.scene.data +
+            "</span>" +
+            "<span style='position: absolute; left: 530px'>" +
+            value.scene.address +
+            "</span>" +
+            "</a>" +
+            "<button onclick='handleDeleteClick()'>刪除</button>" +
+            "</li>";
+        });
+
+        $("#CLScene").append(CLScene_html);
+      }
+
+      function updateSQLTable(data) {
+        $("#sql_log > tbody").empty();
+        var time = (data.time / 1000000).toFixed(2);
+        var table_html = "";
+
+        sql_num = 0;
+        sql_num += 1;
+
+        table_html += "<tr>";
+        table_html += "<td>" + sql_num + "</td>";
+        table_html += "<td>" + data.sql + "</td>";
+        table_html += '<td style="text-align: right">' + "0" + "</td>";
+        table_html += '<td style="text-align: right">' + data.row + "</td>";
+        table_html += '<td style="text-align: right">' + data.row + "</td>";
+        table_html += '<td style="text-align: right">' + time + "</td>";
+        table_html += "</tr>";
+        $("#sql_log > tbody").append(table_html);
+        $("#sql_summary").html(
+          "(default) " + data.row + " queries took " + time + " ms"
+        );
+      }
+      $(document).ready(function () {
+        getCLItem(id);
+      });
     </script>
   </body>
 </html>

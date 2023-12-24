@@ -45,7 +45,6 @@ public class CollectionItem {
 	private void getScene(int scene_id) {
 
 		JSONObject jso = sceh.getById(scene_id); //從sch呼叫getbyid
-		
 		 /** 取出經解析到JSONObject之Request參數 */
         String address = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("address");
         String detail = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("detail");
@@ -63,7 +62,7 @@ public class CollectionItem {
 //        }
         
         /** 建立一個新的會員物件 */
-        this.sc = new Scene(name, address, detail, opentime, phone, images);
+        this.sc = new Scene(scene_id, name, address, detail, opentime, phone, images);
 	}
 	
     /**
