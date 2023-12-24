@@ -46,10 +46,10 @@ public class Comment {
 	
 	public JSONObject getCommentData() {
         /** 透過JSONObject將該項產品所需之資料全部進行封裝*/
-		
+		Member_ m = mh.getById(this.user_id);
         JSONObject jso = new JSONObject();
         jso.put("Context", getContext());
-        jso.put("User", mh.getById(this.user_id).getMemberData());
+        jso.put("User", m.getMemberData());
 
         return jso;
     }

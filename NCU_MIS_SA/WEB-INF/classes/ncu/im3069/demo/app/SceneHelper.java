@@ -145,12 +145,12 @@ public class SceneHelper {
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
                 ArrayList<String> images = new ArrayList<String>();
-//              String[] images_ = 
-//              		image.split(",");
-//              ArrayList<String> images = new ArrayList<String>();
-//              for (int i = 0; i < images_.length; i++) {
-//              	images.add(images_[i]);
-//              }
+                if(image != null) {
+                    String[] images_ = image.split(","); 
+                    for (int i = 0; i < images_.length; i++) {
+                    	images.add(images_[i]);
+                    }
+                }
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
@@ -226,12 +226,12 @@ public class SceneHelper {
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
                 ArrayList<String> images = new ArrayList<String>();
-//                String[] images_ = 
-//                		image.split(",");
-//                ArrayList<String> images = new ArrayList<String>();
-//                for (int i = 0; i < images_.length; i++) {
-//                	images.add(images_[i]);
-//                }
+                if(image != null) {
+                    String[] images_ = image.split(","); 
+                    for (int i = 0; i < images_.length; i++) {
+                    	images.add(images_[i]);
+                    }
+                }
                 /** 將每一筆會員資料產生一名新Member物件 */
                 scene = new Scene(scene_id, name, address, detail, opentime, phone, images);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
@@ -303,12 +303,12 @@ public class SceneHelper {
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
                 ArrayList<String> images = new ArrayList<String>();
-//              String[] images_ = 
-//              		image.split(",");
-//              ArrayList<String> images = new ArrayList<String>();
-//              for (int i = 0; i < images_.length; i++) {
-//              	images.add(images_[i]);
-//              }
+                if(image != null) {
+                    String[] images_ = image.split(","); 
+                    for (int i = 0; i < images_.length; i++) {
+                    	images.add(images_[i]);
+                    }
+                }
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
@@ -392,12 +392,12 @@ public class SceneHelper {
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
                 ArrayList<String> images = new ArrayList<String>();
-//              String[] images_ = 
-//              		image.split(",");
-//              ArrayList<String> images = new ArrayList<String>();
-//              for (int i = 0; i < images_.length; i++) {
-//              	images.add(images_[i]);
-//              }
+                if(image != null) {
+                    String[] images_ = image.split(","); 
+                    for (int i = 0; i < images_.length; i++) {
+                    	images.add(images_[i]);
+                    }
+                }
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);

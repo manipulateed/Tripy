@@ -48,10 +48,12 @@ public class ItineraryItemController extends HttpServlet{
         String phone = jso.getString("phone");
         String opentime = jso.getString("opentime");
         String image = jso.getString("images");
-        String[] images_ = image.split(",");
         ArrayList<String> images = new ArrayList<String>();
-        for (int i = 0; i < images_.length; i++) {
-        	images.add(images_[i]);
+        if(!image.isEmpty()) {
+            String[] images_ = image.split(","); 
+            for (int i = 0; i < images_.length; i++) {
+            	images.add(images_[i]);
+            }
         }
         /** 建立一個新的景點物件 */
         Scene m = new Scene(id, name, address, detail, opentime, phone, images);

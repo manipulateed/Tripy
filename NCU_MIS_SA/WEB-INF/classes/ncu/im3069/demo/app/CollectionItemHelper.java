@@ -198,7 +198,7 @@ public class CollectionItemHelper {
     		 /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_Collection` WHERE `tbl_Collection`.`Collection_CL` = ?";
+            String sql = "SELECT * FROM `tripy`.`tbl_collection` WHERE `tbl_collection`.`Collection_CL` = ?";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

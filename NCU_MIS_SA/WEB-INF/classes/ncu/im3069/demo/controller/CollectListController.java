@@ -53,7 +53,7 @@ public class CollectListController extends HttpServlet {
           resp.put("message", "單筆收藏清單資料取得成功");
           resp.put("response", query);
         }
-        else {
+        else if(!user_id.isEmpty()){
           /** 透過 collectListHelper 物件之 getAll() 方法取回所有訂單之資料，回傳之資料為 JSONObject 物件 */
           JSONObject query = clh.getAll(Integer.parseInt(user_id));
           resp.put("status", "200");
