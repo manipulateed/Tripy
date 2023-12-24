@@ -52,12 +52,12 @@ public class SceneController extends HttpServlet {
         String image = jso.getString("images");
 
         ArrayList<String> images = new ArrayList<String>();
-//      String[] images_ = 
-//      		image.split(",");
-//      ArrayList<String> images = new ArrayList<String>();
-//      for (int i = 0; i < images_.length; i++) {
-//      	images.add(images_[i]);
-//      }
+        if(image != null) {
+            String[] images_ = image.split(","); 
+            for (int i = 0; i < images_.length; i++) {
+            	images.add(images_[i]);
+            }
+        }
         /** 建立一個新的會員物件 */
         Scene m = new Scene(name, address, detail, opentime, phone, images);
         
@@ -105,7 +105,7 @@ public class SceneController extends HttpServlet {
         /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
         String id = jsr.getParameter("id");
         String keyword = jsr.getParameter("keyword");
-        System.out.println(id);
+
         /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
         if (id.isEmpty() && keyword.isEmpty()) {
             /** 透過MemberHelper物件之getAll()方法取回所有會員之資料，回傳之資料為JSONObject物件 */
@@ -203,12 +203,12 @@ public class SceneController extends HttpServlet {
         String opentime = jso.getString("opentime");
         String image = jso.getString("images");
         ArrayList<String> images = new ArrayList<String>();
-//      String[] images_ = 
-//      		image.split(",");
-//      ArrayList<String> images = new ArrayList<String>();
-//      for (int i = 0; i < images_.length; i++) {
-//      	images.add(images_[i]);
-//      }
+        if(image != null) {
+            String[] images_ = image.split(","); 
+            for (int i = 0; i < images_.length; i++) {
+            	images.add(images_[i]);
+            }
+        }
         
         /** 建立一個新的會員物件 */
         Scene m = new Scene(id, name, address, detail, opentime, phone, images);

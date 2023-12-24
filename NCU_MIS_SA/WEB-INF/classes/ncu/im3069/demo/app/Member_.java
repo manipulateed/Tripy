@@ -62,8 +62,8 @@ public class Member_ {
         setPassword(password);
         setSex(sex);
         setIdCard(idcard);
-        getCollect_ListFromDB();
-        getItinerary_ListFromDB();
+//        getCollect_ListFromDB();
+//        getItinerary_ListFromDB();
     }
     
     public int getId() {
