@@ -73,7 +73,7 @@ public class ItineraryItem {
 //            }
 //        }
         /** 建立一個新的會員物件 */
-        this.sc = new Scene(name, address, detail, opentime, phone, images);
+        this.sc = new Scene(scene_id, name, address, detail, opentime, phone, images);
 	}
     
     /**
