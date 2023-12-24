@@ -49,7 +49,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` where `City_District` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_City` where `City_District` = ? ";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -101,7 +101,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` where `City_Name` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_city` where `City_Name` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);         
@@ -143,22 +143,21 @@ public class CityHelper {
     public JSONObject getById(int id) {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         City city = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
-        JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
         long start_time = System.nanoTime();
+        JSONArray jsa = new JSONArray();
         /** 紀錄SQL總行數 */
         int row = 0;
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
         
-        try {
+       try {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City` WHERE `City_Id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_city` WHERE `City_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -172,20 +171,19 @@ public class CityHelper {
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
             /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+            /** 每執行一次迴圈表示有一筆資料 */
             while(rs.next()) {
-                /** 每執行一次迴圈表示有一筆資料 */
-                row += 1;
-                
-                /** 將 ResultSet 之資料取出 */
-                int city_id = rs.getInt("City_Id");
-                String name = rs.getString("City_Name");
-                
-                /** 將每一筆評論資料產生一名新Comment物件 */
-                city = new City(city_id, name);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-                jsa.put(city.getCityAllInfo());
-            }
-            
+	            row += 1;
+	            
+	            /** 將 ResultSet 之資料取出 */
+	            int city_id = rs.getInt("City_Id");
+	            String name = rs.getString("City_Name");
+	            
+	            /** 將每一筆評論資料產生一名新Comment物件 */
+	            city = new City(city_id, name);
+	            /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+	            jsa.put(city.getCityAllInfo());
+            };
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
@@ -236,7 +234,7 @@ public class CityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_City`";
+            String sql = "SELECT * FROM `tripy`.`tbl_city`";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

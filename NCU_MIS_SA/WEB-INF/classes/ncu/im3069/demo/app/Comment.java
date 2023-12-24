@@ -10,7 +10,7 @@ public class Comment {
 	private String context;
 	
 	private int user_id;
-		
+	private Member_Helper mh = Member_Helper.getHelper();
 	public Comment(String context, int user_id) {
 		setContext(context);
 		setUser_Id(user_id);
@@ -46,9 +46,10 @@ public class Comment {
 	
 	public JSONObject getCommentData() {
         /** 透過JSONObject將該項產品所需之資料全部進行封裝*/
+		
         JSONObject jso = new JSONObject();
         jso.put("Context", getContext());
-        jso.put("User_Id", getUser_Id());
+        jso.put("User", mh.getById(this.user_id).getMemberData());
 
         return jso;
     }

@@ -3,6 +3,9 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+  	<script src="statics/js/jquery-confirm.js"></script>
+  	<script src="statics/js/big.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
@@ -162,7 +165,7 @@
 			</div>
 		</div>
 	</section>
-
+	<scetion>
 	<!-- Content -->
 	<div class="bg-0 p-t-95 p-b-50">
 		<div class="p-rl-50 p-rl-15-sr1199">
@@ -192,200 +195,260 @@
 			
 				
 			</div>
+			<script type="text/javascript">
+					
+					// 取得網址參數
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+                var id = url.searchParams.get("id");
+		  		function getCitySceneData() {
+				  	$.ajax({
+			          type: "GET",
+			          url: "api/city.do",
+			          data: "id=" + id,
+			          crossDomain: true,
+			          cache: false,
+			          dataType: 'json',
+			          timeout: 5000,
+			          success: function (response) {
+			              if(response.status == 200){
+			            	  updateHTML(response.response.data);
+			              }
+			          },
+			          error: function () {
+			              alert("無法連線到伺服器！");
+			          }
+			    	});
+			  	}
+			  	getCitySceneData();
+		  
+				function updateHTML(data) {
+					$("#title").html(data[0]['city_info']['name']+"旅遊指南");
+					
+					  
+					var inner_html = "";
+					  
+					$.each(data[0].scene_info, function (k, v) {
+						inner_html += updateOrderProductTable(v);
+					});
+					 
+					$("#panel").append(inner_html);
+				
+				  }
+				  
+				function updateOrderProductTable(data) {
+					var table_html = "";
+					table_html +=  '<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">'
+					table_html +=	'<div class="flex-col-s-c">'
+					table_html +=	'<div class="w-full pos-relative wrap-pic-w m-b-16">'
+					table_html +=	'<img src="images/project-07.jpg" alt="IMG" height= "280px">'
+					table_html +=	'<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">'
+					table_html +=	'<a href="tripy-SceneInfo.html?scene_id='+data.id+'" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">'
+					table_html +=	'看評論'
+					table_html +=	'</a>'
+					table_html +=	'</div>'
+					table_html +=	'</div>'
+					table_html +=	'<a href="tripy-SceneInfo.html?scene_id='+data.id+'" class="t1-m-1 cl-3 hov-link2 trans-02">'
+					table_html +=	data.name
+					table_html +=	'</a>'
+					table_html +=	'</div>'
+					table_html +=	'</div>'
+					return table_html;		  
+				  }
+			</script>
 		</div>
 	</div>
-	
+	</section>
 	
 	<!-- Footer -->
-	<footer>
-		<div class="parallax100 kit-overlay1 p-t-35 p-b-15" style="background-image: url(images/bg-03.jpg);">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e p-b-6 m-b-18">
-							<a href="#">
-								<img class="max-s-full" src="images/icons/logo-02.png" alt="IMG">
-							</a>
-						</div>
+<!--	<footer style="position: absolute;bottom: 0;width: 100%;">-->
+<!--		<div class="parallax100 kit-overlay1 p-t-35 p-b-15" style="background-image: url(images/bg-03.jpg);">-->
+<!--			<div class="container">-->
+<!--				<div class="row justify-content-center">-->
+<!--					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">-->
+<!--						<div class="size-h-1 flex-s-e p-b-6 m-b-18">-->
+<!--							<a href="#">-->
+<!--								<img class="max-s-full" src="images/icons/logo-02.png" alt="IMG">-->
+<!--							</a>-->
+<!--						</div>-->
 
-						<div>
-							<p class="t1-s-2 cl-13 p-b-9">
-								On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized   the charms of pleasure of.
-							</p>
-						</div>
-					</div>
+<!--						<div>-->
+<!--							<p class="t1-s-2 cl-13 p-b-9">-->
+<!--								On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized   the charms of pleasure of.-->
+<!--							</p>-->
+<!--						</div>-->
+<!--					</div>-->
 
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Contact us
-							</h4>
-						</div>
+<!--					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">-->
+<!--						<div class="size-h-1 flex-s-e m-b-18">-->
+<!--							<h4 class="t1-m-3 text-uppercase cl-0">-->
+<!--								Contact us-->
+<!--							</h4>-->
+<!--						</div>-->
 
-						<ul>
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-home" aria-hidden="true"></i>
-								</span>
+<!--						<ul>-->
+<!--							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">-->
+<!--								<span class="size-w-3">-->
+<!--									<i class="fa fa-home" aria-hidden="true"></i>-->
+<!--								</span>-->
 
-								<span class="size-w-4">
-									379 5Th Ave New York, Nyc 10018
-								</span>
-							</li>
+<!--								<span class="size-w-4">-->
+<!--									379 5Th Ave New York, Nyc 10018-->
+<!--								</span>-->
+<!--							</li>-->
 
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-								</span>
+<!--							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">-->
+<!--								<span class="size-w-3">-->
+<!--									<i class="fa fa-envelope-o" aria-hidden="true"></i>-->
+<!--								</span>-->
 
-								<span class="size-w-4">
-									contac@gmail.com
-								</span>
-							</li>
+<!--								<span class="size-w-4">-->
+<!--									contac@gmail.com-->
+<!--								</span>-->
+<!--							</li>-->
 
-							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">
-								<span class="size-w-3">
-									<i class="fa fa-phone" aria-hidden="true"></i>
-								</span>
+<!--							<li class="flex-wr-s-s t1-s-2 cl-13 p-b-9">-->
+<!--								<span class="size-w-3">-->
+<!--									<i class="fa fa-phone" aria-hidden="true"></i>-->
+<!--								</span>-->
 
-								<span class="size-w-4">
-									(+1) 96 716 6879
-									<br>
-									(+1) 96 716 6897
-								</span>
-							</li>
-						</ul>
-					</div>
+<!--								<span class="size-w-4">-->
+<!--									(+1) 96 716 6879-->
+<!--									<br>-->
+<!--									(+1) 96 716 6897-->
+<!--								</span>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</div>-->
 
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								Company
-							</h4>
-						</div>
+<!--					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">-->
+<!--						<div class="size-h-1 flex-s-e m-b-18">-->
+<!--							<h4 class="t1-m-3 text-uppercase cl-0">-->
+<!--								Company-->
+<!--							</h4>-->
+<!--						</div>-->
 
-						<div class="flex-wr-s-s">
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="index.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Home
-									</a>
-								</li>
+<!--						<div class="flex-wr-s-s">-->
+<!--							<ul class="w-50">-->
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="index.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Home-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="projects-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Projects
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="projects-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Projects-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="services-list.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Services
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="services-list.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Services-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="about.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										About us
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="about.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										About us-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="contact.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Contact
-									</a>
-								</li>
-							</ul>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="contact.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Contact-->
+<!--									</a>-->
+<!--								</li>-->
+<!--							</ul>-->
 
-							<ul class="w-50">
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Blogs
-									</a>
-								</li>
+<!--							<ul class="w-50">-->
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Blogs-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										404 Page
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										404 Page-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="shop-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Shop
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="shop-grid.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Shop-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Elements
-									</a>
-								</li>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="#" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Elements-->
+<!--									</a>-->
+<!--								</li>-->
 
-								<li class="kit-list1 p-b-9">
-									<a href="typography.html" class="t1-s-2 cl-13 hov-link2 trans-02">
-										Typography
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
+<!--								<li class="kit-list1 p-b-9">-->
+<!--									<a href="typography.html" class="t1-s-2 cl-13 hov-link2 trans-02">-->
+<!--										Typography-->
+<!--									</a>-->
+<!--								</li>-->
+<!--							</ul>-->
+<!--						</div>-->
+<!--					</div>-->
 
-					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">
-						<div class="size-h-1 flex-s-e m-b-18">
-							<h4 class="t1-m-3 text-uppercase cl-0">
-								subscribe
-							</h4>
-						</div>
+<!--					<div class="col-sm-8 col-md-5 col-lg-3 p-b-20">-->
+<!--						<div class="size-h-1 flex-s-e m-b-18">-->
+<!--							<h4 class="t1-m-3 text-uppercase cl-0">-->
+<!--								subscribe-->
+<!--							</h4>-->
+<!--						</div>-->
 
-						<div class="p-t-6">
-							<form class="flex-wr-c-c m-b-15">
-								<input class="size-a-17 bg-0 t1-s-2 plh-6 cl-6 p-rl-20" type="text" name="email" placeholder="Your E-mail">
+<!--						<div class="p-t-6">-->
+<!--							<form class="flex-wr-c-c m-b-15">-->
+<!--								<input class="size-a-17 bg-0 t1-s-2 plh-6 cl-6 p-rl-20" type="text" name="email" placeholder="Your E-mail">-->
 
-								<button class="flex-c-c size-a-16 bg-11 fs-18 cl-10 hov-btn3 trans-02">
-									<i class="fa fa-envelope-o"></i>
-								</button>
-							</form>
+<!--								<button class="flex-c-c size-a-16 bg-11 fs-18 cl-10 hov-btn3 trans-02">-->
+<!--									<i class="fa fa-envelope-o"></i>-->
+<!--								</button>-->
+<!--							</form>-->
 
-							<div class="flex-wr-s-c p-t-10">
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-facebook"></i>	
-								</a>
+<!--							<div class="flex-wr-s-c p-t-10">-->
+<!--								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">-->
+<!--									<i class="fa fa-facebook"></i>	-->
+<!--								</a>-->
 
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-twitter"></i>	
-								</a>
+<!--								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">-->
+<!--									<i class="fa fa-twitter"></i>	-->
+<!--								</a>-->
 
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-google-plus"></i>	
-								</a>
+<!--								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">-->
+<!--									<i class="fa fa-google-plus"></i>	-->
+<!--								</a>-->
 
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-instagram"></i>	
-								</a>
+<!--								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">-->
+<!--									<i class="fa fa-instagram"></i>	-->
+<!--								</a>-->
 
-								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">
-									<i class="fa fa-linkedin"></i>	
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<!--								<a href="#" class="flex-c-c size-a-7 borad-50per bg-11 fs-16 cl-0 hov-btn2 trans-02 m-r-10">-->
+<!--									<i class="fa fa-linkedin"></i>	-->
+<!--								</a>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
 
-		<div class="bg-10">
-			<div class="container txt-center p-tb-15">
-				<span class="t1-s-2 cl-14">
-					Copyright @ 2018 Designed by pencilblue. All rights reserved. 
-				</span>
-			</div>
-		</div>
-	</footer>
+<!--		<div class="bg-10">-->
+<!--			<div class="container txt-center p-tb-15">-->
+<!--				<span class="t1-s-2 cl-14">-->
+<!--					Copyright @ 2018 Designed by pencilblue. All rights reserved. -->
+<!--				</span>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</footer>-->
 
 
 <!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
@@ -409,65 +472,5 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 	
-	<script type="text/javascript">
-		var url_string = window.location.href;
-  		var url = new URL(url_string);
-  		var city_id = url.searchParams.get("city_id");	
-  		
-  		function getCitySceneData() {
-		  	$.ajax({
-	          type: "GET",
-	          url: "api/city.do",
-	          data: "city_id=" + city_id,
-	          crossDomain: true,
-	          cache: false,
-	          dataType: 'json',
-	          timeout: 5000,
-	          success: function (response) {
-	              if(response.status == 200){
-	            	  updateHTML(response.response.data);
-	              }
-	          },
-	          error: function () {
-	              alert("無法連線到伺服器！");
-	          }
-	    	});
-	  	}
-	  	getCitySceneData();
-  
-		function updateHTML(data) {
-			$("#title").html(data['city_info']['name']+"旅遊指南");
-			
-			  
-			var inner_html = "";
-			  
-			$.each(data.scene_info, function (k, v) {
-				inner_html += updateOrderProductTable(v['name']);
-			});
-			 
-			$("#panel").append(inner_html);
-		
-		  }
-		  
-		function updateOrderProductTable(data) {
-			var table_html = "";
-			table_html +=  '<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">'
-			table_html +=	'<div class="flex-col-s-c">'
-			table_html +=	'<div class="w-full pos-relative wrap-pic-w m-b-16">'
-			table_html +=	'<img src="images/project-07.jpg" alt="IMG" height= "280px">'
-			table_html +=	'<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">'
-			table_html +=	'<a href="projects-detail-01.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">'
-			table_html +=	'看評論'
-			table_html +=	'</a>'
-			table_html +=	'</div>'
-			table_html +=	'</div>'
-			table_html +=	'<a href="projects-detail-01.html" class="t1-m-1 cl-3 hov-link2 trans-02">'
-			table_html +=	data
-			table_html +=	'</a>'
-			table_html +=	'</div>'
-			table_html +=	'</div>'
-			return table_html;		  
-		  }
-	</script>
 </body>
 </html>
