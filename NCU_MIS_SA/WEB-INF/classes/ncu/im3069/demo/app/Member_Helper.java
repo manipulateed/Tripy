@@ -276,7 +276,7 @@ public class Member_Helper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -287,19 +287,18 @@ public class Member_Helper {
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-                
+            while(rs.next()) {    
             /** 將 ResultSet 之資料取出 */
-            int member_id = rs.getInt("User_Id");
-            String name = rs.getString("User_Name");
-            String email = rs.getString("User_Email");
-            String password = rs.getString("User_Password");
-            String sex = rs.getString("Gender");
-            String idcard = rs.getString("User_IDCard");
-            
-            /** 將每一筆會員資料產生一名新Member物件 */
-            m = new Member_(member_id, name, email, password, sex, idcard);
-            /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-            
+	            int member_id = rs.getInt("User_Id");
+	            String name = rs.getString("User_Name");
+	            String email = rs.getString("User_Email");
+	            String password = rs.getString("User_Password");
+	            String sex = rs.getString("Gender");
+	            String idcard = rs.getString("User_IDCard");
+	            
+	            /** 將每一筆會員資料產生一名新Member物件 */
+	            m = new Member_(member_id, name, email, password, sex, idcard);
+            }
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());

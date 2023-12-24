@@ -58,19 +58,20 @@ public class ItineraryItem {
 		JSONObject jso = sceh.getById(scene_id); //從sch呼叫getbyid
 		
 		 /** 取出經解析到JSONObject之Request參數 */
-        String address = jso.getString("address");
-        String detail = jso.getString("detail");
-        String name = jso.getString("name");
-        String phone = jso.getString("phone");
-        String opentime = jso.getString("opentime");
+        String address = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("address");
+        String detail = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("detail");
+        String name = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("name");
+        String phone = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("phone");
+        String opentime = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("opentime");
         
-        String image = jso.getString("images");
-        String[] images_ = image.split(",");
+//        String image = jso.getJSONArray("data").getJSONObject(0).getJSONObject("Scene_info").getString("images");
         ArrayList<String> images = new ArrayList<String>();
-        for (int i = 0; i < images_.length; i++) {
-        	images.add(images_[i]);
-        }
-        
+//        if(image != null) {
+//            String[] images_ = image.split(","); 
+//            for (int i = 0; i < images_.length; i++) {
+//            	images.add(images_[i]);
+//            }
+//        }
         /** 建立一個新的會員物件 */
         this.sc = new Scene(name, address, detail, opentime, phone, images);
 	}
