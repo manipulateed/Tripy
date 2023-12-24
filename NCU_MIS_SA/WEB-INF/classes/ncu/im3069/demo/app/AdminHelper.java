@@ -54,7 +54,7 @@ public class AdminHelper {
             conn = DBMgr.getConnection();
             
             /** SQL指令 */
-            String sql = "DELETE FROM `Tripy`.`tbl_User` WHERE `User_Id` = ? LIMIT 1";
+            String sql = "DELETE FROM `tripy`.`tbl_User` WHERE `User_Id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -114,7 +114,7 @@ public class AdminHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_User` INNER JOIN `Tripy`.`tbl_Charactor` ON `User_Charactor` = `Char_Id` INNER JOIN `Tripy`.`tbl_Sex` ON `Sex_Id` = `User_Sex` where `Charactor` = ?";
+            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Character` ON `User_Character` = `Char_Id` INNER JOIN `tripy`.`tbl_Sex` ON `Sex_Id` = `User_Sex_Id` where `Character` = ?";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -140,7 +140,7 @@ public class AdminHelper {
                 String idcard = rs.getString("User_IDCard");
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Admin(admin_id, email, password, name, sex, idcard);
+                m = new Admin(admin_id, name, email, password, sex, idcard);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getAdminData());
             }
@@ -175,7 +175,7 @@ public class AdminHelper {
      * 透過編號（email）取得管理員資料(登入)
      *
      */
-    public JSONObject getByEmail(String Email) {
+    public JSONObject getByEmail(String Email,String Password) {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Admin m = null;
         /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
@@ -193,11 +193,13 @@ public class AdminHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `Tripy`.`tbl_User` INNER JOIN `Tripy`.`tbl_Charactor` ON `User_Charactor` = `Char_Id` INNER JOIN `Tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Character` ON `User_Character` = `Char_Id` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? AND `User_Password` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, Email);
+            pres.setString(2, Password);
+
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -216,13 +218,13 @@ public class AdminHelper {
                 String name = rs.getString("User_Name");
                 String email = rs.getString("User_Email");
                 String password = rs.getString("User_Password");
-                String sex = rs.getString("Gender");
+                String sex = rs.getString("Sex");
                 String idcard = rs.getString("User_IDCard");
-                String charactor = rs.getString("Charactor");
+                String character = rs.getString("Character");
                 
-                if(charactor == "管理員") {
+                if(character.equals("管理員")) {
                 	/** 將每一筆會員資料產生一名新Member物件 */
-                    m = new Admin(user_id, email, password, name, sex, idcard);
+                    m = new Admin(user_id, name, email, password, sex, idcard);
                     /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                     jsa.put(m.getAdminData());
                 }
@@ -325,7 +327,7 @@ public class AdminHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `Tripy`.`tbl_User`(`User_Name`,`User_Email`,`User_Password`,`User_Sex_Id`,`User_IDCard`,`User_Charactor`)"+
+            String sql = "INSERT INTO `tripy`.`tbl_User`(`User_Name`,`User_Email`,`User_Password`,`User_Sex_Id`,`User_IDCard`,`User_Character`)"+
             		"VALUES(?, ?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -334,7 +336,7 @@ public class AdminHelper {
             String password = m.getPassword();
             int sex = (m.getSex().equals("男")? 1:2);
             String idcard = m.getIdCard();
-            int charactor = 1;
+            int character = 2;
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -343,7 +345,7 @@ public class AdminHelper {
             pres.setString(3, password);
             pres.setInt(4, sex);
             pres.setString(5, idcard);
-            pres.setInt(6, charactor);
+            pres.setInt(6, character);
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -397,7 +399,7 @@ public class AdminHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `Tripy`.`tbl_User` SET `User_Name` = ? ,`User_Password` = ?  WHERE `User_Id` = ?";
+            String sql = "Update `tripy`.`tbl_User` SET `User_Name` = ? ,`User_Password` = ?  WHERE `User_Id` = ?";
             /** 取得所需之參數 */
             String name = m.getName();
             int id = m.getId();

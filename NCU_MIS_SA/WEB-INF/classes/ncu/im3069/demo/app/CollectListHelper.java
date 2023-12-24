@@ -333,7 +333,7 @@ public class CollectListHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_Collect_List` WHERE `tbl_Collect_List`.`CL_User` = ?";
+            String sql = "SELECT * FROM `tripy`.`tbl_collect_list` WHERE `tbl_collect_list`.`CL_User` = ?";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);

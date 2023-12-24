@@ -48,18 +48,13 @@ public class CollectionItemController extends HttpServlet{
         */
         
         /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+        int id = Integer.parseInt(jso.getString("id"));
         String address = jso.getString("address");
         String detail = jso.getString("detail");
         String name = jso.getString("name");
         String phone = jso.getString("phone");
         String opentime = jso.getString("opentime");
-        String image = jso.getString("images");
-        String[] images_ = image.split(",");
         ArrayList<String> images = new ArrayList<String>();
-        for (int i = 0; i < images_.length; i++) {
-        	images.add(images_[i]);
-        }
         /** 建立一個新的景點物件 */
         Scene m = new Scene(id, name, address, detail, opentime, phone, images);
         

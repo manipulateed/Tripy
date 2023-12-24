@@ -448,7 +448,7 @@ public class ItineraryListHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
             String sql = "SELECT il.* FROM `tripy`.`tbl_Itinerary_List` AS il "
-                    + "INNER JOIN `tripy`.`tbl_IL_User` AS ilu ON L.Id = ilu.IL_User_ILId "
+                    + "INNER JOIN `tripy`.`tbl_IL_User` AS ilu ON il.IL_Id = ilu.IL_User_ILId "
                     + "WHERE ilu.IL_User_UserId = ?";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
@@ -592,7 +592,7 @@ public class ItineraryListHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
             String sql = "SELECT il.* FROM `tripy`.`tbl_Itinerary_List` AS il "
-                    + "INNER JOIN `tripy`.`tbl_IL_User` AS ilu ON L.Id = ilu.IL_User_ILId "
+                    + "INNER JOIN `tripy`.`tbl_IL_User` AS ilu ON il.IL_Id = ilu.IL_User_ILId "
                     + "WHERE ilu.IL_User_UserId = ?";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */

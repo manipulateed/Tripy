@@ -36,45 +36,86 @@ public class AdminController extends HttpServlet{
 	        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 	        JsonReader jsr = new JsonReader(request);
 	        JSONObject jso = jsr.getObject();
+	        //看是登入還是註冊
+	        String action = request.getParameter("action");
 	        
-	        /** 取出經解析到JSONObject之Request參數 */
-	        String email = jso.getString("email");
-	        String password = jso.getString("password");
-	        String name = jso.getString("name");
-	        String sex = jso.getString("sex");
-	        String idcard = jso.getString("idcare");
 	        
-	        /** 建立一個新的會員物件 */
-	        Admin m= new Admin(name, email, password, sex, idcard);
+	        //觸發登入
+	        if(action.equals("login")) {
+	        	String email = jso.getString("email");
+		        String password = jso.getString("password");
+		        
+		        if(email.isEmpty() || password.isEmpty()) {
+		            /** 以字串組出JSON格式之資料 */
+		            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
+		            /** 透過JsonReader物件回傳到前端（以字串方式） */
+		            jsr.response(resp, response);
+		        }
+		        else if (Admh.getByEmail(email,password) == null) {
+		        	/** 以字串組出JSON格式之資料 */
+		            String resp = "{\"status\": \'400\', \"message\": \'查無此帳號或是密碼輸入錯誤！\', \'response\': \'\'}";
+		            /** 透過JsonReader物件回傳到前端（以字串方式） */
+		            jsr.response(resp, response);		            
+		            
+		        }
+		        else {
+		        	/** 新建一個JSONObject用於將回傳之資料進行封裝 */
+		            JSONObject data = Admh.getByEmail(email,password);
+		            JSONObject resp = new JSONObject();
+		            
+		            resp.put("status", "200");
+		            resp.put("message", "成功登入!");
+		            resp.put("response", data);
+		            
+		            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+		            jsr.response(resp, response);
+		        }
+		        
+		        
+	        }
 	        
-	        /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
-	        if(email.isEmpty() || password.isEmpty() || name.isEmpty() || sex.isEmpty() || idcard.isEmpty()) {
-	            /** 以字串組出JSON格式之資料 */
-	            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
-	            /** 透過JsonReader物件回傳到前端（以字串方式） */
-	            jsr.response(resp, response);
-	        }
-	        /** 透過MemberHelper物件的checkDuplicate()檢查該會員電子郵件信箱是否有重複 */
-	        else if (!Admh.checkDuplicate(m)) {
-	            /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
-	            JSONObject data = Admh.create(m);
-	            
-	            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
-	            JSONObject resp = new JSONObject();
-	            resp.put("status", "200");
-	            resp.put("message", "成功! 註冊會員資料...");
-	            resp.put("response", data);
-	            
-	            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-	            jsr.response(resp, response);
-	        }
-	        else {
-	            /** 以字串組出JSON格式之資料 */
-	            String resp = "{\"status\": \'400\', \"message\": \'新增帳號失敗，此E-Mail帳號重複！\', \'response\': \'\'}";
-	            /** 透過JsonReader物件回傳到前端（以字串方式） */
-	            jsr.response(resp, response);
-	        }
-	    }
+	        //觸發新增管理者
+	        else {  
+		        /** 取出經解析到JSONObject之Request參數 */
+		        String email = jso.getString("email");
+		        String password = jso.getString("password");
+		        String name = jso.has("name") ? jso.getString("name") : null;
+		        String sex = jso.has("sex") ? jso.getString("sex") : null;
+		        String idcard = jso.has("idcard") ? jso.getString("idcard") : null;
+		        
+		        /** 建立一個新的會員物件 */
+		        Admin m= new Admin(name, email, password, sex, idcard);
+		        
+		        /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
+		        if(email.isEmpty() || password.isEmpty() || name.isEmpty() || sex.isEmpty() || idcard.isEmpty()) {
+		            /** 以字串組出JSON格式之資料 */
+		            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
+		            /** 透過JsonReader物件回傳到前端（以字串方式） */
+		            jsr.response(resp, response);
+		        }
+		        /** 透過MemberHelper物件的checkDuplicate()檢查該會員電子郵件信箱是否有重複 */
+		        else if (!Admh.checkDuplicate(m)) {
+		            /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
+		            JSONObject data = Admh.create(m);
+		            
+		            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+		            JSONObject resp = new JSONObject();
+		            resp.put("status", "200");
+		            resp.put("message", "成功! 註冊會員資料...");
+		            resp.put("response", data);
+		            
+		            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+		            jsr.response(resp, response);
+		        }
+		        else {
+		            /** 以字串組出JSON格式之資料 */
+		            String resp = "{\"status\": \'400\', \"message\": \'新增帳號失敗，此E-Mail帳號重複！\', \'response\': \'\'}";
+		            /** 透過JsonReader物件回傳到前端（以字串方式） */
+		            jsr.response(resp, response);
+		        }
+		      }
+	        
+	    	}
 
 	    /**
 	     * 處理Http Method請求GET方法（取得資料）
@@ -170,7 +211,7 @@ public class AdminController extends HttpServlet{
 	        String password = jso.getString("password");
 	        String name = jso.getString("name");
 	        String sex = jso.getString("sex");
-	        String idcard = jso.getString("idcare");
+	        String idcard = jso.getString("idcard");
 
 	        /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
 	        Admin m = new Admin(id, name, email, password, sex, idcard);
