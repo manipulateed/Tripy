@@ -175,7 +175,7 @@ public class AdminHelper {
      * 透過編號（email）取得管理員資料(登入)
      *
      */
-    public JSONObject getByEmail(String Email) {
+    public JSONObject getByEmail(String Email,String Password) {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Admin m = null;
         /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
@@ -193,11 +193,13 @@ public class AdminHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Character` ON `User_Character` = `Char_Id` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Character` ON `User_Character` = `Char_Id` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? AND `User_Password` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, Email);
+            pres.setString(2, Password);
+
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -216,7 +218,7 @@ public class AdminHelper {
                 String name = rs.getString("User_Name");
                 String email = rs.getString("User_Email");
                 String password = rs.getString("User_Password");
-                String sex = rs.getString("Gender");
+                String sex = rs.getString("Sex");
                 String idcard = rs.getString("User_IDCard");
                 String character = rs.getString("Character");
                 
