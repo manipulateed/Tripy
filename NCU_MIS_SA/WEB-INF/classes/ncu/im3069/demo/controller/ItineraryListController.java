@@ -210,9 +210,9 @@ public class ItineraryListController extends HttpServlet {
         JSONObject jso = jsr.getObject();
         
         /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+        int id = Integer.parseInt(jso.getString("id"));
         String name = jso.getString("name");
-        int user_id = jso.getInt("user_id");
+        int user_id = Integer.parseInt(jso.getString("user_id"));
         String end_= jso.getString("end");
         String start_= jso.getString("start");
         java.util.Date d = null;

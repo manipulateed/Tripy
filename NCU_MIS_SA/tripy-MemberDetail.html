@@ -31,6 +31,12 @@
 <!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<!-- SweetAlert的JS套件 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="animsition">
 
@@ -95,12 +101,19 @@
 	<section class="bg-0 p-b-40">
 		<div class="container">
 			<!-- Title section -->
-			<div class="flex-col-c-c p-b-50">
-				<h3 class="t1-b-1 cl-3 txt-center m-b-11">
-					會員資料
-				</h3>
-
-				<div class="size-a-2 bg-3"></div>
+			<div class="col-auto p-b-50" name="back">
+				<a href="tripy-SeeAllMember.html" class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20">
+					返回會員列表
+					<i class="fa fa-long-arrow-left m-l-15"></i>
+				</a>
+			</div>
+			<div class="row justify-content-between align-items-center">
+				<div class="col-auto flex-col-c-c p-b-50 "style="position: absolute; left: 50%; transform: translateX(-50%);"> 
+					<h3 class="t1-b-1 cl-3 txt-center m-b-11">
+						會員資料
+					</h3>
+					<div class="size-a-2 bg-3"></div>
+				</div>
 			</div>
 
             <div class="row justify-content-center">
@@ -108,109 +121,77 @@
 					<div>
 						<div class="p-b-32">
 							<ul class="p-t-10">
-                                <div class="bo-b-1 bcl-14 m-b-18"></div>
-								<li class="bo-b-1 bcl-14 m-b-18">
+                                <div class="bo-b-1 bcl-14 m-b-18"></div><!-- 會員資料下面的那一條線 -->
+								<li class="bo-b-1 bcl-14 m-b-18"> <!-- 姓名li -->
 									<div class="flex-wr-sb-c t1-s-2 cl-5 p-tb-3">
 										<span style="font-weight: bold;">
-											姓名
+											<label style="font-weight: bold;">姓名</label>
 										</span>
 
 										<span style="position: absolute; left: 250px;">
-											周科均
+											<span id="member_name" style="font-weight: bold;"></span>
 										</span>
                                        
-                                        <div class="p-l-20 bo-l-1 bcl-12">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-        
-                                            <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                                編輯
-                                            </a>
+                                        <div class="p-l-20 bo-l-1 bcl-12">                                                
+                                            <button onclick="editName()">
+												<i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
+											</button>                                            
                                         </div>
                                         
 									</div>
 								</li>
 
-								<li class="bo-b-1 bcl-14 m-b-18">
+								<li class="bo-b-1 bcl-14 m-b-18"> <!-- 性別li -->
 									<div class="flex-wr-sb-c t1-s-2 cl-5 p-tb-3">
 										<span style="font-weight: bold;">
-											性別
+											<label for="member_sex">性別</label>
 										</span>
 
 										<span style="position: absolute; left: 250px;">
-											男性
+											<span id="member_sex" style="font-weight: bold;"></span>
 										</span>
-                                       
-                                        <div class="p-l-20 bo-l-1 bcl-12">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-        
-                                            <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                                編輯
-                                            </a>
-                                        </div>
-                                        
 									</div>
 								</li>
 
-								<li class="bo-b-1 bcl-14 m-b-18">
+								<li class="bo-b-1 bcl-14 m-b-18"> <!-- 身分證字號li -->
 									<div class="flex-wr-sb-c t1-s-2 cl-5 p-tb-3">
 										<span style="font-weight: bold;">
-											身分證字號
+											<label style="font-weight: bold;">身分證字號</label>
 										</span>
 
 										<span style="position: absolute; left: 250px;">
-											H110110110
-										</span>
-                                       
-                                        <div class="p-l-20 bo-l-1 bcl-12">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-        
-                                            <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                                編輯
-                                            </a>
-                                        </div>
-                                        
+											<span id="member_idcard" style="font-weight: bold;"></span>
+										</span>                                                                       
 									</div>
 								</li>
 
-								<li class="bo-b-1 bcl-14 m-b-18">
+								<li class="bo-b-1 bcl-14 m-b-18"> <!-- 密碼li -->
 									<div class="flex-wr-sb-c t1-s-2 cl-5 p-tb-3">
 										<span style="font-weight: bold;">
-											密碼
+											<label style="font-weight: bold;">密碼</label>
 										</span>
 
 										<span style="position: absolute; left: 250px;">
-											evan123
+											<span id="member_password" style="font-weight: bold;"></span>
 										</span>
                                        
-                                        <div class="p-l-20 bo-l-1 bcl-12">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-        
-                                            <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                                編輯
-                                            </a>
-                                        </div>
-                                        
+										<div class="p-l-20 bo-l-1 bcl-12">
+											<button onclick="editPassword()">
+												<i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
+											</button>
+										</div>                                        
 									</div>
 								</li>
 
-                                <li class="bo-b-1 bcl-14 m-b-18">
+                                <li class="bo-b-1 bcl-14 m-b-18"> <!-- 電子郵件li -->
 									<div class="flex-wr-sb-c t1-s-2 cl-5 p-tb-3">
 										<span style="font-weight: bold;">
-											電子郵件
+											<label style="font-weight: bold;">電子郵件</label>
 										</span>
 
 										<span style="position: absolute; left: 250px;">
-											e20021204@gmail.com
-										</span>
-                                       
-                                        <div class="p-l-20 bo-l-1 bcl-12">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-        
-                                            <a href="#" class="t1-s-2 cl-11 hov-link3">
-                                                編輯
-                                            </a>
-                                        </div>
-                                        
+											<span id="member_email" style="font-weight: bold;"></span>
+										</span>                                       
 									</div>
 								</li>
 							</ul>
@@ -221,8 +202,238 @@
 		</div>
 	</section>
 
+	<script>
+	  //取得網址參數
+	  var url_string = window.location.href;
+      var url = new URL(url_string);
+      var email = url.searchParams.get("email");
+      var password = url.searchParams.get("password");
+      var sql_num = 0;
+
+	  //作為儲存更改資料前的變數(old)
+	  var name_o = "";
+	  var sex_o = "";
+	  var idcard_o = "";
+	  var password_o = "";
+	  var email_o = "";
+
+	  //作為取得的user id
+	  var user_id = "";
+
+	  function getMember(){
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:8090/NCU_MIS_SA/api/member.do",
+			crossDomain: true,
+			data: "email=" + email+"&password="+password,
+			cache: false,
+			dataType: "json",
+			timeout: 5000,
+			success: function(response){
+				if(response.status == 200){
+					//先取得要顯示在頁面上的
+					document.getElementById("member_name").innerHTML = response["response"]["data"][0]['data'][0]["name"];
+					document.getElementById("member_sex").innerHTML = response["response"]["data"][0]['data'][0]["sex"];
+					document.getElementById("member_idcard").innerHTML = response["response"]["data"][0]['data'][0]["idcard"];
+					document.getElementById("member_password").innerHTML = response["response"]["data"][0]['data'][0]["password"];
+					document.getElementById("member_email").innerHTML = response["response"]["data"][0]['data'][0]["email"];
+
+					//把原先取得的放入變數之中
+					name_o = response["response"]["data"][0]['data'][0]["name"];
+					sex_o = response["response"]["data"][0]['data'][0]["sex"];
+					idcard_o = response["response"]["data"][0]['data'][0]["idcard"];
+					password_o = response["response"]["data"][0]['data'][0]["password"];
+					email_o = response["response"]["data"][0]['data'][0]["email"];
+
+					//取得原本的user id
+					user_id = response["response"]["data"][0]['data'][0]["id"];
+				}
+				console.log(response);				
+			},
+			error: function () {
+            alert("無法連線到伺服器！(getMember)");
+          },
+		});
+	  }
+
+	  $(document).ready(function () {
+        // 發出GET的AJAX請求取得原本該會員的資料
+        getMember();
+      });
+      getMember();
+
+	  //編輯名稱
+	  //要先取得網址參數
+	  var editName = function(){
+		editNameWithId(user_id);
+	  };
+
+	  function editNameWithId(id){
+		swal("編輯會員名稱", {
+          content: {
+            element: "input",
+            attributes: {
+              placeholder: `${name_o}`,
+            },
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+            if (value !== "" && value !== null) {
+              var newname = document.getElementById("member_name");
+              updateName(id, value);
+            } else {
+              swal("您未輸入任何文字");
+            }
+          } else {
+            swal.close();
+          }
+        });
+	  }
+
+	  function updateName(id, value){
+		var name = value;
+		var sex = sex_o;
+		var idcard = idcard_o;
+		var password = password_o;
+		var email = email_o;
+
+		//將資料組成JSON格式
+		var data_object = {
+			"id" : id,
+			"name" : name,
+			"sex" : sex,
+			"idcard" : idcard,
+			"password" : password,
+			"email" : email,
+		};
+
+		//將JSON格式轉換成字串
+        var data_string = JSON.stringify(data_object);
+
+		//發出POST的PUT請求
+        $.ajax({
+          type: "PUT",
+          url: "api/member.do",
+          data: data_string,
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          timeout: 5000,
+          success: function (response) {
+            swal("已成功更改會員名稱");
+
+            if (response.status == 200) {
+              //successful
+              getMember(); //253
+            }
+          },
+          error: function () {
+            //unsuccesful
+            alert("無法連線到伺服器!(updateName)");
+          },
+        });
+      }
+
+	  //編輯密碼
+	  var editPassword = function(){
+		editPasswordWithId(user_id);
+	  };
+
+	  function editPasswordWithId(id){
+		swal("編輯會員密碼", {
+          content: {
+            element: "input",
+            attributes: {
+              placeholder: `${password_o}`,
+            },
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+			var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (password_rule.test(value)) {
+			  //密碼輸入正確
+              updatePassword(id, value);
+            } else {
+			  //密碼輸入失敗
+              swal("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+            }
+          } else {
+            swal.close();
+          }
+        });
+	  }
+
+	  function updatePassword(id, value){
+		var name = name_o;
+		var sex = sex_o;
+		var idcard = idcard_o;
+		var password = value;
+		var email = email_o;
+
+		//將資料組成JSON格式
+		var data_object = {
+			"id" : id,
+			"name" : name,
+			"sex" : sex,
+			"idcard" : idcard,
+			"password" : password,
+			"email" : email,
+		};
+
+		//將JSON格式轉換成字串
+        var data_string = JSON.stringify(data_object);
+
+		//發出POST的PUT請求
+        $.ajax({
+          type: "PUT",
+          url: "api/member.do",
+          data: data_string,
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          timeout: 5000,
+          success: function (response) {
+            swal("已成功更改會員密碼");
+
+            if (response.status == 200) {
+              //successful
+              getMember(); //253
+            }
+          },
+          error: function () {
+            //unsuccesful
+            alert("無法連線到伺服器!(updateName)");
+          },
+        });
+      }
+	</script>
+
 <!--===============================================================================================-->	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
