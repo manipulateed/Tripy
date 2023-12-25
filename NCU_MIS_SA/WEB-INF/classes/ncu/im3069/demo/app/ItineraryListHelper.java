@@ -37,7 +37,7 @@ public class ItineraryListHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
             String sql = "SELECT count(*) FROM `tripy`.`tbl_Itinerary_List` INNER JOIN"
-            		+ " `tripy`.`tbl_IL_User` ON `tbl_Itinerary_List`.IL_Id = `tbl_IL_User`.IL_User_ILId"
+            		+ " `tripy`.`tbl_IL_User` ON `tbl_Itinerary_List`.`IL_Id` = `tbl_IL_User`.`IL_User_ILId`"
             		+ "WHERE `IL_Name` = ? AND `IL_User_UserId` = ?";
             
             /** 取得所需之參數 */
@@ -166,7 +166,7 @@ public class ItineraryListHelper {
         response.put("sql", exexcute_sql);
         response.put("time", duration);
         response.put("row", row);
-
+        response.put("ItineraryList_id", Itinerary_id);
 
         return response;
     }

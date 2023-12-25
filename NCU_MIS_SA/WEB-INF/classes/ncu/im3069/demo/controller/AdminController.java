@@ -131,6 +131,7 @@ public class AdminController extends HttpServlet{
 	        JsonReader jsr = new JsonReader(request);
 	        /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
 	        String email = jsr.getParameter("email");
+	        String password = jsr.getParameter("password");
 	        
 	        /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
 	        if (email.isEmpty()) {
@@ -148,7 +149,7 @@ public class AdminController extends HttpServlet{
 	        }
 	        else {
 	            /** 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料，回傳之資料為JSONObject物件 */
-	            JSONObject query = Admh.getByEmail(email);
+	            JSONObject query = Admh.getByEmail(email,password);
 	            
 	            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
 	            JSONObject resp = new JSONObject();

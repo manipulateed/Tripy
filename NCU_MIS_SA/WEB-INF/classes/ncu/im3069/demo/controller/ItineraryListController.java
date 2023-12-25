@@ -47,7 +47,7 @@ public class ItineraryListController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
 
         /** 取出經解析到 JsonReader 之 Request 參數 */
-        int id = Integer.parseInt(jsr.getParameter("id"));
+        String id = jsr.getParameter("id");
         int user_id = Integer.parseInt(jsr.getParameter("user_id"));
 
         /** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
@@ -56,7 +56,7 @@ public class ItineraryListController extends HttpServlet {
         /** 判斷該字串是否存在，若存在代表要取回個別訂單之資料，否則代表要取回全部資料庫內之資料 */
         if (!String.valueOf(id).isEmpty()) {
           /** 透過 ItineraryListHelper 物件的 getByID() 方法自資料庫取回該筆資料，回傳之資料為 JSONObject 物件 */
-          JSONObject query = ilh.getById(String.valueOf(id));
+          JSONObject query = ilh.getById(id);
           resp.put("status", "200");
           resp.put("message", "單筆行程清單資料取得成功");
           resp.put("response", query);
@@ -89,7 +89,7 @@ public class ItineraryListController extends HttpServlet {
         /** 取出經解析到 JSONObject 之 Request 參數 */
         String name = jso.getString("name");
         JSONArray Collaborators = jso.getJSONArray("Collaborators");
-        int user_id = jso.getInt("user_id");
+        int user_id = Integer.parseInt(jso.getString("user_id"));
        
         String end_= jso.getString("end");
         String start_= jso.getString("start");
@@ -105,7 +105,7 @@ public class ItineraryListController extends HttpServlet {
         ArrayList<Member_> m = new  ArrayList<Member_>();
         for (int i = 0; i < Collaborators.length(); i++) {
             // 根據需要從資料庫中取得協作者的資訊，例如使用 UserHelper
-            int collaborator_Id = Collaborators.getInt(i);
+            int collaborator_Id =  Integer.parseInt(Collaborators.getJSONObject(0).getString("collaborator"));
             Member_ collaborator = mh.getById(collaborator_Id);
             m.add(collaborator);
         }
