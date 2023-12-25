@@ -1,101 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>tripy</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/revolution/css/layers.css">
-	<link rel="stylesheet" type="text/css" href="vendor/revolution/css/navigation.css">
-	<link rel="stylesheet" type="text/css" href="vendor/revolution/css/settings.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
-<!-- SweetAlert的JS套件 -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<html lang="en">
+  <head>
+    <title>tripy</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/css-hamburgers/hamburgers.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/animsition/css/animsition.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/layers.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/navigation.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/revolution/css/settings.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/MagnificPopup/magnific-popup.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.min.css" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!--===============================================================================================-->
+  </head>
+  <body class="animsition">
+    <!-- Header -->
+    <header>
+      <!-- Header desktop -->
+      <nav class="container-header-desktop">
+        <div class="wrap-menu-desktop">
+          <div class="limiter-menu-desktop container">
+            <!-- Logo desktop -->
+            <div class="logo">
+              <a href="index.html"
+                ><img src="images/icons/newlogo.png" alt="LOGO"
+              /></a>
+            </div>
 
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+            <!-- Menu desktop -->
+            <div class="menu-desktop">
+              <ul class="main-menu respon-sub-menu">
+                <li>
+                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
+                </li>
 
-<script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-</head>
-<body class="animsition">
+                <li>
+                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
+                    >觀光行程</a
+                  >
+                </li>
 
-	<!-- Header -->
-	<header>
-		<!-- Header desktop -->
-		<nav class="container-header-desktop">
-			<div class="menu-desktop">
-				<ul class="main-menu respon-sub-menu">
-					<li>
-						<a href="tripy-City.html" style="font-weight: bold;">景點</a>
-					</li>
+                <li>
+                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
+                    >我的收藏</a
+                  >
+                </li>
 
-					<li>
-						<a href="tripy-StartPlanning.html" style="font-weight: bold;">觀光行程</a>
-					</li>
+                <li>
+                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
+                  <ul class="sub-menu bold-chinese-text">
+                    <li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
+                    <li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
+                    <li><a href="tripy-AddAdmin.html">新增管理員</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <style>
+        .kit-underline1 {
+          position: relative;
+        }
 
-					<li>
-						<a href="tripy-FavoriteList.html" style="font-weight: bold;">我的收藏</a>
-					</li>
+        .kit-underline1::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #ddd;
+          border-left: 70px solid #05233a;
+        }
 
-					<li>
-						<a href="tripy-login.html" style="font-weight: bold;">登入</a>
-						<ul class="sub-menu bold-chinese-text">
-							<li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
-							<li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
-							<li><a href="tripy-AddAdmin.html">新增管理員</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>		
-		</nav>
-        <style>
-            .kit-underline1 {
-                position: relative;
-            }
-              
-            .kit-underline1::after {
-                content: "";
-                display: block;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: #ddd;
-                border-left: 70px solid #05233a;
-            }
-    
-            .size-a-105 {
-                width: 100%;
-                height: 2px;
-            }
-            .bold-chinese-text {
-                font-family: '微軟正黑體', sans-serif;
-                font-weight: bold; 
-            }
-        </style>
-	</header>
+        .size-a-105 {
+          width: 100%;
+          height: 2px;
+        }
+        .bold-chinese-text {
+          font-family: "微軟正黑體", sans-serif;
+          font-weight: bold;
+        }
+      </style>
+    </header>
 
 	<!-- Partners -->
 	<section class="bg-0 p-b-40">

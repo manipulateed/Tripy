@@ -80,7 +80,7 @@ public class CollectListController extends HttpServlet {
 
         /** 取出經解析到 JSONObject 之 Request 參數 */
         String name = jso.getString("name");
-        int user_id = jso.getInt("user_id");
+        int user_id = Integer.parseInt(jso.getString("user_id"));
 
         /** 建立一個新的collectList物件 */
         Collect_List cl = new Collect_List(name); 

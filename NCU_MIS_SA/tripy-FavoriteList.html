@@ -167,34 +167,10 @@
               </div>
 
               <!-- 新增清單 -->
-              <div id="collectlist">
-                <div class="CollectList" id="CL">
-                  <button onclick="createCList();">
-                    <i class="fs-14 cl-7 fa fa-plus m-r-2"> 新增清單</i>
-                  </button>
-                </div>
-
-                <!-- 台南好玩的 -->
-                <div class="CollectList" id="list_tainan">
-                  <b>
-                    <a
-                      href="tripy-FavoriteList-detail.html"
-                      class="collectionlist"
-                      style="color: black"
-                      id="list_name_1"
-                      >台南好玩的</a
-                    >
-                  </b>
-                  <br /><br />
-                  <button onclick="editCList();">
-                    <i class="fs-14 cl-7 fa fa-pencil m-r-2"> 編輯</i>
-                  </button>
-                  <button onclick="deleteCList()">
-                    <i class="fs-14 cl-7 fa fa-trash m-r-2"> 刪除</i>
-                  </button>
-                </div>
+              <div id="collectlist" class="container">
+               
               </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -207,11 +183,12 @@
         color: black;
         padding: 20px;
         width: 150px;
-        height: 100px;
+        height: 120px;
         text-align: center;
         align-items: center;
         float: left;
         margin-right: 15px;
+        margin-top: 15px;
       }
 
       #CL {
@@ -260,8 +237,16 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
-      var user_id = 4;
+      var url_string = window.location.href;
+      	var url = new URL(url_string);      
+		var user_id = url.searchParams.get("user_id");
+				if(user_id == ""){
+					user_id = null;
+				}
+     
+    //  user_id = 4;
       var user_id_str = user_id.toString();
+      
 
       //新增清單
       function createCList() {
@@ -289,7 +274,7 @@
             // 將資料組成JSON格式
             var data_object = {
               name: value,
-              id: user_id_str,
+              user_id: user_id_str,
             };
 
             // 將JSON格式轉換成字串
@@ -487,8 +472,8 @@
           collectlist_html +=
             "<div class='CollectList'>" +
             "<b>" +
-            "<a href='tripy-FavoriteList-detail.html?id=" +
-            value["id"] +
+            "<a href='tripy-FavoriteList-detail.html?CL_id=" +
+            value["id"] +"&user_id="+user_id+
             "' class='collectionlist' style='color: black'>" +
             value["name"] +
             "</a>" +

@@ -341,7 +341,7 @@
         $.each(data, function (index, value) {
           AllAdmin_html +=
             "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18'>" +
-            "<a href='tripy-AdminDetail.html?email=" +
+            "<a href='tripy-AdminDetail.html?id="+value["id"]+"&email=" + 
             value["email"] +"&password="+value["password"]+
             " 'class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
             "<span name='left' style='margin-left: 20px'>" +

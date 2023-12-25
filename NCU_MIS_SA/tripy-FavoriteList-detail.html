@@ -143,7 +143,6 @@
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto p-b-50" name="back">
                   <a
-                    href="tripy-FavoriteList.html"
                     class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
                   >
                     返回
@@ -230,15 +229,16 @@
       //取得網址參數
       var url_string = window.location.href;
       var url = new URL(url_string);
-      var id = url.searchParams.get("id");
-      var id_str = id.toString();
+      var CL_id = url.searchParams.get("CL_id");
+      var user_id = url.searchParams.get("user_id");
+      var id_str = CL_id.toString();
       var list_name = "";
 
       function getAll() {
-        getCLItem(id);
+        getCLItem(CL_id);
       }
 
-      function getListName(id) {
+      function getListName(CL_id) {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
           type: "GET", //注意！！
@@ -246,7 +246,7 @@
           crossDomain: true,
           cache: false,
           dataType: "json",
-          data: { id: id },
+          data: { id: CL_id },
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
@@ -264,7 +264,7 @@
       }
       getListName(id_str);
 
-      function getCLItem(id) {
+      function getCLItem(CL_id) {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
           type: "GET", //注意！！
@@ -272,7 +272,7 @@
           crossDomain: true,
           cache: false,
           dataType: "json",
-          data: { list_id: id },
+          data: { list_id: CL_id },
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
@@ -298,7 +298,7 @@
         $.each(data, function (index, value) {
           CLScene_html +=
             "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18' id='tainan_2'>" +
-            "<a href='tripy-SceneInfo.html?id=" +
+            "<a href='tripy-SceneInfo.html?user_id="+user_id+"scene_id=" +
             value.scene.id +
             "' class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
             "<span name='left' style='margin-left: 20px'>" +
