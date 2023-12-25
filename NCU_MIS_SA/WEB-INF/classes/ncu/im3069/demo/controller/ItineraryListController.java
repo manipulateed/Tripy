@@ -105,7 +105,7 @@ public class ItineraryListController extends HttpServlet {
         ArrayList<Member_> m = new  ArrayList<Member_>();
         for (int i = 0; i < Collaborators.length(); i++) {
             // 根據需要從資料庫中取得協作者的資訊，例如使用 UserHelper
-            int collaborator_Id = Collaborators.getInt(i);
+            int collaborator_Id = Integer.parseInt(Collaborators.getString(i));
             Member_ collaborator = mh.getById(collaborator_Id);
             m.add(collaborator);
         }
@@ -210,9 +210,9 @@ public class ItineraryListController extends HttpServlet {
         JSONObject jso = jsr.getObject();
         
         /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+        int id = Integer.parseInt(jso.getString("id"));
         String name = jso.getString("name");
-        int user_id = jso.getInt("user_id");
+        int user_id = Integer.parseInt(jso.getString("user_id"));
         String end_= jso.getString("end");
         String start_= jso.getString("start");
         java.util.Date d = null;
