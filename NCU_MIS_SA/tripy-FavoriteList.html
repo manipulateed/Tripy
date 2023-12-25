@@ -260,9 +260,85 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
-      var sql_num = 0;
-      //刪除收藏清單
+      var user_id = 4;
+      var user_id_str = user_id.toString();
 
+      //新增清單
+      function createCList() {
+        AddCollecList(user_id);
+      }
+
+      function AddCollecList(user_id) {
+        swal("新增清單名稱", {
+          content: {
+            element: "input",
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+            // 將資料組成JSON格式
+            var data_object = {
+              name: value,
+              id: user_id_str,
+            };
+
+            // 將JSON格式轉換成字串
+            var data_string = JSON.stringify(data_object);
+            // 發出POST的AJAX請求
+            $.ajax({
+              type: "POST",
+              url: "http://localhost:8090/NCU_MIS_SA/api/Collect_List.do",
+              data: data_string,
+              crossDomain: true,
+              cache: false,
+              dataType: "json",
+              timeout: 5000,
+              success: function (response) {
+                if (response.status == 200) {
+                  swal("已成功新增收藏清單", {
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "確定",
+                        value: true,
+                        visible: true,
+                        className: "btn-primary",
+                        closeModal: true,
+                      },
+                    },
+                  }).then((value) => {
+                    if (value) {
+                      // 導向到新的頁面
+                      getAllCL(user_id);
+                    }
+                  });
+                  updateSQLTable(response.response);
+                } else {
+                  swal(response.message);
+                }
+                console.log(response);
+              },
+              error: function () {
+                swal("新增失敗！");
+              },
+            });
+          } else {
+            // 使用者按下取消按鈕
+            swal.close();
+          }
+        });
+      }
+      //刪除清單
       function deleteCList(id) {
         swal({
           title: `確認要刪除該收藏清單嗎`,
@@ -297,7 +373,7 @@
                 if (response.status == 200) {
                   console.log(response.response.data);
                   swal(`已成功刪除`);
-                  getAllCL();
+                  getAllCL(id);
                 }
                 console.log(response);
               },
@@ -311,10 +387,74 @@
           }
         });
       }
+      //編輯清單
+      function editCList(id) {
+        swal("編輯收藏清單名稱", {
+          content: {
+            element: "input",
+          },
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value !== null) {
+            if (value !== "" && value !== null) {
+              updateName(id, value);
+            } else {
+              swal("您未輸入任何文字");
+            }
+          } else {
+            swal.close();
+          }
+        });
+      }
 
-		var test_id = 1; 
-      //取得所有收藏清單
-      function getAllCL() {
+      function updateName(id, value) {
+        //把取到的名字存成變數
+        var name = value;
+
+        //將資料組成JSON格式
+        var data_object = {
+          id: id,
+          name: name,
+          user_id: user_id,
+        };
+
+        //將JSON格式轉換成字串
+        var data_string = JSON.stringify(data_object);
+
+        //發出POST的PUT請求
+        $.ajax({
+          type: "PUT",
+          url: "http://localhost:8090/NCU_MIS_SA/api/Collect_List.do",
+          data: data_string,
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          timeout: 5000,
+          success: function (response) {
+            swal("已成功更改清單名稱");
+
+            if (response.status == 200) {
+              //successful
+              getAllCL(id); //253
+            }
+          },
+          error: function () {
+            //unsuccesful
+            swal("編輯失敗！此清單名稱已存在");
+          },
+        });
+      }
+      function getAllCL(id) {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
           type: "GET", //注意！！
@@ -322,21 +462,22 @@
           crossDomain: true,
           cache: false,
           dataType: "json",
+          data: { user_id: user_id },
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
+              console.log(response.response.data);
               updateTable(response.response.data);
-              updateSQLTable(response.response);
             }
             console.log(response);
           },
           error: function () {
-            swal("無法連線到伺服器!！");
+            swal("無法連線到伺服器！");
           },
         });
       }
-	
-      getAllCL(test_id);
+
+      getAllCL(user_id);
 
       // 更新收藏清單表格
       function updateTable(data) {
@@ -344,14 +485,20 @@
         var collectlist_html = "";
         $.each(data, function (index, value) {
           collectlist_html +=
-            "<div>" +
+            "<div class='CollectList'>" +
             "<b>" +
-            "<a href='tripy-FavoriteList-detail.html' class='collectionlist' style='color: black'>" +
+            "<a href='tripy-FavoriteList-detail.html?id=" +
+            value["id"] +
+            "' class='collectionlist' style='color: black'>" +
             value["name"] +
             "</a>" +
             "</b>" +
             "<br />" +
             "<br />" +
+            "<a href='javascript: editCList(" +
+            value["id"] +
+            ");'><i class='fs-14 cl-7 fa fa-pencil m-r-2'> 編輯</i></a>" +
+            " | " +
             "<a href='javascript: deleteCList(" +
             value["id"] +
             ");'><i class='fs-14 cl-7 fa fa-trash m-r-2'> 刪除</i></a>" +
@@ -360,32 +507,6 @@
 
         $("#collectlist").append(collectlist_html);
       }
-
-      function updateSQLTable(data) {
-        $("#sql_log > tbody").empty();
-        var time = (data.time / 1000000).toFixed(2);
-        var table_html = "";
-
-        sql_num = 0;
-        sql_num += 1;
-
-        table_html += "<tr>";
-        table_html += "<td>" + sql_num + "</td>";
-        table_html += "<td>" + data.sql + "</td>";
-        table_html += '<td style="text-align: right">' + "0" + "</td>";
-        table_html += '<td style="text-align: right">' + data.row + "</td>";
-        table_html += '<td style="text-align: right">' + data.row + "</td>";
-        table_html += '<td style="text-align: right">' + time + "</td>";
-        table_html += "</tr>";
-        $("#sql_log > tbody").append(table_html);
-        $("#sql_summary").html(
-          "(default) " + data.row + " queries took " + time + " ms"
-        );
-      }
-
-      $(document).ready(function () {
-        getAllCL();
-      });
     </script>
   </body>
 </html>

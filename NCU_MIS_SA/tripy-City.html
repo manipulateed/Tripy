@@ -194,14 +194,12 @@
 					if (response.status == 200) {
 					  var city_panel = '';
 					  
-					  $.each(response.response.data, function (){
+					  $.each(response.response.data, function (u, v){
 						  //console.log(response.response.data);
-						  city_panel += addAllCity(this);
+						  city_panel += addAllCity(v);
 					  })
 					  
-					  $("#City_panel").append(city_panel);
-
-					  
+					  $("#City_panel").append(city_panel);				  
 					}
 				  },
 				  error: function () {
@@ -214,21 +212,20 @@
 			function addAllCity(data) {
 				console.log(data);
     			let inner_html = '';
-    			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 ">';
+    			inner_html += '<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">';
    				inner_html += '<div class="flex-col-s-c">';
 				inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
- 				//inner_html += '<img src="statics/img/city/' + data.image + '" height= "280px" >';
+ 				inner_html += '<img src="images/' + data.city_info.name + '.jpg" height= "280px" >';
 				inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
-				inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
+				inner_html += '<a href="tripy-Scene.html?id='+data.city_info.id+'" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
 				inner_html += '找景點';
 				inner_html += '</a>';
 				inner_html += '</div></div>';
-				inner_html += '<a href="tripy-Scene.html?scene_id=" '+data.id+' class="t1-m-1 cl-3 hov-link2 trans-02">';
+				inner_html += '<a href="tripy-Scene.html?id='+data.city_info.id+'" class="t1-m-1 cl-3 hov-link2 trans-02">';
 				inner_html += data.city_info.name;
 				inner_html += '</a>';
 				inner_html += '</div></div>';
-				
-    	
+					
 				return inner_html;
  		  	}
  		  	
@@ -284,11 +281,11 @@
        					inner_html += '<div class="flex-col-s-c">';
 						inner_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
 						inner_html += '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
-						inner_html += '<a href="tripy-Scene.html" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
+						inner_html += '<a href="tripy-Scene.html?id=' + data.data[0].product_info[i].id + '" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
 						inner_html += '找景點';
 						inner_html += '</a>';
 						inner_html += '</div></div>';
-			            inner_html += '<a href="tripy-Scene.html?scene_id=' + data.data[0].product_info[i].id + '" class="t1-m-1 cl-3 hov-link2 trans-02">';
+			            inner_html += '<a href="tripy-Scene.html?id=' + data.data[0].product_info[i].id + '" class="t1-m-1 cl-3 hov-link2 trans-02">';
 			            inner_html += data.data[0].product_info[i].name;
 			            inner_html += '</a>';
 			            inner_html += '</div></div>';

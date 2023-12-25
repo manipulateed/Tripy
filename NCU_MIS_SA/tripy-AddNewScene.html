@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
   	<script src="statics/js/jquery-confirm.js"></script>
   	<script src="statics/js/big.min.js"></script>
@@ -166,9 +167,9 @@
 	                                    </span>
 	                                </a>
 	                            </li>
-	                            <li  class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:30px;">
-			                      <div class="rs1-select2 bor9 bg0" style=" margin-left: -20px;">
-			                          <select class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-tb-10 " id="city" name="city">
+	                            <li  class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:30px;">									
+			                      <div class="rs1-select2 bor9 bg0" style=" margin-left: -20px;">								  
+			                          <select class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-tb-10 " id="city" name="city">										  
 										  <option value="0">選擇城市...</option>
 			                              <option value="1">雙北</option>
 			                              <option value="2">桃園</option>
@@ -192,7 +193,8 @@
                 </div>
                 
                 <script>
-
+					var url_string = window.location.href;
+                	var url = new URL(url_string);
 					async function addName(){
 						const inputValue = $("#name").text();
 						const { value: name } = await Swal.fire({
@@ -310,7 +312,15 @@
 								  text: "景點各項內容不能為空!",
 								  confirmButtonText: "OKay",	
 								});
-		                    }          
+		                    }  
+		                    else if(detail.length > 200){
+								Swal.fire({
+								  icon: "error",
+								  title: "Oops...",
+								  text: "景點簡介過長!",
+								  confirmButtonText: "OKay",	
+								});
+							}        
 		                    else {
 													
 		                        // 將資料組成JSON格式
@@ -338,17 +348,30 @@
 		                                success: function (response) {
 		                                    if(response.status == 200){
 												swal.fire({
-									                    icon: "success",
-									                    title: "Success!",
-									  					text: "新增成功",
-									  					confirmButtonText: "OKay",
-									                  }).then((result) => {
-									                    if (result) {
-									                      // 導向到新的頁面
-									                     window.location.href = url;
-									                  } 
-									              });
-		                                    }    
+								                    icon: "success",
+								                    title: "成功!",
+								  					text: response.message,
+								  					confirmButtonText: "OKay",
+								                }).then((result) => {
+								                    if (result) {
+								                      // 導向到新的頁面
+								                     window.location.href = url;
+								                  	} 
+									            });
+		                                    }
+		                                    else if(response.status == 400){
+												swal.fire({
+								                    icon: "warning",
+								                    title: "失敗",
+								  					text: response.message,
+								  					confirmButtonText: "Oh No~",
+								                }).then((result) => {
+								                    if (result) {
+								                      // 導向到新的頁面
+								                     window.location.href = url;
+								                  	} 
+								                });
+											 }    
 		                                },
 		                                error: function () {
 		                                    alert("無法連線到伺服器！");

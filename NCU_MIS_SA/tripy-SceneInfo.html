@@ -405,6 +405,7 @@
 						  title: "Are You Sure?",
 						  text: "確定要新增至此收藏單嗎?",
 						  confirmButtonText: "Yes",
+						  showCancelButton: true,
 						  cancelButtonText: "No",				                  
 						}).then((result) => {
 					   		if (result.isConfirmed) {
@@ -438,7 +439,7 @@
 						      if(response.status == 200){
 						    	  swal.fire({
 				                    icon: "success",
-				                    title: "Success!",
+				                    title: "成功!",
 				  					text: response.message,
 				  					confirmButtonText: "Great",
 				                  }).then((result) => {
@@ -451,7 +452,7 @@
 						      else if(response.status == 400){
 								  swal.fire({
 				                    icon: "warning",
-				                    title: "Failure",
+				                    title: "失敗",
 				  					text: response.message,
 				  					confirmButtonText: "Oh No~",
 				                  }).then((result) => {

@@ -143,7 +143,7 @@
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto p-b-50" name="back">
                   <a
-                    href="index.html"
+                    href="tripy-FavoriteList.html"
                     class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
                   >
                     返回
@@ -180,45 +180,8 @@
                   </h4>
                 </form>
                 <div class="size-a-105 bg-11"></div>
-                <div id="CLScene">
-                  <ul class="p-t-22">
-                    <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18">
-                      <a
-                        href="tripy-SceneInfo.html"
-                        class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
-                      >
-                        <span name="left" style="margin-left: 20px"> </span>
-                        <span style="position: absolute; left: 200px">
-                          安平古堡
-                        </span>
-
-                        <span style="position: absolute; left: 530px">
-                          台南市安平區國勝路82號
-                        </span>
-                      </a>
-                    </li>
-                    <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18" id="tainan_2">
-                      <a
-                        href="tripy-SceneInfo.html"
-                        class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3"
-                      >
-                        <span name="left" style="margin-left: 20px"> </span>
-                        <span
-                          style="position: absolute; left: 200px"
-                          id="tainan_2_name"
-                        >
-                          赤崁樓
-                        </span>
-
-                        <span style="position: absolute; left: 530px">
-                          台南市中西區民族路二段212號
-                        </span>
-                      </a>
-                      <button onclick="handleDeleteClick()">刪除</button>
-                    </li>
-                  </ul>
-                </div>
               </div>
+              <div id="CLScene"></div>
             </div>
           </div>
         </div>
@@ -268,6 +231,38 @@
       var url_string = window.location.href;
       var url = new URL(url_string);
       var id = url.searchParams.get("id");
+      var id_str = id.toString();
+      var list_name = "";
+
+      function getAll() {
+        getCLItem(id);
+      }
+
+      function getListName(id) {
+        // 發出POST的GET請求取得所有會員列表
+        $.ajax({
+          type: "GET", //注意！！
+          url: "http://localhost:8090/NCU_MIS_SA/api/Collect_List.do",
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          data: { id: id },
+          timeout: 10000,
+          success: function (response) {
+            if (response.status == 200) {
+              console.log(response.response.data);
+              list_name += response.response.data.collect_List_info.name;
+              console.log(list_name);
+              document.getElementById("title_name").innerHTML = list_name;
+            }
+            console.log(response);
+          },
+          error: function () {
+            swal("無法連線到伺服器！");
+          },
+        });
+      }
+      getListName(id_str);
 
       function getCLItem(id) {
         // 發出POST的GET請求取得所有會員列表
@@ -282,7 +277,7 @@
           success: function (response) {
             if (response.status == 200) {
               console.log(response.response.data);
-              updateTable(response.response.data.scene_info);
+              updateTable(response.response.data);
               updateSQLTable(response);
             }
             console.log(response);
@@ -295,7 +290,7 @@
         });
       }
 
-      getCLItem(id);
+      getAll();
 
       function updateTable(data) {
         $("#CLScene").empty();
@@ -304,17 +299,20 @@
           CLScene_html +=
             "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18' id='tainan_2'>" +
             "<a href='tripy-SceneInfo.html?id=" +
-            value["id"] +
+            value.scene.id +
             "' class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
-            "<span name='left' style='margin-left: 20px'> </span>" +
+            "<span name='left' style='margin-left: 20px'>" +
+            " </span>" +
             "<span style='position: absolute; left: 200px'>" +
-            value.scene.data +
+            value.scene.name +
             "</span>" +
             "<span style='position: absolute; left: 530px'>" +
             value.scene.address +
             "</span>" +
             "</a>" +
-            "<button onclick='handleDeleteClick()'>刪除</button>" +
+            "<a href='javascript: deleteCLScene(" +
+            value["id"] +
+            ");'><i class='fs-14 cl-7 fa fa-trash m-r-2'> 刪除</i></a>" +
             "</li>";
         });
 
@@ -345,6 +343,57 @@
       $(document).ready(function () {
         getCLItem(id);
       });
+
+      //刪除收藏景點
+      function deleteCLScene(id) {
+        console.log(id);
+        swal({
+          title: `確認要刪除該景點嗎`,
+          icon: "warning",
+          dangerMode: true,
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            console.log("You pressed OK!");
+            var request = { id: id };
+            var data_string = JSON.stringify(request); //把id變string
+            $.ajax({
+              type: "DELETE",
+              url: "http://localhost:8090/NCU_MIS_SA/api/collectionItem.do",
+              crossDomain: true,
+              data: data_string,
+              cache: false,
+              dataType: "json",
+              timeout: 5000,
+              success: function (response) {
+                //跟後端連線成功
+                if (response.status == 200) {
+                  console.log(response.response.data);
+                  swal(`已成功刪除`);
+                  getAll();
+                }
+                console.log(response);
+              },
+              error: function () {
+                swal(`無法連到伺服器`);
+              },
+            });
+          } else {
+            console.log("You pressed cancle!");
+            swal.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>
