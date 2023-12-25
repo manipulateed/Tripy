@@ -218,7 +218,7 @@ public class AdminHelper {
                 String name = rs.getString("User_Name");
                 String email = rs.getString("User_Email");
                 String password = rs.getString("User_Password");
-                String sex = rs.getString("Sex");
+                String sex = rs.getString("Gender");
                 String idcard = rs.getString("User_IDCard");
                 String character = rs.getString("Character");
                 
