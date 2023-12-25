@@ -4,6 +4,10 @@
 	<title>tripy</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+  	<script src="statics/js/jquery-confirm.js"></script>
+  	<script src="statics/js/big.min.js"></script>
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 <!--===============================================================================================-->
@@ -114,69 +118,245 @@
     
                     <div class="col-sm-10 col-md-6 p-b-30">
                         <div class="p-l-15 flex-col-s-s p-l-0-sr767">
-                            <a href="#" class="t1-m-5 cl-3 text-uppercase m-b-18 js-name1 hov-link2 trans-02 bold-chinese-text">
-                                新增景點名稱
-                            </a>
-                            
-                            <li class="bo-b-1 bcl-14 m-b-18">
-                                <a href="#" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
-                                    <span class="size-w-0">
-                                        <span class="fs-14 cl-5">
-                                            <i class="fa fa-map-marker"></i>
-                                        </span>
-                                        <span>
-                                            新增地址
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            
-    
-                            <li class="bo-b-1 bcl-14 m-b-18">
-                                <a href="#" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
-                                    <span class="size-w-0">
-                                        <span class="fs-14 cl-5">
-                                            <i class="fa fa-clock-o"></i>
-                                        </span>
-                                        <span>
-                                            新增開放時間
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li class="bo-b-1 bcl-14 m-b-18">
-                                <a href="#" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
-                                    <span class="size-w-0">
-                                        <span class="fs-14 cl-5">
-                                            <i class="fa fa-phone"></i>
-                                        </span>
-                                        <span>
-                                            新增電話號碼
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li class="bo-b-1 bcl-14 m-b-18">
-                                <a href="#" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
-                                    <span class="size-w-0">
-                                        <span class="fs-14 cl-5">
-                                            <i class="fa fa-columns"></i>
-                                        </span>
-                                        <span>
-                                            新增簡介
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-    
-                            <button class="m-t-40 size-a-26 flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 js-addcart1 bold-chinese-text">
-                                確認新增
-                            </button>
+							<div style="align-content: center; justify-content: center; width: 100%; display: flex;margin-bottom:15px">					
+	                            <a id="name" href="javascript:void(0);" onclick="addName()" class="t1-m-5 cl-3 text-uppercase m-b-18 js-name1 hov-link2 trans-02 bold-chinese-text">新增景點名稱</a>
+							</div>
+                           <ul style="width: 100%;"> 
+	                            <li class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:30px">
+	                                <a href="javascript:void(0);" onclick="addAddress()" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
+	                                    <span class="size-w-0">
+	                                        <span class="fs-14 cl-5">
+	                                            <i class="fa fa-map-marker"></i>
+	                                        </span>
+	                                        <span id="address">新增地址</span>
+	                                    </span>
+	                                </a>
+	                            </li>
+	                            
+	    
+	                            <li class="bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
+	                                <a href="javascript:void(0);" onclick="addOpentime()" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
+	                                    <span class="size-w-0">
+	                                        <span class="fs-14 cl-5">
+	                                            <i class="fa fa-clock-o"></i>
+	                                        </span>
+	                                        <span id="opentime">新增開放時間</span>
+	                                    </span>
+	                                </a>
+	                            </li>
+	
+	                            <li class="bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
+	                                <a href="javascript:void(0);" onclick="addPhone()" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
+	                                    <span class="size-w-0">
+	                                        <span class="fs-14 cl-5">
+	                                            <i class="fa fa-phone"></i>
+	                                        </span>
+	                                        <span id="phone">新增電話號碼</span>
+	                                    </span>
+	                                </a>
+	                            </li>
+	
+	                            <li class="bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
+	                                <a href="javascript:void(0);" onclick="addDetail()" class="flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
+	                                    <span class="size-w-0">
+	                                        <span class="fs-14 cl-5">
+	                                            <i class="fa fa-columns"></i>
+	                                        </span>
+	                                        <span id="detail">新增簡介</span>
+	                                    </span>
+	                                </a>
+	                            </li>
+	                            <li  class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:30px;">
+			                      <div class="rs1-select2 bor9 bg0" style=" margin-left: -20px;">
+			                          <select class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-tb-10 " id="city" name="city">
+										  <option value="0">選擇城市...</option>
+			                              <option value="1">雙北</option>
+			                              <option value="2">桃園</option>
+			                              <option value="3">台中</option>
+			                              <option value="4">南投</option>
+			                              <option value="5">高雄</option>
+			                              <option value="6">花蓮</option>
+			                              <option value="7">台東</option>
+			                          </select>
+			                          <div class="dropDownSelect2"></div>
+			                      </div>
+			                  </li>
+    						</ul>
+    						<div style="align-content: center; justify-content: center; width: 100%; display: flex;">
+	                            <button id="submit" class="m-t-40 size-a-26 flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 js-addcart1 bold-chinese-text">
+	                                確認新增
+	                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <script>
+
+					async function addName(){
+						const inputValue = $("#name").text();
+						const { value: name } = await Swal.fire({
+						  title: "請輸入景點名稱...",
+						  input: "text",
+						  inputLabel: "景點名稱",
+						  inputPlaceholder:  $("#name").text(),
+						  showCancelButton: true,
+						  inputValidator: (value) => {
+						    if (!value) {
+						      return "You need to give it a name!";
+						    }
+						  }
+						});
+						if (name) {
+						  $("#name").html(name); 
+						}						
+					}
+					async function addAddress(){
+						const inputValue = $("#address").text();
+						const { value: address } = await Swal.fire({
+						  title: "請輸入景點地址...",
+						  input: "text",
+						  inputLabel: "景點地址",
+						  inputPlaceholder:  $("#address").text(),
+						  showCancelButton: true,
+						  inputValidator: (value) => {
+						    if (!value) {
+						      return "You need to give it a address!";
+						    }
+						  }
+						});
+						if (address) {
+						  $("#address").html(address); 
+						}
+					}
+					async function addPhone(){
+						const inputValue = $("#phone").text();
+						const { value: phone } = await Swal.fire({
+						  title: "請輸入景點電話...",
+						  input: "text",
+						  inputLabel: "景點電話",
+						  inputPlaceholder:  $("#phone").text(),
+						  showCancelButton: true,
+						  inputValidator: (value) => {
+						    if (!value) {
+						      return "You need to give it a phone number!";
+						    }
+						  }
+						});
+						if (phone) {
+						  $("#phone").html(phone); 
+						}
+					}
+					async function addOpentime(){
+						const inputValue = $("#opentime").text();
+						const { value: opentime } = await Swal.fire({
+						  title: "請輸入景點營業時間...",
+						  input: "text",
+						  inputLabel: "景點營業時間",
+						  inputPlaceholder:  $("#opentime").text(),
+						  showCancelButton: true,
+						  inputValidator: (value) => {
+						    if (!value) {
+						      return "You need to give it opentime!";
+						    }
+						  }
+						});
+						if (opentime) {
+						  $("#opentime").html(opentime); 
+						}
+					}
+					async function addDetail(){
+						var inputValue = $("#detail").text();
+						const { value: detail } = await Swal.fire({
+						  title: "請描述景點...",
+						  input: "textarea",
+						  inputLabel: "景點簡介",
+						  inputPlaceholder: $("#detail").text(),
+						  showCancelButton: true,
+						  inputValidator: (value) => {
+						    if (!value) {
+						      return "You need to give it some detail!";
+						    }
+						  }
+						});
+						if (detail) {
+					  		$("#detail").html(detail); 					
+						}															
+					}
+					$('#submit').click(function() {
+						Swal.fire({
+						  icon: "question",
+						  title: "Are You Sure?",
+						  text: "確定要新增此景點嗎?",
+						  confirmButtonText: "Yes",
+						  cancelButtonText: "No",				                  
+						}).then((result) => {
+					   		if (result.isConfirmed) {
+					         	submit();
+					    	}
+						});		                
+	                });
+	                function submit() {
+		                    var name = $('#name').text();
+		                    var address = $('#address').text();
+		                    var phone = $('#phone').text();
+		                    var opentime = $('#opentime').text();
+		                    var detail = $('#detail').text();
+							var city_id = $("#city option:selected").attr('value')
+		                    if (name == "新增景點名稱" || address== "新增地址" || phone == "新增電話號碼"|| opentime == "新增開放時間" || detail == "新增簡介" || city_id == "0") {
+								Swal.fire({
+								  icon: "error",
+								  title: "Oops...",
+								  text: "景點各項內容不能為空!",
+								  confirmButtonText: "OKay",	
+								});
+		                    }          
+		                    else {
+													
+		                        // 將資料組成JSON格式
+		                        var data_object = {
+								    "city": $("#city option:selected").text(),
+								    "detail": $("#detail").text(),
+								    "address": $("#address").text(),
+								    "phone": $("#phone").text(),
+								    "opentime": $("#opentime").text(),
+								    "name": $("#name").text()
+								};
+		
+		                        // 將JSON格式轉換成字串
+		                        var data_string = JSON.stringify(data_object);
+		
+		                        // 發出POST的AJAX請求
+		                        $.ajax({
+		                                type: "POST",
+		                                url: "api/scene.do",
+		                                data: data_string,
+		                                crossDomain: true,
+		                                cache: false,
+		                                dataType: 'json',
+		                                timeout: 5000,
+		                                success: function (response) {
+		                                    if(response.status == 200){
+												swal.fire({
+									                    icon: "success",
+									                    title: "Success!",
+									  					text: "新增成功",
+									  					confirmButtonText: "OKay",
+									                  }).then((result) => {
+									                    if (result) {
+									                      // 導向到新的頁面
+									                     window.location.href = url;
+									                  } 
+									              });
+		                                    }    
+		                                },
+		                                error: function () {
+		                                    alert("無法連線到伺服器！");
+		                                }		                     
+	                    		});
+		                    }
+		                }
+				</script>
             </div>
         </div>
 	
