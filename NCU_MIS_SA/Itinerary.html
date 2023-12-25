@@ -253,7 +253,7 @@
 
                             <div class="col-sm-6">
                                 <div class="rs1-select2 bor9 bg0 ">
-                                    <select id="SelectCL" class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-b-10 " name="sex">
+                                    <select id="SelectCL" onchange="handleSelectChange()" class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-b-10 " name="sex">
                                         <option>收藏清單</option>
                                         <option>台南好好玩</option>
                                         <option>爛桃園</option>
@@ -293,7 +293,9 @@
 	
 	<!--JS-->
 	<script>
-		
+		var url_string = window.location.href;
+  		var url = new URL(url_string);
+        var user_id = url.searchParams.get("user_id");
 		 //getAllCL("1");
 
 		//透過user_id取得CL
@@ -306,7 +308,7 @@
           cache: false,
           dataType: "json",
           //data: { user_id: user_id },
-          data: { user_id : user_id },          
+          data: "user_id=" + user_id,        
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
@@ -326,10 +328,10 @@
       // 更新收藏清單表格
       function updateTable(data) {
         $("#SelectCL").empty();
-        var collectlist_html = "";
+        var collectlist_html = "<option>收藏清單</option>";
         $.each(data, function (index, value) {
 			
-			collectlist_html += "<option>" + value["name"] + "</option>"
+			collectlist_html += '<option value="' +value["id"]+ '">'+ value["name"] + "</option>"
 	
         });
 
@@ -340,24 +342,12 @@
 		
 		
 		
-		
-	   //收藏清單被選擇後顯示該收藏清單之收藏
-		   	   		   
-        // 取得 <select> 元素
-        var SelectCL = document.getElementById("SelectCL");
+      function handleSelectChange() {
+        var selectedId = document.getElementById("SelectCL").value;
+        console.log("Selected ID: " + selectedId);
+        getCLItem(selectedId);
+      }
 
-        // 監聽 <select> 元素的變化事件
-        SelectCL.addEventListener("change", function() {
-            // 獲取選中選項的值(CL_id)
-            var id = SelectCL.value;
-
-            // 在這裡執行 getAll()，並傳遞選中選項的值
-            getCLItem(id);
-        });
-      
-   	  
-      //getCLItem("3");
-      
 	  function getCLItem(id) {
         // 發出POST的GET請求取得所有收藏清單內容(id=CL_id)
         console.log("enter");
@@ -372,19 +362,19 @@
           success: function (response) {
             if (response.status == 200) {
               console.log(response.response.data);
-              $.each(response, function (){
+              var collection_panel = "";
+              $.each(response.response.data, function (u, v){
 						  
-						  Collection_panel += addCollectionByCLId(this);
-						  //console.log (response);
-						  
-					  })
-					  
-					  $("#Collection_panel").empty();
-					  $("#Collection_panel").append(Collection_panel);
-					  
-					  
-					}
-				  },
+                    Collection_panel += addCollectionByCLId(v);
+                    console.log (response);
+                    
+                })
+            
+                $("#Collection_panel").empty();
+                $("#Collection_panel").append(Collection_panel);
+                    
+            }
+            },
           error: function () {
             alert("無法連線到伺服器！");
           },
@@ -395,30 +385,26 @@
 			let inner_html = '';
 				
 			console.log(data);
-           		
        		
-       		if (data.data && data.data.length > 0 && data.data[0].scene && data.data[0].scene.length > 0) {
-        		for (let i = 0; i < data.data[0].scene.length; i++) {
+       		//if (data.data && data.data.length > 0 && data.data[0].scene && data.data[0].scene.length > 0) {
 					inner_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
        				inner_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">';
-					//inner_html += '<img src="images/南機場夜市.jpg" alt="IMG">';
+					inner_html += '<img src="images/'+data.scene.name+'.jpg" alt="IMG">';
 					inner_html += '</div>';
 					inner_html += '<div class="cmt-text">';	
 					inner_html += '<div class="bold-chinese-text p-t-25">+';
-					inner_html += '<a href="tripy-Scene.html?scene_id=' + data.data[0].product_info[i].id + '" class="t1-m-1 cl-3 hov-link2 trans-02">';
-			        inner_html += data.data[0].scene[i].name; //collection(scene)名稱
+					inner_html += '<a href="tripy-Scene.html?scene_id=' + data.scene.id + '" class="t1-m-1 cl-3 hov-link2 trans-02">';
+			        inner_html += data.scene.name; //collection(scene)名稱
 					inner_html += '</a>';
 					inner_html += '</div></div>';
 					inner_html += '<div class="bold-chinese-text p-t-5">';
 					inner_html += '<p class="t1-s-1 cl-5">';
-					inner_html += data.data[0].scene[i].address; //adress(還沒確認名稱)
+					inner_html += data.scene.address; //adress(還沒確認名稱)
 			        inner_html += '</p></div></div>';
-			        
-
-			        }
-		   		} else {
-		        	console.error('Invalid data structure or missing product_info.');
-		   		}
+	
+		   		// } else {
+		        // 	console.error('Invalid data structure or missing product_info.');
+		   		// }
 		
 
 				return inner_html;
