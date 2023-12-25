@@ -7,6 +7,7 @@
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
   	<script src="statics/js/jquery-confirm.js"></script>
   	<script src="statics/js/big.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
@@ -44,12 +45,13 @@
 					<div class="logo">
 						<a href="index.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
 					</div>
-					<!-- search box
+					<!-- search box -->	
 					<div class="search-box">
+							<!-- Search -->
 							<form class="flex-wr-c-c w-100">
 								<input class="size-a-21 bg-none t1-s-5 cl-6 plh-6 bo-tbl-1 bcl-11 p-rl-20" type="text" name="search" placeholder="搜尋">
 							</form>
-					</div> -->	
+					</div>
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu respon-sub-menu">
@@ -67,7 +69,11 @@
 
 							<li>
 								<a href="tripy-login.html" style="font-weight: bold;">登入</a>
-								
+								<ul class="sub-menu bold-chinese-text">
+									<li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
+									<li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
+									<li><a href="tripy-AddAdmin.html">新增管理員</a></li>
+								</ul>
 							</li>
 						</ul>
 					</div>					
@@ -109,7 +115,7 @@
 						</div>
 
 						<!-- map -->
-						<iframe class="m-b-45 p-t-20 p-r-20" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.1440240914512!2d121.50334947483204!3d25.029185938486297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9b1b0aaddbf%3A0x2da96f69cab8853d!2z5Y2X5qmf5aC05aSc5biC!5e0!3m2!1szh-TW!2stw!4v1702707291252!5m2!1szh-TW!2stw"
+						<iframe id="google" class="m-b-45 p-t-20 p-r-20" src=""
                         width="300px;" height = "270px;"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
 						
@@ -212,8 +218,6 @@
 				if(user_id == ""){
 					user_id = null;
 				}
-				 var email = url.searchParams.get("email");
-				var password = url.searchParams.get("password");
 				$("#back").attr("href", "tripy-Scene.html?id="+city_id);
 
 		  		function getSceneData() {
@@ -358,7 +362,9 @@
 					$("#detail").html(data[0]['Scene_info']['detail']);
 					$("#image").attr("src", "images/"+data[0]['Scene_info']['name']+".jpg");					  
 					var inner_html = "";
-					  
+					var map = getMap(data[0]['Scene_info']['name']); 
+					console.log(map);
+					$("#google").attr("src", map); 
 					$.each(data[0].Scene_Comment_info, function (k, v) {
 						inner_html += getComment(v);
 					});
@@ -465,12 +471,47 @@
 						}
 			    	});
 				  }
+				  // 載入 CSV 檔案
+				  function getMap(name){
+						var csvFilePath = 'Tripy_假資料.csv';
+						var map ="";
+						Papa.parse(csvFilePath, {
+						    download: true,
+						    complete: function (results) {
+						        // 資料成功解析後的回呼函式
+						
+						        // 資料儲存在 results.data 中
+						        var data = results.data;				
+						
+						        // 在資料陣列中尋找符合條件的行
+						        var targetRow = data.find(function (row) {
+						            return row[2] === name; // 假設 id 在 CSV 中的第一個欄位
+						        });
+						
+						        // 檢查是否找到了符合條件的行
+						        if (targetRow) {
+						            // 現在，targetRow 包含符合條件的整行資料	
+						           console.log(targetRow[3]);				
+						           map =  targetRow[3];
+						        } else {
+						            console.log("未找到符合條件的資料行");
+						        }
+						    }
+						});
+						return map;
+					}
 			</script>
 		</div>
 	</div>
 	
 	
-	
+	<!-- Footer -->
+	<footer>
+		
+	</footer>
+
+
+
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
