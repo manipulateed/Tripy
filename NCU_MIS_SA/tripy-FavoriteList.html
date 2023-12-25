@@ -85,17 +85,17 @@
             <!-- Menu desktop -->
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
-                <li>
+                <li id="scene">
                   <a href="tripy-City.html" style="font-weight: bold">景點</a>
                 </li>
 
-                <li>
+                <li id="plan">
                   <a href="tripy-StartPlanning.html" style="font-weight: bold"
                     >觀光行程</a
                   >
                 </li>
 
-                <li>
+                <li id="CL">
                   <a href="tripy-FavoriteList.html" style="font-weight: bold"
                     >我的收藏</a
                   >
@@ -243,6 +243,8 @@
 				if(user_id == ""){
 					user_id = null;
 				}
+      var email = url.searchParams.get("email");
+      var password = url.searchParams.get("email");
      
     //  user_id = 4;
       var user_id_str = user_id.toString();
@@ -474,6 +476,8 @@
             "<b>" +
             "<a href='tripy-FavoriteList-detail.html?CL_id=" +
             value["id"] +"&user_id="+user_id+
+            "&email=" +email+
+            "&password=" +password+  
             "' class='collectionlist' style='color: black'>" +
             value["name"] +
             "</a>" +
@@ -492,6 +496,8 @@
 
         $("#collectlist").append(collectlist_html);
       }
+      
+      
     </script>
   </body>
 </html>
