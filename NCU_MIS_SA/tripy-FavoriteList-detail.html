@@ -85,19 +85,18 @@
             <!-- Menu desktop -->
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
-                <li>
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
-                    >景點</a
-                  >
+                <li id="scene">
+                  <a href="tripy-Scene.html" style="font-weight: bold"
+                    >景點</a>
                 </li>
 
-                <li>
+                <li id="plan">
                   <a href="tripy-StartPlanning.html" style="font-weight: bold"
                     >觀光行程</a
                   >
                 </li>
 
-                <li>
+                <li id="CL">
                   <a href="tripy-FavoriteList.html" style="font-weight: bold"
                     >我的收藏</a
                   >
@@ -141,14 +140,10 @@
           <div class="col-sm-10 col-md-4 col-lg-10 p-b-30">
             <div>
               <div class="row justify-content-between align-items-center">
-                <div class="col-auto p-b-50" name="back">
-                  <a
-                    href="tripy-FavoriteList.html"
-                    class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
-                  >
-                    返回
-                    <i class="fa fa-long-arrow-left m-l-15"></i>
-                  </a>
+                <div class="col-auto p-b-50" name="back" id="back">
+					<!--返回-->
+                   
+                 
                 </div>
                 <div
                   class="col-auto flex-col-c-c p-b-50"
@@ -230,15 +225,18 @@
       //取得網址參數
       var url_string = window.location.href;
       var url = new URL(url_string);
-      var id = url.searchParams.get("id");
-      var id_str = id.toString();
+      var CL_id = url.searchParams.get("CL_id");
+      var user_id = url.searchParams.get("user_id");
+      var email = url.searchParams.get("email");
+      var password = url.searchParams.get("email");
+      var id_str = CL_id.toString();
       var list_name = "";
 
       function getAll() {
-        getCLItem(id);
+        getCLItem(CL_id);
       }
 
-      function getListName(id) {
+      function getListName(CL_id) {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
           type: "GET", //注意！！
@@ -246,7 +244,7 @@
           crossDomain: true,
           cache: false,
           dataType: "json",
-          data: { id: id },
+          data: { id: CL_id },
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
@@ -264,7 +262,7 @@
       }
       getListName(id_str);
 
-      function getCLItem(id) {
+      function getCLItem(CL_id) {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
           type: "GET", //注意！！
@@ -272,7 +270,7 @@
           crossDomain: true,
           cache: false,
           dataType: "json",
-          data: { list_id: id },
+          data: { list_id: CL_id },
           timeout: 10000,
           success: function (response) {
             if (response.status == 200) {
@@ -298,8 +296,10 @@
         $.each(data, function (index, value) {
           CLScene_html +=
             "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18' id='tainan_2'>" +
-            "<a href='tripy-SceneInfo.html?id=" +
-            value.scene.id +
+            "<a href='tripy-SceneInfo.html?user_id="+user_id+
+            "&email=" +email+
+            "&password=" +password+
+            "&scene_id=" +value.scene.id+
             "' class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
             "<span name='left' style='margin-left: 20px'>" +
             " </span>" +
@@ -341,7 +341,7 @@
         );
       }
       $(document).ready(function () {
-        getCLItem(id);
+        getCLItem(CL_id);
       });
 
       //刪除收藏景點
@@ -394,6 +394,50 @@
           }
         });
       }
+      
+      //去找上一頁的user_id的各個function
+      
+       				function back(){
+		 				 $("#back").empty();
+		 				 var inner_html=""
+						 inner_html += "<a href='tripy-FavoriteList.html?user_id="+user_id+
+						 "&email=" +email+
+            			 "&password=" +password+					
+						 "' class='size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20'>"+"返回"+"<i class='fa fa-long-arrow-left m-l-15'></i>"+"</a>";
+	 		 			 $("#back").append(inner_html)
+	 		 		}back();	
+	 		 			 
+	 		 		function back_scene(){
+		 				 $("#scene").empty();
+		 				 var inner_html=""
+						 inner_html += "<a href='tripy-City.html?user_id="+user_id+
+						 "&email=" +email+
+           				 "&password=" +password+
+						 "'style='font-weight: bold'>景點</a>";
+						  $("#scene").append(inner_html)
+	 		 		}back_scene();	
+	 		 			 
+	 		 		function back_plan(){
+		 				 $("#plan").empty();
+		 				 var inner_html=""
+						 inner_html += "<a href='tripy-StartPlanning.html?user_id="+user_id+
+						 "&email=" +email+
+           				 "&password=" +password+
+						 "'style='font-weight: bold'>我的行程</a>";
+						  $("#plan").append(inner_html)
+	 		 		}back_plan();
+	 		 			 
+	 		 		function back_CL(){
+		 				 $("#CL").empty();
+		 				 var inner_html=""
+						 inner_html += "<a href='tripy-FavoriteList.html?user_id="+user_id+
+						 "&email=" +email+
+           				 "&password=" +password+
+						 "'style='font-weight: bold'>我的收藏</a>";
+						  $("#CL").append(inner_html)
+	 		 		}back_CL();
+	 		 			 
+	 
     </script>
   </body>
 </html>

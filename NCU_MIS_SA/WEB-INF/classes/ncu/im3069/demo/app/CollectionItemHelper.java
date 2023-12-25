@@ -79,7 +79,7 @@ public class CollectionItemHelper {
 			conn = DBMgr.getConnection();
 			
 			/** SQL指令 */
-			String sql = "DELETE FROM `tripy`,`tbl_Collection` WHERE `Collection_Id` = ? LIMIT 1";
+			String sql = "DELETE FROM `tripy`.`tbl_Collection` WHERE `Collection_Id` = ? LIMIT 1";
 			
 			/** 將參數回填至SQL指令當中 */
 			pres = conn.prepareStatement(sql);
