@@ -207,6 +207,7 @@
 	  var url_string = window.location.href;
       var url = new URL(url_string);
       var email = url.searchParams.get("email");
+      var password = url.searchParams.get("password");
       var sql_num = 0;
 
 	  //作為儲存更改資料前的變數(old)
@@ -224,28 +225,28 @@
 			type: "GET",
 			url: "http://localhost:8090/NCU_MIS_SA/api/member.do",
 			crossDomain: true,
-			data: "email=" + email,
+			data: "email=" + email+"&password="+password,
 			cache: false,
 			dataType: "json",
 			timeout: 5000,
 			success: function(response){
 				if(response.status == 200){
 					//先取得要顯示在頁面上的
-					document.getElementById("member_name").innerHTML = response["response"]["data"][0]["data"][0]["name"];
-					document.getElementById("member_sex").innerHTML = response["response"]["data"][0]["data"][0]["sex"];
-					document.getElementById("member_idcard").innerHTML = response["response"]["data"][0]["data"][0]["idcard"];
-					document.getElementById("member_password").innerHTML = response["response"]["data"][0]["data"][0]["password"];
-					document.getElementById("member_email").innerHTML = response["response"]["data"][0]["data"][0]["email"];
+					document.getElementById("member_name").innerHTML = response["response"]["data"][0]['data'][0]["name"];
+					document.getElementById("member_sex").innerHTML = response["response"]["data"][0]['data'][0]["sex"];
+					document.getElementById("member_idcard").innerHTML = response["response"]["data"][0]['data'][0]["idcard"];
+					document.getElementById("member_password").innerHTML = response["response"]["data"][0]['data'][0]["password"];
+					document.getElementById("member_email").innerHTML = response["response"]["data"][0]['data'][0]["email"];
 
 					//把原先取得的放入變數之中
-					name_o = response["response"]["data"][0]["data"][0]["name"];
-					sex_o = response["response"]["data"][0]["data"][0]["sex"];
-					idcard_o = response["response"]["data"][0]["data"][0]["idcard"];
-					password_o = response["response"]["data"][0]["data"][0]["password"];
-					email_o = response["response"]["data"][0]["data"][0]["email"];
+					name_o = response["response"]["data"][0]['data'][0]["name"];
+					sex_o = response["response"]["data"][0]['data'][0]["sex"];
+					idcard_o = response["response"]["data"][0]['data'][0]["idcard"];
+					password_o = response["response"]["data"][0]['data'][0]["password"];
+					email_o = response["response"]["data"][0]['data'][0]["email"];
 
 					//取得原本的user id
-					user_id = response["response"]["data"][0]["data"][0]["id"];
+					user_id = response["response"]["data"][0]['data'][0]["id"];
 				}
 				console.log(response);				
 			},
