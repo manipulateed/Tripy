@@ -3,7 +3,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<script> var action = ""; </script>
 	
@@ -57,23 +57,12 @@
 						<ul class="main-menu respon-sub-menu">
 							<li>
 								<a href="tripy-City.html" style="font-weight: bold;">景點</a>
-							</li>
-
-							<li>
-								<a href="tripy-StartPlanning.html" style="font-weight: bold;">觀光行程</a>
-							</li>
-
-							<li>
-								<a href="tripy-FavoriteList.html" style="font-weight: bold;">我的收藏</a>
-							</li>
+							</li>							
 
 							<li>
                                 <a href="tripy-login.html" id =Login style="font-weight: bold;">登入</a>
 							</li>
-                            
-                            <li>
-                                <a href="tripy-MemberDetail" id =profile class="hide-menu" style="font-weight: bold;">我的帳號</a>
-							</li>
+             
 						</ul>
 					</div>				
 				</div>
@@ -140,7 +129,7 @@
 	
 	<div class="main">
         <div class="container-login a-container" id="a-container">
-          <form class="form" id="a-form" method="post" action="index.html">
+          <form class="form" id="a-form" method="post" action="">
               <div class="flex-col-c-c p-b-50">
                   <h3 class="t1-b-1 cl-3 txt-center m-b-11">
                       登入
@@ -153,13 +142,7 @@
               <input class="size-a-5 bo-all-1 bcl-11 t1-m-2 cl-6 plh-6 p-rl-20 w-full-sr575 m-tb-10 borderOne" type="text"  id="login_member_email" name="email" placeholder="email@example.com">
               <input class="size-a-5 bo-all-1 bcl-11 t1-m-2 cl-6 plh-6 p-rl-20 w-full-sr575 m-tb-10 borderOne" type="text"  id="login_member_password" name="password" placeholder="密碼">
               
-              <h6 class="p-tb-8 p-b-8">
-                  <a href="news-detail.html" class="t1-s-2 cl-3 hov-link2 trans-02">
-                      忘記密碼？
-                  </a>
-              </h6>
-  
-           
+     
               <button class="form__button switch-btn size-a-6 flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-tb-10 borderOne" input type='submit' name ="login" id="submit_Login" onclick="setAction('login')">
                登入
               </button>
@@ -172,7 +155,7 @@
         	action = value;  // 切換 action 為 login 或 signup
     	}
 		</script>
-
+		
         <!--javascript(登入)-->
         <script type="text/javascript">
             $(document).ready(function() {
@@ -190,25 +173,8 @@
                     var password = $('#login_member_password').val();
             
 
-                    var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                    var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-                    if (!email_rule.test(email)) {
-                        
-                        alert("Email格式不符！");
-                        event.preventDefault();
-                        $('#member_email').val('');
-                        
-                    }
-                    else if(!password_rule.test(password)) {
-                        
-                        alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
-                        event.preventDefault();
-                        $('#member_password').val('');
-
-                    }
-                    else {
-                        //$('#profile').removeClass('hide-menu');
+                    
+                        $('#profile').removeClass('hide-menu');
                         // 將資料組成JSON格式      
                         var data_object = {
                             "email": email,
@@ -218,7 +184,7 @@
 
                         // 將JSON格式轉換成字串
                         var data_string = JSON.stringify(data_object);
-						console.log(action);
+						
                         // 發出POST的AJAX請求
                         $.ajax({
                                 type: "POST",
@@ -231,9 +197,76 @@
                                 success: function (response) {
                                     
                                     
+                                    if(response.status == 300){
+										//console.log(action);
+										//alert("欄位不能有空值");
+										swal("欄位不能有空值", {
+                    						icon: "error",
+                   							buttons: {	
+                      							confirm: {
+                        						text: "error",
+                        						value: true,
+                        						visible: true,
+                        						className: "btn-primary",
+                        						closeModal: true,
+                      							},
+                    						},
+                  						}).then((value) => {
+                    						if (value) {
+
+											}
+					                  	});
+                                    }
+                                    if(response.status == 400){
+										//console.log(action);
+										//alert("查無此帳號或是密碼輸入錯誤，請重新輸入！");
+										swal("查無此帳號或是密碼輸入錯誤，請重新輸入！", {
+                    						icon: "error",
+                   							buttons: {	
+                      							confirm: {
+                        						text: "error",
+                        						value: true,
+                        						visible: true,
+                        						className: "btn-primary",
+                        						closeModal: true,
+                      							},
+                    						},
+                  						}).then((value) => {
+                    						if (value) {
+                      						$('#login_member_email').val('');
+								        	$('#login_member_password').val('');
+											}
+					                  	});
+										
+                                    }
                                     if(response.status == 200){
+<<<<<<< HEAD
+										//console.log(action);
+										
+										//alert("登入成功");
+										swal("登入成功", {
+                    						icon: "success",
+                   							buttons: {	
+                      							confirm: {
+                        						text: "確定",
+                        						value: true,
+                        						visible: true,
+                        						className: "btn-primary",
+                        						closeModal: true,
+                      							},
+                    						},
+                  						}).then((value) => {
+                    						if (value) {
+                      							// 導向到新的頁面
+											$('#login_member_email').val('');
+								        	$('#login_member_password').val('');
+								        	getkey(email,password);					                    }
+					                  	});
+														        
+=======
                                         window.location.href = "index.html";
                                         alert("登入成功");
+>>>>>>> 0c6eb92759eb3e3a9f225bc06a0e1aa6f573048e
                                     }
 
 
@@ -245,9 +278,68 @@
                                 }
                                 
                         });
-                    }
+                    
                 }  
             });
+            
+            function getkey(email,password){
+				console.log(email,password);
+				$.ajax({
+					
+				  type: "GET",
+				  url: "http://localhost:8090/NCU_MIS_SA/api/member.do",
+				  crossDomain: true,
+				  cache: false,
+				  dataType: 'json',
+				  data: {email: email, password:password },
+				  timeout: 5000,
+				  success: function (response1) {
+					if (response1.status == 200) {
+						
+						console.log(response1);
+						console.log(response1.response.character);
+						
+
+						//console.log(response1.response.data[0].data[0].id);
+
+						//console.log(response1.response.data[0].data[0].character);
+						var character=response1.response.character;
+						var user_id="";
+						
+						
+						//管理員登入
+						if(character==2){
+							user_id = response1.response.data[0].id;		
+							var url = "index-admin.html?user_id=" + user_id + "&user_email=" + email +"&user_password=" + password;
+		                	window.history.pushState({}, '', url);		
+		                	window.location.href = url;
+						}
+						
+						//會員登入取值
+						if(character==1){
+							user_id = response1.response.data[0].data[0].id;
+							var url = "index.html?user_id=" + user_id + "&user_email=" + email +"&user_password=" + password;
+		                	window.history.pushState({}, '', url);		
+		                	window.location.href = url;
+							
+						}
+						
+							
+                		
+
+                		//更新 URL
+		                //var url = "index.html?user_id=" + user_id + "&user_email=" + email +"&user_password=" + password;
+		                //window.history.pushState({}, '', url);		
+		                //window.location.href = url;
+		  
+		                
+					}
+				  },
+				  error: function () {
+					alert("無法連線到伺服器！");
+				  }
+				});
+			}
         </script>
 		
         <div class="container-login b-container" id="b-container">
@@ -273,9 +365,9 @@
                       <div class="rs1-select2 bor9 bg0 ">
                           <select class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-tb-10 " id="member_sex" name="sex">
                               <option>性別</option>
-                              <option>男性</option>
-                              <option>女性</option>
-                              <option>其他</option>
+                              <option>男生</option>
+                              <option>女生</option>
+                              <option>無性別</option>
                           </select>
                           <div class="dropDownSelect2"></div>
                       </div>
@@ -301,8 +393,9 @@
                     
                 });
 
-                function submit_SignUp() {         
-
+                function submit_SignUp() { 
+					        
+					//event.preventDefault();
                     var email = $('#member_email').val();
                     var password = $('#member_password').val();
                     var name = $('#member_name').val();
@@ -314,14 +407,45 @@
 					//還沒加身分證限制
 					
                     if (!email_rule.test(email)) {
-
-                        alert("Email格式不符！");
+	
+                        //alert("Email格式不符！");
+                        swal("Email格式不符！", {
+                    		icon: "error",
+                   			buttons: {	
+                      		confirm: {
+                        	text: "error",
+                        	value: true,
+                        	visible: true,
+                        	className: "btn-primary",
+                        	closeModal: true,
+                      		},
+                    		},
+                  			}).then((value) => {
+                    		if (value) {                     			
+							}
+					        });
                         event.preventDefault();
                         
                     }
                     else if(!password_rule.test(password)) {
                         
-                        alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+                        //alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+                        swal("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！", {
+                    		icon: "error",
+                   			buttons: {	
+                      		confirm: {
+                        	text: "error",
+                        	value: true,
+                        	visible: true,
+                        	className: "btn-primary",
+                        	closeModal: true,
+                      		},
+                    		},
+                  			}).then((value) => {
+                    		if (value) {                     			
+							}
+					        });
+   
                         event.preventDefault();
                         
                     }
@@ -354,17 +478,68 @@
                                 timeout: 5000,
                                 success: function (response) {
 									
-                                    //alert("註冊成功!！");
+									
+									if(response.status == 300){
+										//alert("欄位不能有空值");
+                        				swal("欄位不能有空值", {
+			                    		icon: "error",
+			                   			buttons: {	
+			                      		confirm: {
+			                        	text: "error",
+			                        	value: true,
+			                        	visible: true,
+			                        	className: "btn-primary",
+			                        	closeModal: true,
+			                      		},
+			                    		},
+			                  			}).then((value) => {
+			                    		if (value) {                     			
+										}
+								        });
+								        
+                                    }
+                                    
                                     if (response.status == 400){
-                                        alert("email重複，請直接登入或更改email註冊")
+                                        //alert("email重複，請直接登入或更改email註冊")
+                                        swal("email重複，請直接登入或更改email註冊", {
+			                    		icon: "error",
+			                   			buttons: {	
+			                      		confirm: {
+			                        	text: "error",
+			                        	value: true,
+			                        	visible: true,
+			                        	className: "btn-primary",
+			                        	closeModal: true,
+			                      		},
+			                    		},
+			                  			}).then((value) => {
+			                    		if (value) {                     			
+										}
+								        });
                                     }
                                     if (response.status == 200){
-                                        alert("註冊成功")
-                                        $('#member_email').val('');
-								        $('#member_password').val('');
-								        $('#member_name').val('');
-								        $('#member_sex').val('');
-								        $('#member_idCard').val('');
+                                        //alert("註冊成功")
+                                        
+								        swal("註冊成功", {
+			                    		icon: "success",
+			                   			buttons: {	
+			                      		confirm: {
+			                        	text: "success",
+			                        	value: true,
+			                        	visible: true,
+			                        	className: "btn-primary",
+			                        	closeModal: true,
+			                      		},
+			                    		},
+			                  			}).then((value) => {
+			                    		if (value) {  
+											$('#member_email').val('');
+									        $('#member_password').val('');
+									        $('#member_name').val('');
+									        $('#member_sex').val('');
+									        $('#member_idCard').val('');                   			
+										}
+								        });
                                     }
                                     
                                 },

@@ -181,7 +181,7 @@ public class Member_Helper {
      * @param id 會員編號
      * @return the JSON object 回傳SQL執行結果與該會員編號之會員資料
      */
-    public JSONObject getByEmail(String Email) {
+    public JSONObject getByEmail(String Email,String Password) {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Member_ m = null;
         /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
@@ -192,6 +192,7 @@ public class Member_Helper {
         long start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
+        String character="";
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
         
@@ -199,11 +200,13 @@ public class Member_Helper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? LIMIT 1";
+            String sql = "SELECT * FROM `tripy`.`tbl_User` INNER JOIN `tripy`.`tbl_Sex` ON `tbl_User`.`User_Sex_Id` = `tbl_Sex`.`Sex_Id` WHERE `User_Email` = ? AND `User_Password` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, Email);
+            pres.setString(2, Password);
+
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -223,7 +226,9 @@ public class Member_Helper {
                 String email = rs.getString("User_Email");
                 String password = rs.getString("User_Password");
                 String sex = rs.getString("Gender");
-                String idcard = rs.getString("User_IDCard");
+                String idcard = rs.getString("User_IDCard"); 
+                character = rs.getString("User_Character");
+
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 m = new Member_(member_id, name, email, password, sex, idcard);
@@ -253,6 +258,8 @@ public class Member_Helper {
         response.put("row", row);
         response.put("time", duration);
         response.put("data", jsa);
+        response.put("character", character);
+
 
         return response;
     }
