@@ -4,6 +4,10 @@
 	<title>tripy</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+  	<script src="statics/js/jquery-confirm.js"></script>
+  	<script src="statics/js/big.min.js"></script>
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 <!--===============================================================================================-->
@@ -133,48 +137,19 @@
 						<div class="p-b-32">
                             <div class="size-a-105 bg-11"></div>
                             <form class="flex-row">
-                                <h4 class="t1-s-4 cl-3 p-tb-10 " style="font-weight: bold; margin-left: 20px;">
+                                <h4 class="t1-s-4 cl-3 p-tb-10 " style="font-weight: bold; margin-left: 50px;">
                                     景點名稱
                                 </h4>
                                 
-                                <h4 class="t1-s-4 cl-3 p-tb-10 " style="font-weight: bold; margin-left: 170px;">
+                                <h4 class="t1-s-4 cl-3 p-tb-10 " style="font-weight: bold; margin-left: 140px;">
                                     地址
                                 </h4>
 
                             </form>
                             <div class="size-a-105 bg-11"></div>
 
-							<ul class="p-t-22">
-                                <li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18">
-                                    <a href="tripy-MemberDetail.html" class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3">
-                                        <span  name="left" style="margin-left: 20px;">
-
-                                        </span>
-                                        <span style="position: absolute; left: 35px; ">
-                                            中大湖
-                                        </span>
- 
-                                        <span style="position: absolute; left: 260px;">
-                                            桃園市中壢區中大路300號
-                                        </span>
-
-                                        <div class="d-flex">
-                                            <div class="p-rl-20 bo-l-1 bcl-12">
-                                                <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-                                                <a href="#" class="t1-s-2 cl-11 hov-link3">編輯</a>
-                                            </div>
-                                        
-                                            <div class="p-rl-20 bo-l-1 bcl-12 ms-auto">
-                                                <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
-                                                <a href="#" class="t1-s-2 cl-11 hov-link3">刪除</a>
-                                            </div>
-                                        </div>
-                                        
-
-                                    </a>
-                                </li>
-                               
-                               
+							<ul class="p-t-22" id="allscene">
+                                                                                        
 							</ul>
 						</div>
 
@@ -186,6 +161,113 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+					
+					// 取得網址參數
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+				var user_id = url.searchParams.get("user_id");
+		  		function getSceneData() {
+				  	$.ajax({
+			          type: "GET",
+			          url: "api/scene.do",
+			          crossDomain: true,
+			          cache: false,
+			          dataType: 'json',
+			          timeout: 5000,
+			          success: function (response) {
+			              if(response.status == 200){
+			            	var inner_html = "";
+			
+							$.each(response.response.data, function (k, v) {
+								inner_html += updateHTML(v);
+							});
+							 
+							$("#allscene").append(inner_html);
+			              }
+			          },
+			          error: function () {
+			              alert("無法連線到伺服器！");
+			          }
+			    	});
+			  	}
+			  	
+			  	getSceneData();
+			  	function updateHTML(data) {					  
+					var scene_html = "";				
+					scene_html += '<li class="flex-wr-sb-c bo-b-1 bcl-14 m-b-18">'
+                    scene_html += '<a href="tripy-SceneInfo.html?scene_id='+data.Scene_info.id+'" class="t1-s-2 cl-5 hov-link2 trans-02 p-tb-3">'
+                    scene_html += '<span  name="left" style="margin-left: 20px;">'
+                    scene_html += '</span>'
+                    scene_html += '<span style="position: absolute; left: 35px; ">'
+                    scene_html += data.Scene_info.name
+                    scene_html += '</span>'
+                    scene_html += '<span style="position: absolute; left: 260px;">'
+                    scene_html += data.Scene_info.address
+                    scene_html += '</span>'
+                    scene_html += '<div class="d-flex">'
+                    scene_html += '<div class="p-rl-20 bo-l-1 bcl-12">'
+                    scene_html += '<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>'
+                    scene_html += '<a href="tripy-ModifyScene.html?scene_id='+data.Scene_info.id+'" class="t1-s-2 cl-11 hov-link3">編輯</a>'
+                    scene_html += '</div>'                  
+                    scene_html += '<div class="p-rl-20 bo-l-1 bcl-12 ms-auto">'
+                    scene_html += '<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>'
+                    scene_html += '<a href="javascript:void(0);" class="t1-s-2 cl-11 hov-link3" onclick="deletescene('+data.Scene_info.id+')">刪除</a>'
+                    scene_html += '</div>'
+                    scene_html += '</div>'
+                    scene_html += '</a>'
+                    scene_html += '</li>'
+					return scene_html;
+				  }
+				  
+				  function deletescene(scene_id){
+					  Swal.fire({
+						  icon: "question",
+						  title: "Are You Sure?",
+						  text: "確鄧要刪除此景點嗎?",
+						  confirmButtonText: "Yes",
+						  showCancelButton: true,
+						  cancelButtonText: "No",				                  
+						}).then((result) => {
+					   		if (result.isConfirmed) {
+					         	var data_object = {
+								    "id": scene_id,		
+								};
+								// 將JSON格式轉換成字串
+				                var data_string = JSON.stringify(data_object);    
+								$.ajax({
+									type: "DELETE",
+									url: "api/scene.do",
+									data: data_string,
+									crossDomain: true,
+									cache: false,
+									dataType: 'json',
+									timeout: 5000,
+									success: function (response) {
+									      if(response.status == 200){
+									    	  swal.fire({
+							                    icon: "success",
+							                    title: "成功!",
+							  					text: response.message,
+							  					confirmButtonText: "Great",
+							                  }).then((result) => {
+							                    if (result) {
+							                      // 導向到新的頁面
+							                     window.location.href = url;
+							                  	} 
+							                  });
+									      }								   
+									},
+									error: function () {
+									      alert("無法連線到伺服器！");
+									}
+						    	});
+					    	}
+						});
+				  }
+				  
+				  
+			  	</script>
 	</section>
 
 	
