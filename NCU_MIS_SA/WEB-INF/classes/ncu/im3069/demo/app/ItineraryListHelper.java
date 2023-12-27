@@ -395,16 +395,19 @@ public class ItineraryListHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `tripy`.`tbl_Itinerary_List` SET `IL_Name` = ? WHERE `IL_Id` = ?";
+            String sql = "Update `tripy`.`tbl_Itinerary_List` SET `IL_Name` = ?, `IL_Start`=?, `IL_End`=? `WHERE `IL_Id` = ?";
             /** 取得所需之參數 */
             String name = il.getName();
             int id = il.getId();
-            
+            Date start = il.getStart();        
+            Date end = il.getEnd();
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, name); 
             pres.setInt(2, id);
+            pres.setDate(3, (java.sql.Date) start);
+            pres.setDate(4, (java.sql.Date) end);
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 

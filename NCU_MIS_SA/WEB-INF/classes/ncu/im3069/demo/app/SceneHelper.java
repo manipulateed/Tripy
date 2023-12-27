@@ -500,8 +500,8 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `tripy`.`tbl_scene_info`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`,`Scene_Image)"+
-            		"VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `tripy`.`tbl_scene_info`(`Scene_Name`,`Scene_Address`,`Scene_Detail`,`Scene_City`,`Scene_Phone`,`Scene_OpenTime`)"+
+            		"VALUES(?, ?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
             String name = s.getName();
@@ -509,7 +509,7 @@ public class SceneHelper {
             String detail = s.getDetail();
             String phone = s.getPhone();
             String opentime = s.getOpentime();
-            String images = s.getImages().stream().map(String::valueOf).collect(Collectors.joining(","));
+//            String images = s.getImages().stream().map(String::valueOf).collect(Collectors.joining(","));
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -519,7 +519,7 @@ public class SceneHelper {
             pres.setInt(4, city_id);
             pres.setString(5, phone);
             pres.setString(6, opentime);
-            pres.setString(7, images);
+ //           pres.setString(7, images);
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
