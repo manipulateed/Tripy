@@ -49,10 +49,10 @@ public class SceneController extends HttpServlet {
         String city = jso.getString("city");
         int city_id = Cith.getCityIdByCityName(city);
         
-        String image = jso.getString("images");
+       String image = jso.getString("images");
 
         ArrayList<String> images = new ArrayList<String>();
-        if(image != null) {
+        if(!image.isEmpty()) {
             String[] images_ = image.split(","); 
             for (int i = 0; i < images_.length; i++) {
             	images.add(images_[i]);

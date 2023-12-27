@@ -126,7 +126,9 @@
 					<div class="p-l-50 p-l-15-sr991 p-l-0-sr767">
 						<!-- News detail -->
 						<div class="m-b-25">
-							<img class="m-b-45 max-s-full"  src="" alt="IMG" id="image">
+							<div style="height:500px; margin-top:-50px; margin-bottom: 30px;">
+								<img class="m-b-45 max-s-full"  src="" alt="IMG" id="image" style="background-size: cover; height: 100%; width:100%">
+                           	</div>
                            
 							<h4 class="t1-b-3 cl-10 m-b-11 bold-chinese-text" id= "name">
 
@@ -218,8 +220,10 @@
 				if(user_id == ""){
 					user_id = null;
 				}
-				$("#back").attr("href", "tripy-Scene.html?id="+city_id);
-
+				if(city_id != "" || city_id != null){
+					$("#back").attr("href", "tripy-Scene.html?id="+city_id);
+				}
+				
 		  		function getSceneData() {
 				  	$.ajax({
 			          type: "GET",
@@ -362,9 +366,8 @@
 					$("#detail").html(data[0]['Scene_info']['detail']);
 					$("#image").attr("src", "images/"+data[0]['Scene_info']['name']+".jpg");					  
 					var inner_html = "";
-					var map = getMap(data[0]['Scene_info']['name']); 
-					console.log(map);
-					$("#google").attr("src", map); 
+					getMap(data[0]['Scene_info']['name']); 
+
 					$.each(data[0].Scene_Comment_info, function (k, v) {
 						inner_html += getComment(v);
 					});
@@ -406,7 +409,7 @@
 					  Swal.fire({
 						  icon: "question",
 						  title: "Are You Sure?",
-						  text: "確定要新增至此收藏單嗎?",
+						  text: "確定要新增至此收藏清單嗎?",
 						  confirmButtonText: "Yes",
 						  showCancelButton: true,
 						  cancelButtonText: "No",				                  
@@ -473,7 +476,7 @@
 				  }
 				  // 載入 CSV 檔案
 				  function getMap(name){
-						var csvFilePath = 'Tripy_假資料.csv';
+						var csvFilePath = 'Tripy.csv';
 						var map ="";
 						Papa.parse(csvFilePath, {
 						    download: true,
@@ -493,12 +496,12 @@
 						            // 現在，targetRow 包含符合條件的整行資料	
 						           console.log(targetRow[3]);				
 						           map =  targetRow[3];
+						           $("#google").attr("src", map);
 						        } else {
 						            console.log("未找到符合條件的資料行");
 						        }
 						    }
 						});
-						return map;
 					}
 			</script>
 		</div>

@@ -112,14 +112,14 @@ public class CityHelper {
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-              
-            /** 將 ResultSet 之資料取出 */
-            int city_id = rs.getInt("City_Id");
-            String name_ = rs.getString("City_Name");
-            
-            /** 將每一筆評論資料產生一名新Comment物件 */
-            city = new City(city_id, name_);
-
+            while(rs.next())  {
+            	 /** 將 ResultSet 之資料取出 */
+                int city_id = rs.getInt("City_Id");
+                String name_ = rs.getString("City_Name");           
+                      
+	            /** 將每一筆評論資料產生一名新Comment物件 */
+	            city = new City(city_id, name_);
+            }
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
