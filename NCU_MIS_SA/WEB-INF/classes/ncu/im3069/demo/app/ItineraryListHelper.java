@@ -106,13 +106,17 @@ public class ItineraryListHelper {
             String name = il.getName();
             Date start = il.getStart();        
             Date end = il.getEnd();
+
+            // 使用 java.sql.Date 的函數進行轉換
+            java.sql.Date sqlStartDate = new java.sql.Date(start.getTime());
+            java.sql.Date sqlEndDate = new java.sql.Date(end.getTime());
             
             /** 將參數回填至SQL指令當中 */
             //sql
             pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pres.setString(1, name);
-            pres.setDate(2, (java.sql.Date) start);
-            pres.setDate(3, (java.sql.Date) end);
+            pres.setDate(2, sqlStartDate);
+            pres.setDate(3, sqlEndDate);
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             int affectedRows = pres.executeUpdate();

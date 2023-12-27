@@ -91,8 +91,9 @@ public class ItineraryListController extends HttpServlet {
         JSONArray Collaborators = jso.getJSONArray("Collaborators");
         int user_id = Integer.parseInt(jso.getString("user_id"));
        
-        String end_= jso.getString("end");
         String start_= jso.getString("start");
+        String end_= jso.getString("end");
+       
         java.util.Date d = null;
         java.util.Date d_ = null;
         try {
@@ -210,19 +211,20 @@ public class ItineraryListController extends HttpServlet {
         JSONObject jso = jsr.getObject();
         
         /** 取出經解析到JSONObject之Request參數 */
-        int id = Integer.parseInt(jso.getString("id"));
+        int id =jso.getInt("id");
+        //int id = Integer.parseInt(jso.getString("id"));
         String name = jso.getString("name");
         int user_id = Integer.parseInt(jso.getString("user_id"));
-        String end_= jso.getString("end");
-        String start_= jso.getString("start");
+        // String end_= jso.getString("end");
+        // String start_= jso.getString("start");
         java.util.Date d = null;
         java.util.Date d_ = null;
-        try {
-        	d = format.parse(start_);
-        	d_ = format.parse(end_);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        } 
+        // try {
+        // 	d = format.parse(start_);
+        // 	d_ = format.parse(end_);
+        // } catch (Exception e) {
+        // 	e.printStackTrace();
+        // } 
         
         /** 透過傳入之參數，新建一個以這些參數之ItineraryList物件 */
         ItineraryList il = new ItineraryList(id, name, d, d_);

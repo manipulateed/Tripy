@@ -449,19 +449,20 @@ public class ItineraryItemHelper {
             conn = DBMgr.getConnection();
             
             /** SQL指令 */
-            String sql = "Update `tripy`.`tbl_Itinerary` SET `Scene` = ?, `Itinerary_Day` = ?, `Itinerary_Day_Order` = ? , WHERE `Itinerary_Id` = ?";
-            
+            //String sql = "Update `tripy`.`tbl_Itinerary` SET `Scene` = ?, `Itinerary_Day` = ?, `Itinerary_Day_Order` = ? , WHERE `Itinerary_Id` = ?";
+            String sql = "UPDATE `tripy`.`tbl_Itinerary` SET `Scene` = ?, `Itinerary_Day` = ?, `Itinerary_Day_Order` = ? WHERE `Itinerary_Id` = ?";
+
             /** 取得所需之參數 */
             int sc_id = iti.getScene().getId();
             Date day = iti.getDate();   
-            
+            java.sql.Date sqlDate = new java.sql.Date(day.getTime());
  
             int day_order = iti.getDate_order();
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setInt(1, sc_id);
-            pres.setDate(2, (java.sql.Date) day);
+            pres.setDate(2, sqlDate);
             pres.setInt(3, day_order);
             pres.setInt(4, iti.getId());
             /** 執行更新之SQL指令並記錄影響之行數 */
