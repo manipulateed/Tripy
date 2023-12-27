@@ -134,6 +134,13 @@
 										編輯
 									</a>
 								</div>
+								<div class="p-l-20 bo-l-1 bcl-12" onclick="EditPlan()">
+									<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>
+
+									<a href="" class="t1-s-2 cl-11 hov-link3">
+										編輯
+									</a>
+								</div>
 
 							</div>
 
@@ -191,8 +198,8 @@
 		var url_string = window.location.href;
   		var url = new URL(url_string);
 		var user_id = url.searchParams.get("user_id");
-		var scene_id = url.searchParams.get("scene_id");
-		var ItineraryList_id = url.searchParams.get("ItineraryList_id");
+		// var scene_id = url.searchParams.get("scene_id");
+		// var ItineraryList_id = url.searchParams.get("ItineraryList_id");
 		// var ItineraryList_name = url.searchParams.get("ItineraryList_id");
 		// var ItineraryList_start = url.searchParams.get("ItineraryList_start");
 		// var ItineraryList_end = url.searchParams.get("ItineraryList_end");
@@ -255,10 +262,14 @@
 			table_html +=   data.end;
 			table_html +=	'</a>';
 			table_html +=	'</div>';
-			table_html +=	'<div class="p-l-20 bo-l-1 bcl-12" onclick="EditPlan('+data.id+')">';
+			table_html +=	'<div class="p-rl-20 bo-l-1 bcl-12" onclick="EditPlan('+data.id+')">';
 			table_html +=	'<i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>';
 			table_html +=	'<a href="javascript:void(0)" class="t1-s-2 cl-11 hov-link3">編輯</a>';		
 			table_html +=	'</div>';		
+			table_html +=	'<div class="p-l-20 bo-l-1 bcl-12" onclick="DeletePlan('+data.id+')">';
+			table_html +=	'<i class="fs-14 cl-7 fa fa-trash m-r-2"></i>';
+			table_html +=	'<a href="javascript:void(0)" class="t1-s-2 cl-11 hov-link3">刪除</a>';		
+			table_html +=	'</div>';
 			table_html +=	'</div>';	
 			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&ItineraryList_id='+data.id+'" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">開始規劃</a>';
 			table_html +=	'</div>';		
@@ -402,58 +413,31 @@
 
 		
 		var EditPlan = function (dataID) {
-			swal({
-			title: "編輯旅遊計畫",
+			swal("編輯收藏清單名稱", {
 			content: {
-				element: "div",
-				attributes: {
-					innerHTML: `
-					<ul>
-						<li class="bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
-							<div class="container flex-wr-sb-c t1-s-5 cl-5 hov-link2 trans-02 p-tb-3 bold-chinese-text">
-								<input id="planName" class="swal-input" placeholder="輸入計畫名稱" type="text">
-							</div>
-						</li>
-						
-						<li class="row col bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
-							<label for="startDate">開始日期</label>
-							<input id="startDate" class="swal-input" type="date">
-						</li>
-
-						<li class="row col bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
-							<label for="endDate">結束日期</label>
-							<input id="endDate" class="swal-input" type="date">
-						</li>
-						
-					</ul>
-					`
-				}
+				element: "input",
 			},
 			buttons: {
 				Btn: false,
 				confirm: {
-					text: "確認",
-					visible: true,
+				text: "確認",
+				visible: true,
 				},
 				cancel: {
-					text: "取消",
-					visible: true,
+				text: "取消",
+				visible: true,
 				},
 			},
 			}).then((result) => {
 				if (result) {
 					// 使用者按下確認按鈕
 					const planID = dataID;
-					const planName = document.getElementById('planName').value;
-					const startDate = document.getElementById('startDate').value;
-					const endDate = document.getElementById('endDate').value;
+					const planName = result;
 					
-					if (planName !== "" && startDate !== "" && endDate !== "") {
+					if (planName !== "" ) {
 						var data_object = {
 							"id": planID,
 							"name": planName,
-							"start": startDate,
-							"end": endDate,
 							"user_id":"1"
 						};
 
@@ -522,6 +506,94 @@
 				}
 			});
 		};
+
+		var DeletePlan = function (dataID) {
+			swal({
+				title: "確定要刪除此旅遊計畫嗎？",
+				icon: "warning",
+				buttons: {
+					Btn: false,
+					confirm: {
+						text: "確認",
+						visible: true,
+						className: "btn-danger"
+					},
+					cancel: {
+						text: "取消",
+						visible: true,
+					},
+				},
+			}).then((result) => {
+				if (result) {
+					// 使用者按下確認按鈕
+					const planID = dataID;
+					var data_object = {
+							"id": planID,
+						};
+
+					// 將JSON格式轉換成字串
+					var data_string = JSON.stringify(data_object);
+
+					// 發出 DELETE 的 AJAX 請求
+					$.ajax({
+						type: "DELETE",
+						url: "api/ItineraryList.do",
+						data: data_string,
+						crossDomain: true,
+						cache: false,
+						dataType: 'json',
+						timeout: 5000,
+						success: function (response) {
+							if (response.status == 200) {
+								swal("刪除成功", {
+									icon: "success",
+									buttons: {
+										confirm: {
+											text: "確定",
+											value: true,
+											visible: true,
+											className: "btn-primary",
+											closeModal: true,
+										},
+									},
+								}).then((value) => {
+									if (value) {
+										// 導向到新的頁面
+										window.location.href = url;
+									}
+								});
+							} else if (response.status == 400) {
+								swal("刪除失敗", {
+									icon: "error",
+									buttons: {
+										confirm: {
+											text: "確定",
+											value: true,
+											visible: true,
+											className: "btn-danger",
+											closeModal: true,
+										},
+									},
+								}).then((value) => {
+									if (value) {
+										// 導向到新的頁面
+										window.location.href = url;
+									}
+								});
+							}
+						},
+						error: function () {
+							alert("無法連線到伺服器！");
+						}
+					});
+				} else {
+					// 使用者按下取消按鈕
+					swal.close();
+				}
+			});
+		};
+
+
 
 	</script>
 	

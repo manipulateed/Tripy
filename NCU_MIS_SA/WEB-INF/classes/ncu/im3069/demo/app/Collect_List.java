@@ -24,7 +24,7 @@ public class Collect_List {
     public Collect_List(int id, String name){
         this.id = id;
         this.name = name;
-        getCollectSceneFromDB();
+//        getCollectSceneFromDB();
     }
 
     //setId(設定收藏清單編號)
