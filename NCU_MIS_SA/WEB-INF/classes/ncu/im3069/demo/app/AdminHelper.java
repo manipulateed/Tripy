@@ -186,6 +186,7 @@ public class AdminHelper {
         long start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
+        String character = "";
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
         
@@ -202,6 +203,7 @@ public class AdminHelper {
 
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
+            
 
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
@@ -220,7 +222,7 @@ public class AdminHelper {
                 String password = rs.getString("User_Password");
                 String sex = rs.getString("Gender");
                 String idcard = rs.getString("User_IDCard");
-                String character = rs.getString("Character");
+                character = rs.getString("User_Character");
                 
                 if(character.equals("管理員")) {
                 	/** 將每一筆會員資料產生一名新Member物件 */
@@ -229,8 +231,14 @@ public class AdminHelper {
                     jsa.put(m.getAdminData());
                 }
                 else {
-                	jsa.put(mh.getByEmail(email));
+                	jsa.put(mh.getByEmail(email,password));
                 }
+         
+            }
+            if (row == 0) {
+                JSONObject errorResponse = new JSONObject();
+                errorResponse.put("error", "User not found");
+                return errorResponse;
             }
             
         } catch (SQLException e) {
@@ -255,6 +263,7 @@ public class AdminHelper {
         response.put("row", row);
         response.put("time", duration);
         response.put("data", jsa);
+        response.put("character", character);
 
         return response;
     }
