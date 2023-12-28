@@ -4,6 +4,9 @@
     <title>tripy</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
     <link rel="icon" type="image/png" href="images/icons/favicon.png" />
@@ -246,6 +249,8 @@
             </div>
 		</div>
 	</section>
+	
+	
 
 	<script>
 	  //取得網址參數
@@ -277,21 +282,23 @@
 			success: function(response){
 				if(response.status == 200){
 					//先取得要顯示在頁面上的
-					document.getElementById("admin_name").innerHTML = response["response"]["data"][0]["name"];
-					document.getElementById("admin_sex").innerHTML = response["response"]["data"][0]["sex"];
-					document.getElementById("admin_idcard").innerHTML = response["response"]["data"][0]["idcard"];
-					document.getElementById("admin_password").innerHTML = response["response"]["data"][0]["password"];
-					document.getElementById("admin_email").innerHTML = response["response"]["data"][0]["email"];
+					
+					
+					document.getElementById("admin_name").innerHTML = response["response"]["data"][0]["data"][0]["name"];
+					document.getElementById("admin_sex").innerHTML = response["response"]["data"][0]["data"][0]["sex"];
+					document.getElementById("admin_idcard").innerHTML = response["response"]["data"][0]["data"][0]["idcard"];
+					document.getElementById("admin_password").innerHTML = response["response"]["data"][0]["data"][0]["password"];
+					document.getElementById("admin_email").innerHTML = response["response"]["data"][0]["data"][0]["email"];
 
 					//把原先取得的放入變數之中
-					name_o = response["response"]["data"][0]["name"];
-					sex_o = response["response"]["data"][0]["sex"];
-					idcard_o = response["response"]["data"][0]["idcard"];
-					password_o = response["response"]["data"][0]["password"];
-					email_o = response["response"]["data"][0]["email"];
+					name_o = response["response"]["data"][0]["data"][0]["name"];
+					sex_o = response["response"]["data"][0]["data"][0]["sex"];
+					idcard_o = response["response"]["data"][0]["data"][0]["idcard"];
+					password_o = response["response"]["data"][0]["data"][0]["password"];
+					email_o = response["response"]["data"][0]["data"][0]["email"];
 
 					//取得原本的user id
-					user_id = response["response"]["data"][0]["id"];
+					user_id = response["response"]["data"][0]["data"][0]["id"];
 				}
 				console.log(response);				
 			},

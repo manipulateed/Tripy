@@ -351,7 +351,7 @@
               email: email,
               password: password,
               idcard: idcard,
-              sex: sex
+              sex: sex,
             };
 
             // 將JSON格式轉換成字串
@@ -360,8 +360,8 @@
             // 發出POST的AJAX請求
             $.ajax({
               type: "POST",
-              url: "http://localhost:8090/NCU_MIS_SA/api/admin.do",
-              data: data_string+"action=create",
+              url: "http://localhost:8090/NCU_MIS_SA/api/admin.do?action='create'",
+              data: data_string,
               crossDomain: true,
               cache: false,
               dataType: "json",

@@ -40,39 +40,41 @@ public class AdminController extends HttpServlet{
 	        String action = request.getParameter("action");
 	        
 	        
-	        //觸發登入
-	        if(action.equals("login")) {
-	        	String email = jso.getString("email");
-		        String password = jso.getString("password");
-		        
-		        if(email.isEmpty() || password.isEmpty()) {
-		            /** 以字串組出JSON格式之資料 */
-		            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
-		            /** 透過JsonReader物件回傳到前端（以字串方式） */
-		            jsr.response(resp, response);
-		        }
-		        else if (Admh.getByEmail(email,password) == null) {
-		        	/** 以字串組出JSON格式之資料 */
-		            String resp = "{\"status\": \'400\', \"message\": \'查無此帳號或是密碼輸入錯誤！\', \'response\': \'\'}";
-		            /** 透過JsonReader物件回傳到前端（以字串方式） */
-		            jsr.response(resp, response);		            
-		            
-		        }
-		        else {
-		        	/** 新建一個JSONObject用於將回傳之資料進行封裝 */
-		            JSONObject data = Admh.getByEmail(email,password);
-		            JSONObject resp = new JSONObject();
-		            
-		            resp.put("status", "200");
-		            resp.put("message", "成功登入!");
-		            resp.put("response", data);
-		            
-		            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-		            jsr.response(resp, response);
-		        }
-		        
-		        
-	        }
+	      //觸發登入
+	         if(action.equals("login")) {
+	          String email = jso.getString("email");
+	          String password = jso.getString("password");
+	          
+	          if(email.isEmpty() || password.isEmpty()) {
+	              /** 以字串組出JSON格式之資料 */
+	              String resp = "{\"status\": \'300\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
+	              /** 透過JsonReader物件回傳到前端（以字串方式） */
+	              jsr.response(resp, response);
+	          }
+	          else if (Admh.getByEmail(email, password).has("error")) {
+	              // 代表發生了錯誤
+	              JSONObject errorResponse = Admh.getByEmail(email, password);
+	              
+	              // 提取錯誤信息並回傳給前端
+	              String errorMessage = errorResponse.getString("error");
+	              String resp = "{\"status\": \'400\' , \"message\": \'查無此帳號或是密碼輸入錯誤！\', \'response\': \'\'}";
+	              jsr.response(resp, response);
+	          }
+	          else {
+	           /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+	              JSONObject data = Admh.getByEmail(email,password);
+	              JSONObject resp = new JSONObject();
+	              
+	              resp.put("status", "200");
+	              resp.put("message", "成功登入!");
+	              resp.put("response", data);
+	              
+	              /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+	              jsr.response(resp, response);
+	          }
+	          
+	          
+	         }
 	        
 	        //觸發新增管理者
 	        else {  

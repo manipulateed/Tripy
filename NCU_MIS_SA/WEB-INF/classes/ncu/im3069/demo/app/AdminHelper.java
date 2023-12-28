@@ -343,7 +343,15 @@ public class AdminHelper {
             String name = m.getName();
             String email = m.getEmail();
             String password = m.getPassword();
-            int sex = (m.getSex().equals("男")? 1:2);
+            int sex ;
+            String gender= m.getSex();
+            if(gender.equals("男生")){
+            	sex=1;
+            }else if(gender.equals("女生")) {
+            	sex=2;
+            }else {
+            	sex=3;
+            }
             String idcard = m.getIdCard();
             int character = 2;
             
