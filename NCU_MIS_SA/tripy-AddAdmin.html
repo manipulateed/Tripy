@@ -3,6 +3,7 @@
   <head>
     <title>tripy</title>
     <meta charset="UTF-8" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="images/icons/favicon.png" />
@@ -86,29 +87,22 @@
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
                 <li>
-                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
+					<a href="tripy-SeeAllScene.html" style="font-weight: bold;">所有景點</a>
+								
+				</li>
+				<li>
+					<a href="tripy-AddNewScene.html" style="font-weight: bold;">新增景點</a>			
+				</li>
+				
+				<li>
+					<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
+				</li>
+				<li>
+					<a href="tripy-SeeAllAdmin.html" style="font-weight: bold;">所有管理員</a>
+				</li>
+				<li id="logout">
                 </li>
-
-                <li>
-                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
-                    >觀光行程</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
-                    >我的收藏</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
-                  <ul class="sub-menu bold-chinese-text">
-                    <li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
-                    <li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
-                    <li><a href="tripy-AddAdmin.html">新增管理員</a></li>
-                  </ul>
-                </li>
+                  
               </ul>
             </div>
           </div>
@@ -351,7 +345,7 @@
               email: email,
               password: password,
               idcard: idcard,
-              sex: sex,
+              sex: sex
             };
 
             // 將JSON格式轉換成字串
@@ -360,8 +354,8 @@
             // 發出POST的AJAX請求
             $.ajax({
               type: "POST",
-              url: "http://localhost:8090/NCU_MIS_SA/api/admin.do?action='create'",
-              data: data_string,
+              url: "http://localhost:8090/NCU_MIS_SA/api/admin.do",
+              data: data_string+"action=create",
               crossDomain: true,
               cache: false,
               dataType: "json",
@@ -417,6 +411,58 @@
           );
         }
       });
+      
+      //logout
+		$("#logout").empty();
+        var logout_html = "";
+         logout_html +="<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#logout").append(logout_html);
+        
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>
