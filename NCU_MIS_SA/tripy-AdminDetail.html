@@ -3,6 +3,8 @@
   <head>
     <title>tripy</title>
     <meta charset="UTF-8" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -81,7 +83,7 @@
           <div class="limiter-menu-desktop container">
             <!-- Logo desktop -->
             <div class="logo">
-              <a href="index.html"
+              <a href="index-admin.html"
                 ><img src="images/icons/newlogo.png" alt="LOGO"
               /></a>
             </div>
@@ -90,28 +92,20 @@
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
                 <li>
-                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
-                </li>
-
-                <li>
-                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
-                    >觀光行程</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
-                    >我的收藏</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
-                  <ul class="sub-menu bold-chinese-text">
-                    <li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
-                    <li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
-                    <li><a href="tripy-AddAdmin.html">新增管理員</a></li>
-                  </ul>
+					<a href="tripy-SeeAllScene.html" style="font-weight: bold;">所有景點</a>
+								
+				</li>
+				<li>
+					<a href="tripy-AddNewScene.html" style="font-weight: bold;">新增景點</a>			
+				</li>
+				
+				<li>
+					<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
+				</li>
+				<li>
+					<a href="tripy-SeeAllAdmin.html" style="font-weight: bold;">所有管理員</a>
+				</li>
+				<li id="logout">
                 </li>
               </ul>
             </div>
@@ -478,6 +472,58 @@
             //unsuccesful
             alert("無法連線到伺服器!(updateName)");
           },
+        });
+      }
+      //logout
+		$("#logout").empty();
+        var logout_html = "";
+         logout_html +="<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#logout").append(logout_html);
+        
+        
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
         });
       }
 	</script>
