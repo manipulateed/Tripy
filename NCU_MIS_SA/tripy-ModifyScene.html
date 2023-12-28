@@ -46,13 +46,7 @@
 					<div class="logo">
 						<a href="index-admin.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
 					</div>
-					<!-- search box -->	
-					<div class="search-box">
-							<!-- Search -->
-							<form class="flex-wr-c-c w-100">
-								<input class="size-a-21 bg-none t1-s-5 cl-6 plh-6 bo-tbl-1 bcl-11 p-rl-20" type="text" name="search" placeholder="搜尋">
-							</form>
-					</div>
+
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu respon-sub-menu">
@@ -223,7 +217,7 @@
                 var url_string = window.location.href;
                 var url = new URL(url_string);
                 var scene_id = url.searchParams.get("scene_id");
-				$("#back").attr("href", "tripy-SeeAllInfo.html");
+				$("#back").attr("href", "tripy-SeeAllScene.html");
 
 				var o_name, o_address, o_phone, o_opentime, o_detail;
 		  		function getSceneData() {
@@ -251,7 +245,7 @@
 
                 $("#submit").click(function submit() {
 
-                   swal.fire({
+                   Swal.fire({
 						  icon: "question",
 						  title: "Are You Sure?",
 						  text: "確定要修改景點資訊嗎?",
@@ -269,7 +263,6 @@
 									    "name": $("#name").text(),
 									    "images": "",
 									    "id": scene_id,
-									    "old": o_scene
 									};
 					
 					                // 將JSON格式轉換成字串
@@ -286,7 +279,7 @@
 					                        timeout: 5000,
 					                        success: function (response) {
 					                            if(response.status == 200){
-													swal.fire({
+													Swal.fire({
 										                    icon: "success",
 										                    title: "Success!",
 										  					text: response.message,
@@ -310,7 +303,7 @@
 	              
 	              $("#clean").click(function submit() {
 
-                   swal.fire({
+                   Swal.fire({
 						  icon: "question",
 						  title: "Are You Sure?",
 						  text: "確定要清除變更嗎?",
