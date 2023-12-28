@@ -266,40 +266,25 @@
                 confirmButtonText: "OKay",
               });
             } else {
-                // 將資料組成JSON格式
-                var data_object = {
-                  scene_id: scene_id,
-                  user_id: user_id,
-                  context: context,
-                };
-
-                // 將JSON格式轉換成字串
-                var data_string = JSON.stringify(data_object);
-
-                // 發出POST的AJAX請求
+               // 發出POST的AJAX請求
                 $.ajax({
-                  type: "POST",
-                  url: "api/comment.do",
-                  data: data_string,
+                  type: "GET",
+                  url: "api/scene.do",
+                  data: "keyword="+context,
                   crossDomain: true,
                   cache: false,
                   dataType: "json",
                   timeout: 5000,
                   success: function (response) {
                     if (response.status == 200) {
-                      swal
-                        .fire({
-                          icon: "success",
-                          title: "Success!",
-                          text: "評論成功",
-                          confirmButtonText: "OKay",
-                        })
-                        .then((result) => {
-                          if (result) {
-                            // 導向到新的頁面
-                            window.location.href = url;
-                          }
-                        });
+                      $("#panel").html("");
+                      	var inner_html = "";	
+			
+			            $.each(response.response.data, function (k, v) {
+			              inner_html += getSearch(v);
+			            });
+			
+			            $("#panel").append(inner_html);
                     }
                   },
                   error: function () {
@@ -307,7 +292,48 @@
                   },
                 });
               }
-            }         
+            }   
+      function getSearch(data){
+		  var table_html = "";
+	        table_html +=
+	          '<div class="col-sm-6 col-lg-4 p-b-45 isotope-item market-n">';
+	        table_html += '<div class="flex-col-s-c">';
+	        table_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
+	        table_html +=
+	          '<img src="images/' + data.Scene_info.name + '.jpg" alt="IMG" height= "280px">';
+	        table_html +=
+	          '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
+	        table_html +=
+	          '<a href="tripy-SceneInfo.html?city_id=' +
+	          id +
+	          "&user_id=" +
+	          user_id +
+	          "&scene_id=" +
+	          data.id +
+	          "&email=" +
+	          email +
+	          "&password=" +
+	          password +
+	          '" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
+	        table_html += "看評論";
+	        table_html += "</a>";
+	        table_html += "</div>";
+	        table_html += "</div>";
+	        table_html +=
+	          '<a href="tripy-SceneInfo.html?city_id=' +
+	          id +
+	          "&user_id="+user_id+"&scene_id=" +
+	          data.Scene_info.id +
+	          "&email=" +
+	          email +
+	          "&password=" +
+	          '" class="t1-m-1 cl-3 hov-link2 trans-02">';
+	        table_html += data.Scene_info.name;
+	        table_html += "</a>";
+	        table_html += "</div>";
+	        table_html += "</div>";
+	        return table_html;
+	  }      
       function getCitySceneData() {
         $.ajax({
           type: "GET",
@@ -381,7 +407,7 @@
         table_html +=
           '<a href="tripy-SceneInfo.html?city_id=' +
           id +
-          "&user_id=2&scene_id=" +
+          "&user_id="+user_id+"&scene_id=" +
           data.id +
           "&email=" +
           email +

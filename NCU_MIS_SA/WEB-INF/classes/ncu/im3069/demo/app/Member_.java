@@ -1,8 +1,8 @@
 package ncu.im3069.demo.app;
 
-import java.util.ArrayList;
 
-import org.json.JSONArray;
+
+
 import org.json.JSONObject;
 
 public class Member_ {
@@ -20,16 +20,10 @@ public class Member_ {
     
     private String sex;
     
-    private String idcard;
-    
-    private ArrayList<Collect_List> cl = new ArrayList<Collect_List>();
- 
-    private ArrayList<ItineraryList> il = new ArrayList<ItineraryList>();;
+    private String idcard;   
     
     /** mh，MemberHelper之物件與Member相關之資料庫方法（Sigleton） */
     private Member_Helper Memh =  Member_Helper.getHelper();
-    private CollectListHelper CLh =  CollectListHelper.getHelper();
-    private ItineraryListHelper ILh =  ItineraryListHelper.getHelper();
     /**
      * 實例化（Instantiates）一個新的（new）Member物件<br>
      * 採用多載（overload）方法進行，此建構子用於建立會員資料時，產生一名新的會員
@@ -62,8 +56,6 @@ public class Member_ {
         setPassword(password);
         setSex(sex);
         setIdCard(idcard);
-//        getCollect_ListFromDB();
-//        getItinerary_ListFromDB();
     }
     
     public int getId() {
@@ -95,23 +87,6 @@ public class Member_ {
         return this.idcard;
     }
     
-    public ArrayList<Collect_List> getCollect_List(){
-    	return this.cl;
-    }
-    
-    public ArrayList<ItineraryList> getItinerary_List(){
-    	return this.il;
-    }
-    
-    private void getCollect_ListFromDB() {
-		ArrayList<Collect_List> cl = CLh.getCollectListByUserId(this.id);
-		this.cl = cl;
-	}
-    
-    private void getItinerary_ListFromDB() {
-		ArrayList<ItineraryList> il = ILh.getItineraryListByUserId(this.id);
-		this.il = il;
-	}
     
     public void setId(int id) {
     	this.id = id;
@@ -156,32 +131,9 @@ public class Member_ {
         return jso;
     }
     
-    public JSONArray getCollect_ListData() {
-        JSONArray result = new JSONArray();
-
-        for(int i=0 ; i < this.cl.size() ; i++) {
-            result.put(this.cl.get(i).getCollectListData());
-        }
-
-        return result;
-    }
-    
-    public JSONArray getItinerary_ListData() {
-        JSONArray result = new JSONArray();
-
-        for(int i=0 ; i < this.il.size() ; i++) {
-            result.put(this.il.get(i).getItineraryListData());
-        }
-
-        return result;
-    }
-    
     public JSONObject getMemberAllInfo() {
         JSONObject jso = new JSONObject();
         jso.put("Member_info", getMemberData());
-        jso.put("Collect_List_info", getCollect_ListData());
-        jso.put("Itinerary_List_info", getItinerary_ListData());
-
         return jso;
 	}
   //* FUNCTION
