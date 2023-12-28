@@ -69,7 +69,7 @@ public class ItineraryItemController extends HttpServlet{
         } catch (Exception e) {
         	e.printStackTrace();
         } 
-                
+        System.out.println(d_);       
         /** 建立一個新的收藏物件 */
         ItineraryItem iti = new ItineraryItem(m, d_, order);
         

@@ -257,7 +257,7 @@
         var url_string = window.location.href;
         var url = new URL(url_string);
         var email = url.searchParams.get("email");
-        var password = url.searchParams.get("password");       
+        var password = url.searchParams.get("password");
         var sql_num = 0;
 
         //作為儲存更改資料前的變數(old)
@@ -268,7 +268,7 @@
         var email_o = "";
 
         //作為取得的user id
-        var user_id = url.searchParams.get("user_id");
+        var user_id = "";
 
         function getMember() {
           $.ajax({
@@ -281,6 +281,8 @@
             timeout: 5000,
             success: function (response) {
               if (response.status == 200) {
+				 console.log(email,password);
+				 console.log(response);
                 //先取得要顯示在頁面上的
                 document.getElementById("member_name").innerHTML =
                   response["response"]["data"][0]["data"][0]["name"];

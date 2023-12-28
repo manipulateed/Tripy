@@ -370,8 +370,8 @@
                 //跟後端連線成功
                 if (response.status == 200) {
                   console.log(response.response.data);
-                  swal(`已成功刪除`);
-                  getAll();
+                  swal("已成功刪除");
+                  getCLItem(CL_id);
                 }
                 console.log(response);
               },

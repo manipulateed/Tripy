@@ -53,7 +53,7 @@ public class AdminController extends HttpServlet{
 	          }
 	          else if (Admh.getByEmail(email, password).has("error")) {
 	              // 代表發生了錯誤
-	              JSONObject errorResponse = Admh.getByEmail(email, password);
+	              Admh.getByEmail(email, password);
 	              
 	              String resp = "{\"status\": \'400\' , \"message\": \'查無此帳號或是密碼輸入錯誤！\', \'response\': \'\'}";
 	              jsr.response(resp, response);
