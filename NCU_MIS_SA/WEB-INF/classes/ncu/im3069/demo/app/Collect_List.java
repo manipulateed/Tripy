@@ -12,7 +12,6 @@ public class Collect_List {
     //收藏清單內容
     private ArrayList<CollectionItem> list = new ArrayList<CollectionItem>();
     // ch，CollectionHelper 之物件與 Collection 相關之資料庫方法（Sigleton）
-    private CollectionItemHelper cih = CollectionItemHelper.getHelper();
 
     //建構式for建立收藏清單資料(產生一個新的收藏清單)
     public Collect_List(String name){
@@ -53,15 +52,6 @@ public class Collect_List {
     public ArrayList<CollectionItem> getCollectionScene() {
         return this.list;
     }
-
-    /**
-     * 從 DB 中取得收藏景點(上面的arraylist)
-     */
-    private void getCollectSceneFromDB() {
-        ArrayList<CollectionItem> data = cih.getAllByCollectionListId(String.valueOf(id));
-        this.list = data;
-    }
-
  
     //取得收藏清單基本資料
     public JSONObject getCollectListData() {
