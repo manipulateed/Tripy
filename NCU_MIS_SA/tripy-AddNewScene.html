@@ -3,8 +3,7 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
@@ -65,10 +64,6 @@
 								
 							</li>
 							<li>
-								<a href="tripy-ModifyScene.html" style="font-weight: bold;">修改景點</a>
-								
-							</li>
-							<li>
 								<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
 								
 							</li>
@@ -112,16 +107,38 @@
                 
     
                 <div class="row justify-content-center">
-                    <div class="col-sm-10 col-md-6 p-b-30">
-                         <div class="container">
-							<form action="upload.php" method="POST" enctype="multipart/form-data" id="form_file_upload">
-								<div class="form-group">
-									<label for="uploadFile"> 選擇照片上傳 : </label>
-									<input type="file" name="uploadFile" id="uploadFile" required>
-								</div>
-								<input type="submit" value="File Upload" name="submit_file" class="btn btn-success submit" id="submit_file">
-							</form>
-						</div>
+                    <div class="col-sm-10 col-md-6 p-b-30" id="message">
+						<img class="max-s-full" src="" alt="IMG">
+						
+						<form id="upload_form" enctype="multipart/form-data">
+							新增圖片: <input type="file" name="photo" id="fileInput" /><br>
+							<input type="button" value="Upload" onclick="uploadFile()" />
+						</form>
+					</div>
+					
+					<img id="uploadedImage"></img>
+					<script>
+						function uploadFile() {
+							var formData = new FormData();
+							formData.append("photo", $("#fileInput")[0].files[0]);
+
+						
+							$.ajax({
+								url: "upload.do",
+								type: "POST",
+								data: formData,
+								processData: false,
+								contentType: false,
+								success: function(response) {
+									//$("#message").html(response);
+									alert("成功");
+								},
+								error: function(error) {
+									$("#message").html("Error uploading file.");
+								}
+							});
+						}
+					</script>
                     
     
                     <div class="col-sm-10 col-md-6 p-b-30">
@@ -432,7 +449,7 @@
         
         
       function Logout() {
-        swal({
+        swal.fire({
           title: `確認要登出嗎`,
           icon: "warning",
           dangerMode: true,
@@ -453,7 +470,7 @@
             user_id = null;
             email = null;
             password = null;
-            swal("您已成功登出", {
+            swal.fire("您已成功登出", {
               icon: "success",
               buttons: {
                 confirm: {
@@ -475,6 +492,20 @@
           }
         });
       }
+      /*
+						function readURL(input){
+
+							if(input.files && input.files[0]){
+ 								var reader = new FileReader();
+  								reader.onload = function (e) {
+	 								$("#preview_uploadImg").attr('src', e.target.result);
+  								}
+  								reader.readAsDataURL(input.files[0]);
+								console.log(input.files[0]);
+								console.error(input.files[0]);
+							}
+						}
+						*/
 				</script>
             </div>
         </div>
