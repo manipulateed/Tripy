@@ -3,6 +3,7 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
   	<script src="statics/js/jquery-confirm.js"></script>
@@ -43,7 +44,7 @@
 				<div class="limiter-menu-desktop container">					
 					<!-- Logo desktop -->		
 					<div class="logo">
-						<a href="index.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
+						<a href="index-admin.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
 					</div>
 					<!-- search box -->	
 					<div class="search-box">
@@ -56,25 +57,27 @@
 					<div class="menu-desktop">
 						<ul class="main-menu respon-sub-menu">
 							<li>
-								<a href="tripy-City.html" style="font-weight: bold;">景點</a>
+								<a href="tripy-SeeAllScene.html" style="font-weight: bold;">所有景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-StartPlanning.html" style="font-weight: bold;">觀光行程</a>
+								<a href="tripy-AddNewScene.html" style="font-weight: bold;">新增景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-FavoriteList.html" style="font-weight: bold;">我的收藏</a>
+								<a href="tripy-ModifyScene.html" style="font-weight: bold;">修改景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-login.html" style="font-weight: bold;">登入</a>
-								<ul class="sub-menu bold-chinese-text">
-									<li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
-									<li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
-									<li><a href="tripy-AddAdmin.html">新增管理員</a></li>
-								</ul>
+								<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
+								
 							</li>
+							<li>
+								<a href="tripy-SeeAllAdmin.html" style="font-weight: bold;">所有管理員</a>
+								
+							</li>
+							<li id="logout">
+                			</li>
 						</ul>
 					</div>					
 				</div>
@@ -103,21 +106,22 @@
                                 返回
                                
                             </a>
-                        
-							<h4 class="t1-m-1 text-uppercase cl-3 kit-underline1 p-b-6 bold-chinese-text">
-								我的收藏
-							</h4>
-
-							<ul class="p-t-22" id="CL">
-								
-						
-							</ul>
+                        							
 						</div>
 
 						<!-- map -->
 						<iframe id="google" class="m-b-45 p-t-20 p-r-20" src=""
                         width="300px;" height = "270px;"  style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
+                        
+                        <div class="size-w-0 flex-wr-s-c m-b-11"style="display: flex;justify-content: space-between;align-items: center;">
+							<button  type="button"id="clean" class="btn btn-outline-dark d-inline-flex flex-c-c size-a-23 bg-5 p-rl-10 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 borderOne bold-chinese-text"disabled>
+								清除變更
+							</button>
+							<button  type="button" id="submit" class="btn btn-outline-success d-inline-flex flex-c-c size-a-23 bg-5 p-rl-10 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 borderOne bold-chinese-text"disabled>
+								更新變更
+							</button>
+						</div>
 						
 					</div>
 				</div>
@@ -125,22 +129,26 @@
 				<div class="col-sm-10 col-md-8 col-lg-9 p-b-30">
 					<div class="p-l-50 p-l-15-sr991 p-l-0-sr767">
 						<!-- News detail -->
-						<div class="m-b-25 ">
-							<div style="height:500px; margin-top:-50px; margin-bottom: 30px;">
-								<img class="m-b-45 max-s-full"  src="" alt="IMG" id="image" style="background-size: cover; height: 100%; width:100%">
-                           	</div>
+						<div class="m-b-25 ">						
                             <ul style="width: 100%;"> 
+								<li class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:20px">
+                                    <span class="size-w-0 flex-wr-s-c m-b-11">
+										<div class="p-rl-20 bo-l-1 bcl-12">
+										<div style="height:200px; margin-top:-50px; margin-bottom: 30px;">
+											<img class="m-b-45 max-s-full"  src="" alt="IMG" id="image" style="background-size: cover; height: 100%; width:100%;">
+                           				</div>
+										</div>
+                                        
+                                    </span>
+	                            </li>
+	                            
 	                            <li class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:20px">
                                     <span class="size-w-0 flex-wr-s-c m-b-11">
 										<div class="p-rl-20 bo-l-1 bcl-12">
 										<h4 class="t1-b-3 cl-10 m-b-11 bold-chinese-text" id= "name">
 
 										</h4>
-										</div>
-                                        <span class="p-rl-20 bo-l-1 bcl-12" style="margin-bottom: -5px;">
-                                            <i class="fs-14 cl-7 fa fa-pencil m-r-2"></i>                                        
-                                        	<a href="javascript:void(0);" onclick="modifyname()" class="t1-s-2 cl-11 hov-link3">編輯</a>
-                                        </span>
+										</div>                                       
                                     </span>
 	                            </li>
 	                            
@@ -241,77 +249,86 @@
 			  	getSceneData();
 			  			  	
 
-                $('#form').submit(function(e) {
-					e.preventDefault();
-                    submit();
-                });
+                $("#submit").click(function submit() {
 
-                function submit() {
-                    var context = $('#context').val();
-
-                    if (context.trim() === "") {
-						Swal.fire({
-						  icon: "error",
-						  title: "Oops...",
-						  text: "評論內容不能為空!",
-						  confirmButtonText: "OKay",	
-						});
-                    }          
-                    else {
-						if(user_id == null){
-							Swal.fire({
-								  icon: "warning",
-								  title: "Unapproved",
-								  text: "非會員無法評論!",
-								  confirmButtonText: "OKay",				                  
+                   swal.fire({
+						  icon: "question",
+						  title: "Are You Sure?",
+						  text: "確定要修改景點資訊嗎?",
+						  confirmButtonText: "Yes",
+						  showCancelButton: true,
+						  cancelButtonText: "No",				                  
 							}).then((result) => {
-							   if (result.isConfirmed) {
-							         $('#context').val("");
-							    }
-    						});
-						}
-						else{						
-	                        // 將資料組成JSON格式
-	                        var data_object = {
-	                            "scene_id": scene_id,
-	                            "user_id": user_id,
-	                            "context": context
-	                        };
-	
-	                        // 將JSON格式轉換成字串
-	                        var data_string = JSON.stringify(data_object);
-	
-	                        // 發出POST的AJAX請求
-	                        $.ajax({
-	                                type: "POST",
-	                                url: "api/comment.do",
-	                                data: data_string,
-	                                crossDomain: true,
-	                                cache: false,
-	                                dataType: 'json',
-	                                timeout: 5000,
-	                                success: function (response) {
-	                                    if(response.status == 200){
-											swal.fire({
-								                    icon: "success",
-								                    title: "Success!",
-								  					text: "評論成功",
-								  					confirmButtonText: "OKay",
-								                  }).then((result) => {
-								                    if (result) {
-								                      // 導向到新的頁面
-								                     window.location.href = url;
-								                  } 
-								              });
-	                                    }    
-	                                },
-	                                error: function () {
-	                                    alert("無法連線到伺服器！");
-	                                }
-	                        });
-                    	}
-                    }
-                }
+							   if (result.isConfirmed) {							
+					                // 將資料組成JSON格式
+					                var data_object = {
+									    "detail": $("#detail").text(),
+									    "address": $("#address").text(),
+									    "phone": $("#phone").text(),
+									    "opentime": $("#opentime").text(),
+									    "name": $("#name").text(),
+									    "images": "",
+									    "id": scene_id,
+									    "old": o_scene
+									};
+					
+					                // 將JSON格式轉換成字串
+					                var data_string = JSON.stringify(data_object);
+					
+					                // 發出POST的AJAX請求
+					                $.ajax({
+					                        type: "PUT",
+					                        url: "api/scene.do",
+					                        data: data_string,
+					                        crossDomain: true,
+					                        cache: false,
+					                        dataType: 'json',
+					                        timeout: 5000,
+					                        success: function (response) {
+					                            if(response.status == 200){
+													swal.fire({
+										                    icon: "success",
+										                    title: "Success!",
+										  					text: response.message,
+										  					confirmButtonText: "OKay",
+										                  }).then((result) => {
+										                    if (result) {
+										                      // 導向到新的頁面
+										                     window.location.href = url;
+										                  } 
+										              });
+					                            }    
+					                        },
+					                        error: function () {
+					                            alert("無法連線到伺服器！");
+					                        }
+					                 });		                       	    
+			            }							
+	             	});  
+	              });
+	              
+	              
+	              $("#clean").click(function submit() {
+
+                   swal.fire({
+						  icon: "question",
+						  title: "Are You Sure?",
+						  text: "確定要清除變更嗎?",
+						  confirmButtonText: "Yes",
+						  showCancelButton: true,
+						  cancelButtonText: "No",				                  
+							}).then((result) => {
+							   if (result.isConfirmed) {							
+					                // 將資料組成JSON格式
+								    $("#detail").html(o_detail);
+								    $("#address").html(o_address);
+								    $("#phone").html(o_phone);
+								    $("#opentime").html(o_opentime);
+								    $("#name").html(o_name);			                                    	    
+			            }							
+	             	});  
+	              });                    	
+	                                  	
 				function updateHTML(data) {
 					$("#name").html(data[0]['Scene_info']['name']);
 					$("#address").html(data[0]['Scene_info']['address']);
@@ -319,28 +336,13 @@
 					$("#opentime").html(data[0]['Scene_info']['opentime']);
 					$("#detail").html(data[0]['Scene_info']['detail']);
 					$("#image").attr("src", "images/"+data[0]['Scene_info']['name']+".jpg");
-					
-					o_scene = $("#name").text();
 					o_address = $("#address").text();
 					o_phone = $("#phone").text();
 					o_opentime = $("#opentime").text();
 					o_detail = $("#detail").text();
 					getMap(data[0]['Scene_info']['name']); 				
 				  }
-				 	
-				  async function modifyname(){
-						const inputValue = $("#name").text();
-						const { value: name } = await Swal.fire({
-						  title: "請輸入景點名稱...",
-						  input: "text",
-						  inputLabel: "景點名稱",
-						  inputValue,
-						  showCancelButton: true,						  
-						});
-						if (name) {
-						  $("#name").html(name); 
-						}						
-					}
+				 					  
 					async function modifyaddress(){
 						const inputValue = $("#address").text();
 						const { value: address } = await Swal.fire({
@@ -352,6 +354,9 @@
 						});
 						if (address) {
 						  $("#address").html(address); 
+						  if($("#name").text() !== o_name){
+							  $("#submit, #clean").prop("disabled", false);
+						  }
 						}
 					}
 					async function modifyphone(){
@@ -365,6 +370,9 @@
 						});
 						if (phone) {
 						  $("#phone").html(phone); 
+						  if($("#phone").text() !== o_phone){
+							  $("#submit, #clean").prop("disabled", false);
+						  }
 						}
 					}
 					async function modifyopentime(){
@@ -378,6 +386,9 @@
 						});
 						if (opentime) {
 						  $("#opentime").html(opentime); 
+						  if($("#opentime").text() !== o_opentime){
+							  $("#submit, #clean").prop("disabled", false);
+						  }
 						}
 					}
 					async function modifydetail(){
@@ -390,7 +401,10 @@
 						  showCancelButton: true,						  
 						});
 						if (detail) {
-					  		$("#detail").html(detail); 					
+					  		$("#detail").html(detail); 	
+					  		if($("#detail").text() !== o_detail){
+							  $("#submit, #clean").prop("disabled", false);
+						  }				
 						}															
 				    }						 				  
 				  
@@ -423,6 +437,59 @@
 						    }
 						});
 					}
+					//logout
+					$("#logout").empty();
+			        var logout_html = "";
+			         logout_html +=
+			          "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+			
+			        $("#logout").append(logout_html);
+			        
+			        
+			      function Logout() {
+			        swal({
+			          title: `確認要登出嗎`,
+			          icon: "warning",
+			          dangerMode: true,
+			
+			          buttons: {
+			            Btn: false,
+			            confirm: {
+			              text: "確認",
+			              visible: true,
+			            },
+			            cancel: {
+			              text: "取消",
+			              visible: true,
+			            },
+			          },
+			        }).then((value) => {
+			          if (value != null) {
+			            user_id = null;
+			            email = null;
+			            password = null;
+			            swal("您已成功登出", {
+			              icon: "success",
+			              buttons: {
+			                confirm: {
+			                  text: "確定",
+			                  value: true,
+			                  visible: true,
+			                  className: "btn-primary",
+			                  closeModal: true,
+			                },
+			              },
+			            }).then((value) => {
+			              if (value) {
+			                // 導向到新的頁面
+			                window.location.href = "index.html";
+			              }
+			            });
+			          } else {
+			            swal.close();
+			          }
+			        });
+			      }
 			</script>
 		</div>
 	</div>

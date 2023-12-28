@@ -194,6 +194,7 @@ public class SceneController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
+        
         /** 取出經解析到JSONObject之Request參數 */
         int id = jso.getInt("id");
         String address = jso.getString("address");
@@ -210,6 +211,7 @@ public class SceneController extends HttpServlet {
             }
         }
         
+              
         /** 建立一個新的會員物件 */
         Scene m = new Scene(id, name, address, detail, opentime, phone, images);
         

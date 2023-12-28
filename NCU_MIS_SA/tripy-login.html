@@ -240,10 +240,6 @@
 										
                                     }
                                     if(response.status == 200){
-<<<<<<< HEAD
-										//console.log(action);
-										
-										//alert("登入成功");
 										swal("登入成功", {
                     						icon: "success",
                    							buttons: {	
@@ -262,13 +258,7 @@
 								        	$('#login_member_password').val('');
 								        	getkey(email,password);					                    }
 					                  	});
-														        
-=======
-                                        window.location.href = "index.html";
-                                        alert("登入成功");
->>>>>>> 0c6eb92759eb3e3a9f225bc06a0e1aa6f573048e
                                     }
-
 
                                 },
                                 error: function () {
@@ -310,7 +300,7 @@
 						//管理員登入
 						if(character==2){
 							user_id = response1.response.data[0].id;		
-							var url = "index-admin.html?user_id=" + user_id + "&user_email=" + email +"&user_password=" + password;
+							var url = "index-admin.html?user_id=" + user_id + "&email=" + email +"&password=" + password;
 		                	window.history.pushState({}, '', url);		
 		                	window.location.href = url;
 						}
@@ -318,7 +308,7 @@
 						//會員登入取值
 						if(character==1){
 							user_id = response1.response.data[0].data[0].id;
-							var url = "index.html?user_id=" + user_id + "&user_email=" + email +"&user_password=" + password;
+							var url = "index.html?user_id=" + user_id + "&email=" + email +"&password=" + password;
 		                	window.history.pushState({}, '', url);		
 		                	window.location.href = url;
 							
@@ -387,11 +377,11 @@
           <script type="text/javascript">
             $(document).ready(function() {
                 // 處理表單點擊事件
-                var $form = $('#submit_SignUp');
-                $form.click(function() {
-                    submit_SignUp();
-                    
-                });
+ 
+                $("#b-form").submit(function (e) {
+            		e.preventDefault();
+            		submit_SignUp();
+         		 });
 
                 function submit_SignUp() { 
 					        
@@ -462,7 +452,6 @@
 
                         };
 
-
                         // 將JSON格式轉換成字串
                         var data_string = JSON.stringify(data_object);
                         
@@ -477,8 +466,6 @@
                                 dataType: 'json',
                                 timeout: 5000,
                                 success: function (response) {
-									
-									
 									if(response.status == 300){
 										//alert("欄位不能有空值");
                         				swal("欄位不能有空值", {

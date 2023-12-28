@@ -5,6 +5,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 <!--===============================================================================================-->
@@ -170,13 +171,13 @@
 				<div class="col-sm-10 col-md-4 col-lg-5 p-b-30">
                     <div class="col-sm-6 col-lg-5 p-b-10 isotope-item self " style="width: 100%">
                         <div id="Back"class="bg-0 h-full">
-                            <div id="ItineraryLabel" onclick="back()" class="d-inline-flex flex-row-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
+                            <div id="ItineraryLabel" onclick="selectedDate()" class="d-inline-flex flex-row-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
                                 <i class="fs-14 cl-0 fa fa-chevron-left m-r-2"></i>
                                 台南好好玩
                             </div>
                          
                             <form class="flex-wr-c-c size-a-2">
-                                <button id="button" onclick="selectedDate()" class="size-a-22 fs-18 cl-0 bg-11">
+                                <button class="size-a-22 fs-18 cl-0 bg-11">
                                     <i class="fa fa-calendar-check-o"></i>
                                 </button>
                                 <input id="selectedDate" class="swal-input size-a-21 bg-none t1-s-5 cl-6 plh-6 bo-tbl-1 p-rl-20" type="date">
@@ -376,213 +377,167 @@
         $("#ItineraryTable").append(Itinerary_html);
       }
 
-    //   function updateDateTable(data) {
-    //     $("#ItineraryTable").empty();
-    //     var Itinerary_html = "";
-
-    //     // 取得當前日期
-    //     var currentDate = new Date();
-
-    //     // 格式化日期（YYYY-MM-DD）
-    //     var formattedDate = currentDate.toISOString().split('T')[0];
-
-    //     // 設定日期輸入框的值
-    //     document.getElementById('selectedDate').value = formattedDate;
-
-    //     // 獲取選取的日期
-    //     var selectedDate = document.getElementById('selectedDate').value;
-
-    //     $.each(data, function (index, value) {
-    //         // 檢查日期是否與選取日期相符
-    //         if (value.date === selectedDate) {
-    //             Itinerary_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
-    //             Itinerary_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">';
-    //             Itinerary_html += '<img src="images/' + value.scene.name + '.jpg" alt="IMG">';
-    //             Itinerary_html += '</div>';
-    //             Itinerary_html += '<div class="cmt-text">';
-    //             Itinerary_html += '<div class="p-r-20 p-t-15">';
-    //             Itinerary_html += '<i class="fs-14 cl-11 fa fa-calendar m-r-2"></i>';
-    //             Itinerary_html += '<span class="t1-s-2 cl-11 ">';
-    //             Itinerary_html += value.date;
-    //             Itinerary_html += '</span></div><div class="bold-chinese-text p-t-5"><p class="t1-s-2 cl-3">';
-    //             Itinerary_html += value.scene.name;
-    //             Itinerary_html += '</p></div><div class="bold-chinese-text p-t-5"><p class="t1-s-1 cl-5">';
-    //             Itinerary_html += value.scene.address;
-    //             Itinerary_html += '</p></div></div></div>';
-    //         }
-    //     });
-
-    //     // 將結果顯示在 ItineraryTable 中
-    //     $("#ItineraryTable").append(Itinerary_html);
-    // }
 
 
-    //     function selectedDate(){
-    //         $.ajax({
-    //             type: "GET", //注意！！
-    //             url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryItem.do",
-    //             crossDomain: true,
-    //             cache: false,
-    //             dataType: "json",
-    //             data: "list_id=" + list_id,        
-    //             timeout: 10000,
-    //             success: function (response) {
-    //                 if (response.status == 200) {
-    //                     updateDateTable(response.response.data);
-    //                 }
-    //             },
-    //             error: function () {
-    //                 alert("無法連線到伺服器！");
-    //             },
-    //         });
-    //     }
-
-        function selectedDate() {
-        // 獲取選取的日期
-        var selectedDate = document.getElementById('selectedDate').value;
-
-        // 發送 HTTP 請求到後端 API
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryItem.do",
-            crossDomain: true,
-            cache: false,
-            dataType: "json",
-            data: "list_id="+ list_id,
-             //   selectedDate: selectedDate  // 將選取的日期作為參數傳遞給後端
-            timeout: 10000,
-            success: function (response) {
-                if (response.status == 200) {
-                    updateNewIITable(response.response.data);
-                }
-            },
-            error: function () {
-                alert("無法連線到伺服器！");
-            },
-        });
-    }
-
-    function updateNewIITable(data) {
+    function updateNewIITable(Itdata,PlanDate) {
         // 清空表格
         $("#ItineraryTable").empty();
+        $.ajax({
+          type: "GET", //注意！！
+          url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryItem.do",
+          crossDomain: true,
+          cache: false,
+          dataType: "json",
+          data: "list_id=" + list_id,        
+          timeout: 10000,
+          success: function (response) {
 
-        var Itinerary_html = "";
-        var promises = [];
+            if (response.status == 200) {
+               
+              //updateIITable(response.response.data);
+               // var itineraryDate = new Date(response.response.data.date);
+                var startDate =new Date(Itdata.collect_List_info.start);
+                var endDate =new Date(Itdata.collect_List_info.end);
+                var inputDate = new Date(PlanDate + "T08:00:00");
+                var Itinerary_html = "";
+                $.each(response.response.data, function (index, value) {
+                   // var itineraryDate = new Date(value.date);
 
-        $.each(data, function (index, value) {
-            var ajaxPromise = $.ajax({
-                type: "GET",
-                url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
-                data: {
-                    "user_id": user_id,
-                    "id": list_id
-                },
-                crossDomain: true,
-                cache: false,
-                dataType: "json",
-                timeout: 10000
-            }).then(function (response) {
-                if (response.status == 200) {
-                    // 這裡加入創建行程表格的程式碼
-                    var itineraryDate = new Date(value.date);
-                    var startDate = new Date(response.response.data.collect_List_info.start);
-                    var endDate = new Date(response.response.data.collect_List_info.end);
                     // 檢查日期是否在 start 和 end 之間
-                    if (itineraryDate >= startDate && itineraryDate <= endDate) {
-                        Itinerary_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
-                        // ... (其他行程表格的 HTML 組成)
+                    if (inputDate >= startDate && inputDate <= endDate) {
+                        if (PlanDate === value.date) {
+                            Itinerary_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
+                            Itinerary_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">';
+                            Itinerary_html += '<img src="images/'+ value.scene.name +'.jpg" alt="IMG">';
+                            Itinerary_html += '</div>';
+                            Itinerary_html += '<div class="cmt-text">';
+                            Itinerary_html += '<div class="p-r-20 p-t-15">';
+                            Itinerary_html += '<i class="fs-14 cl-11 fa fa-calendar m-r-2"></i>';
+                            Itinerary_html += '<span class="t1-s-2 cl-11 ">';
+                            Itinerary_html += value.date;
+                            Itinerary_html += '</span></div><div class="bold-chinese-text p-t-5"><p class="t1-s-2 cl-3">';
+                            Itinerary_html += value.scene.name;
+                            Itinerary_html += '</p></div><div class="bold-chinese-text p-t-5"><p class="t1-s-1 cl-5">';
+                            Itinerary_html += value.scene.address;
+                            Itinerary_html += '</p></div></div></div>';
+                            console.log("符合日期範圍的元素:", inputDate);
+                        }
+                        console.log("符合日期範圍的元素:", inputDate);
                     }
-                }
-            });
-
-            promises.push(ajaxPromise);
-        });
-
-        // 等待所有的 AJAX 請求完成
-        $.when.apply($, promises).then(function () {
-            // 所有的 AJAX 請求都已經完成，將新的行程表格添加到 #ItineraryTable
-            $("#ItineraryTable").append(Itinerary_html);
-        }).fail(function () {
+                    else {
+                        // unsuccessful
+                        swal("選取日期不在範圍內");}
+                        console.log("開始日期:", startDate);
+                        console.log("結束日期:", endDate);
+                });   
+                // 將新的行程表格添加到 #ItineraryTable
+                $("#ItineraryTable").append(Itinerary_html);
+            }
+        else {
+                // unsuccessful
+                swal("選取日期不在範圍內");
+            }
+        },
+        error: function () {
             alert("無法連線到伺服器！");
-        });
-    }
-
-
-    // function updateNewIITable(data) {
-    //     // 清空表格
-    //     $("#ItineraryTable").empty();
-
-    //     var Itinerary_html = "";
-    //     $.each(data, function (index, value) {
-    //         $.ajax({
-    //         type: "GET", //注意！！
-    //         url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
-    //         data: {
-    //             "user_id": user_id,
-    //             "id": list_id
-    //             },
-    //         crossDomain: true,
-    //         cache: false,
-    //         dataType: "json",
-    //         timeout: 10000,
-    //         success: function (response) {
-    //             if (response.status == 200) {
-    //                 // 這裡加入創建行程表格的程式碼
-    //                 var itineraryDate = new Date(value.date);
-    //                 var startDate =new Date(response.response.data.collect_List_info.start);
-    //                 var endDate =new Date(response.response.data.collect_List_info.end);
-    //                 // 檢查日期是否在 start 和 end 之間
-    //                 if (itineraryDate >= startDate && itineraryDate <= endDate) {
-    //                     Itinerary_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">'
-    //                     Itinerary_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">'
-    //                     Itinerary_html += '<img src="images/'+ value.scene.name +'.jpg" alt="IMG">'
-    //                     Itinerary_html += '</div>'
-    //                     Itinerary_html += '<div class="cmt-text">'
-    //                     Itinerary_html += '<div class="p-r-20 p-t-15">'
-    //                     Itinerary_html += '<i class="fs-14 cl-11 fa fa-calendar m-r-2"></i>'
-    //                     Itinerary_html += '<span class="t1-s-2 cl-11 ">'
-    //                     Itinerary_html += value.date
-    //                     Itinerary_html += '</span></div><div class="bold-chinese-text p-t-5"><p class="t1-s-2 cl-3">'
-    //                     Itinerary_html += value.scene.name
-    //                     Itinerary_html += '</p></div><div class="bold-chinese-text p-t-5"><p class="t1-s-1 cl-5">'
-    //                     Itinerary_html += value.scene.address
-    //                     Itinerary_html += '</p></div></div></div>'
-    //                 }
-    //             }
-    //         },
-    //         error: function () {
-    //             alert("無法連線到伺服器！");
-    //         },
-    //         });
-    //     });
-
-    //     // 將新的行程表格添加到 #ItineraryTable
-    //     $("#ItineraryTable").append(Itinerary_html);
-    // }
-
-        // function getItineraryDate() {
-        //     $.ajax({
-        //     type: "GET", //注意！！
-        //     url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
-        //     data: {
-        //         "user_id": user_id,
-        //         "id": list_id
-        //         },
-        //     crossDomain: true,
-        //     cache: false,
-        //     dataType: "json",
-        //     timeout: 10000,
-        //     success: function (response) {
-        //         if (response.status == 200) {
-        //             response.response.data.collect_List_info.start - response.response.data.collect_List_info.end;
+        },
+    });
+}
+    
+//         var selectedDate = function (){
+//             $.ajax({
+//             type: "GET", //注意！！
+//             url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
+//             data: {
+//                 "user_id": user_id,
+//                 "id": list_id
+//                 },
+//             crossDomain: true,
+//             cache: false,
+//             dataType: "json",
+//             timeout: 10000,
+//             success: function (response) {
+//                 if (response.status == 200) {
+//                     updateNewIITable(response.response.data);
+//                 }
+//             },
+//             error: function () {
+//                 alert("無法連線到伺服器！");
+//             },
+//             });
+//         }
+        var selectedDate = function () {
+			swal({
+			title: "選擇日期",
+			content: {
+				element: "div",
+				attributes: {
+					innerHTML: `
+						<li class="row col bo-b-1 bcl-14 m-b-18"style="margin-bottom:30px">
+							<label >選擇日期</label>
+							<input id="PlanDate" class="swal-input" type="date">
+						</li>
+					`
+				}
+			},
+			buttons: {
+				Btn: false,
+				confirm: {
+					text: "確認",
+					visible: true,
+				},
+				cancel: {
+					text: "取消",
+					visible: true,
+				},
+			},
+			}).then((result) => {
+				if (result) {
+					const PlanDate = document.getElementById('PlanDate').value;
+					if (PlanDate) {
+                        console.log("成功取得日期值:", PlanDate);
+                        $.ajax({
+                            type: "GET", //注意！！
+                            url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
+                            data: {
+                                "user_id": user_id,
+                                "id": list_id
+                                },
+                            crossDomain: true,
+                            cache: false,
+                            dataType: "json",
+                            timeout: 10000,
+                            success: function (response) {
+                                if (response.status == 200) {
+                                    updateNewIITable(response.response.data,PlanDate);
+                                }
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            },
+                            });
+                    } else {
+                        console.log("未能取得有效的日期值");
+                        // 在這裡處理未能取得日期值的情況
+                    }
+				} else {
+					// 使用者按下取消按鈕
+					swal.close();
+				}
+			});
+		};
+        // function selectedDate() {
+        //     alert("Button clicked!");
+        //     var itineraryDate = new Date($("#selectedDate").val());
+        //         if (itineraryDate) {
+        //             console.log("成功取得日期值:", itineraryDate);
+        //             // 在這裡執行您的邏輯
+        //         } else {
+        //             console.log("未能取得日期值");
+        //             // 在這裡處理未能取得日期值的情況
         //         }
-        //     },
-        //     error: function () {
-        //         alert("無法連線到伺服器！");
-        //     },
-        //     });
+            
         // }
-
         
 		
       function handleSelectChange() {
@@ -610,7 +565,14 @@
             
                 $("#Collection_panel").empty();
                 $("#Collection_panel").append(Collection_panel);
-                    
+                let items = document.querySelectorAll('#Collection_panel > div');
+                items.forEach(item => {
+                    $(item).prop('draggable', true);
+                    item.addEventListener('dragstart', dragStart);
+                    item.addEventListener('dragenter', cancelDefault);
+                    item.addEventListener('dragover', cancelDefault);
+                    console.log("成功:", v);
+                });
             }
             },
           error: function () {
@@ -670,6 +632,60 @@
 
             $("#ItineraryLabel").append(Itinerary_html);
         }
+
+        // =============================================================
+        //拖曳收藏清單
+        let dropTarget = document.querySelector('#ItineraryTable')
+        dropTarget.addEventListener('drop', dropped)
+        dropTarget.addEventListener('dragenter', cancelDefault)
+        dropTarget.addEventListener('dragover', cancelDefault)
+        
+        // let items = document.querySelectorAll('#Collection_panel > div');
+        // items.forEach(item => {
+        //     $(item).prop('draggable', true);
+        //     item.addEventListener('dragstart', dragStart);
+        //     item.addEventListener('dragenter', cancelDefault);
+        //     item.addEventListener('dragover', cancelDefault);
+        // });
+
+        function dragStart(e) {
+            var index = $(e.target).index();
+            e.dataTransfer.setData('text/plain', index);
+        }
+
+        function dropped(e) {
+            cancelDefault(e);
+            let id = e.dataTransfer.getData("text/plain");
+            console.log("成功:", id);
+        }
+
+        function cancelDefault(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+
+
+        document.getElementById('Collection_panel').addEventListener('dragstart', function (e) {
+            // 確認觸發事件的元素是 div 元素
+            if (e.target.tagName.toLowerCase() === 'div') {
+                // 取得拖曳的元素
+                var draggedElement = e.target;
+
+                // 在這裡可以進行相應的處理，例如顯示元素的內容或 ID
+                console.log('拖曳的元素 ID:', draggedElement.id);
+                //console.log('拖曳的元素內容:', draggedElement.textContent);
+                
+                // 設置元素可拖曳
+                draggedElement.draggable = true;
+
+                // 添加拖曳事件監聽器
+                draggedElement.addEventListener('dragstart', dragStart);
+                draggedElement.addEventListener('dragenter', cancelDefault);
+                draggedElement.addEventListener('dragover', cancelDefault);
+            }
+        });
+
 
 	</script>
 	

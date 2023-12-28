@@ -372,14 +372,14 @@
         email = null;
       }
       var password = url.searchParams.get("password");
-      if ((password = "" || password == "null")) {
+      if (password == "" || password == "null") {
         password = null;
       }
 
       $(document).ready(function () {
         showCity();
         showIndex();
-        if (user_id != null && user_id != "") {
+        if (user_id != null && email != null && password != null) {
           showPlan();
           showFL();
           showName();
@@ -427,7 +427,7 @@
         $("#logout").empty();
         var logout_html = "";
         logout_html +=
-          "<button onclick='Logout()' style='font-weight: bold'>登出</button>";
+          "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
 
         $("#login").append(inner_html);
         $("#logout").append(logout_html);

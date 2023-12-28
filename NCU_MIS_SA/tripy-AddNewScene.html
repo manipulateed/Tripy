@@ -3,6 +3,7 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -43,7 +44,7 @@
 				<div class="limiter-menu-desktop container">					
 					<!-- Logo desktop -->		
 					<div class="logo">
-						<a href="index.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
+						<a href="index-admin.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
 					</div>
 					<!-- search box -->	
 					<div class="search-box">
@@ -56,25 +57,27 @@
 					<div class="menu-desktop">
 						<ul class="main-menu respon-sub-menu">
 							<li>
-								<a href="tripy-City.html" style="font-weight: bold;">景點</a>
+								<a href="tripy-SeeAllScene.html" style="font-weight: bold;">所有景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-StartPlanning.html" style="font-weight: bold;">觀光行程</a>
+								<a href="tripy-AddNewScene.html" style="font-weight: bold;">新增景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-FavoriteList.html" style="font-weight: bold;">我的收藏</a>
+								<a href="tripy-ModifyScene.html" style="font-weight: bold;">修改景點</a>
+								
 							</li>
-
 							<li>
-								<a href="tripy-login.html" style="font-weight: bold;">登入</a>
-								<ul class="sub-menu bold-chinese-text">
-									<li><a href="tripy-SeeAllMember.html">檢視所有會員</a></li>
-									<li><a href="tripy-SeeAllAdmin.html">檢視所有管理員</a></li>
-									<li><a href="tripy-AddAdmin.html">新增管理員</a></li>
-								</ul>
+								<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
+								
 							</li>
+							<li>
+								<a href="tripy-SeeAllAdmin.html" style="font-weight: bold;">所有管理員</a>
+								
+							</li>
+							<li id="logout">
+                			</li>
 						</ul>
 					</div>					
 				</div>
@@ -97,12 +100,7 @@
         <div class="bg-0 p-t-85 p-b-65">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
-                    <div class="col-auto p-b-50" name="back">
-                        <a href="index.html" class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20">
-                            返回
-                            <i class="fa fa-long-arrow-left m-l-15"></i>
-                        </a>
-                    </div>
+                    
                     <div class="col-auto flex-col-c-c p-b-50 "style="position: absolute; left: 660px;"> 
                         <h3 class="t1-b-1 cl-3 txt-center m-b-11">
                             新增景點
@@ -111,11 +109,20 @@
                     </div>
 
                 </div>
+                
     
                 <div class="row justify-content-center">
                     <div class="col-sm-10 col-md-6 p-b-30">
-                        <img class="max-s-full" src="images/product-detail-01.jpg" alt="IMG">
-                    </div>
+                         <div class="container">
+							<form action="upload.php" method="POST" enctype="multipart/form-data" id="form_file_upload">
+								<div class="form-group">
+									<label for="uploadFile"> 選擇照片上傳 : </label>
+									<input type="file" name="uploadFile" id="uploadFile" required>
+								</div>
+								<input type="submit" value="File Upload" name="submit_file" class="btn btn-success submit" id="submit_file">
+							</form>
+						</div>
+                    
     
                     <div class="col-sm-10 col-md-6 p-b-30">
                         <div class="p-l-15 flex-col-s-s p-l-0-sr767">
@@ -170,14 +177,14 @@
 	                            <li  class="bo-b-1 bcl-14 m-b-18" style="margin-bottom:30px;">									
 			                      <div class="rs1-select2 bor9 bg0" style=" margin-left: -20px;">								  
 			                          <select class="js-select2 size-a-102 bo-all-1 bcl-11 t1-m-2 plh-6 p-rl-20 w-full-sr575 m-tb-10 " id="city" name="city">										  
-										  <option >選擇城市...</option>
-			                              <option >雙北</option>
-			                              <option >桃園</option>
-			                              <option >台中</option>
-			                              <option >南投</option>
-			                              <option >高雄</option>
-			                              <option >花蓮</option>
-			                              <option >台東</option>
+										  <option value="0">選擇城市...</option>
+			                              <option value="1">雙北</option>
+			                              <option value="2">桃園</option>
+			                              <option value="3">台中</option>
+			                              <option value="4">南投</option>
+			                              <option value="5">高雄</option>
+			                              <option value="6">花蓮</option>
+			                              <option value="7">台東</option>
 			                          </select>
 			                          <div class="dropDownSelect2"></div>
 			                      </div>
@@ -193,6 +200,40 @@
                 </div>
                 
                 <script>
+					
+				//pic
+				$("#form_file_upload").submit(function(e){
+					e.preventDefault();
+					var formObj = $(this);
+					var formURL = formObj.attr("action");
+					var formData = new FormData(this);
+					$.ajax({
+						url: formURL,
+						type: 'POST',
+						data: formData,
+						contentType: false,
+						cache: false,
+						processData: false,
+						enctype: "multipart/form-data",
+						dataType:"json",
+						beforeSend: function(){
+							$('.submit').attr("disabled", "disabled"); //submit btn
+							$('#submit_file').css("opacity",".5");
+						},
+						success:function(data){
+							if(data.success){
+								alert(data.message);
+							}
+							if(data.error){
+								alert(data.message);
+							}
+							$('.submit').removeAttr("disabled"); //submit btn
+							$('#submit2').css("opacity","");
+						}
+					})
+				})
+				//pic end		
+							
 					var url_string = window.location.href;
                 	var url = new URL(url_string);
 					async function addName(){
@@ -327,13 +368,12 @@
 													
 		                        // 將資料組成JSON格式
 		                        var data_object = {
-								    "city": $("#city").val(),
+								    "city": $("#city option:selected").text(),
 								    "detail": $("#detail").text(),
 								    "address": $("#address").text(),
 								    "phone": $("#phone").text(),
 								    "opentime": $("#opentime").text(),
-								    "name": $("#name").text(),
-								    "images": ""
+								    "name": $("#name").text()
 								};
 		
 		                        // 將JSON格式轉換成字串
@@ -382,6 +422,59 @@
 	                    		});
 		                    }
 		                }
+		//logout
+		$("#logout").empty();
+        var logout_html = "";
+         logout_html +=
+          "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#logout").append(logout_html);
+        
+        
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
+        });
+      }
 				</script>
             </div>
         </div>

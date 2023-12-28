@@ -137,7 +137,7 @@
           email = null;
         }
         var password = url.searchParams.get("password");
-        if ((password = "" || password == "null")) {
+        if (password == "" || password == "null") {
           password = null;
         }
 
@@ -254,6 +254,12 @@
           inner_html +=
             '<a href="tripy-Scene.html?id=' +
             data.city_info.id +
+            "&user_id=" +
+            user_id +
+            "&email=" +
+            email +
+            "&password=" +
+            password +
             '" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
           inner_html += "找景點";
           inner_html += "</a>";
@@ -261,6 +267,12 @@
           inner_html +=
             '<a href="tripy-Scene.html?id=' +
             data.city_info.id +
+            "&user_id=" +
+            user_id +
+            "&email=" +
+            email +
+            "&password=" +
+            password +
             '" class="t1-m-1 cl-3 hov-link2 trans-02">';
           inner_html += data.city_info.name;
           inner_html += "</a>";
@@ -326,6 +338,12 @@
               inner_html +=
                 '<a href="tripy-Scene.html?id=' +
                 data.data[0].product_info[i].id +
+                "&user_id=" +
+                user_id +
+                "&email=" +
+                email +
+                "&password=" +
+                password +
                 '" class="size-a-15 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn2 trans-02 p-rl-10 hov-1-2">';
               inner_html += "找景點";
               inner_html += "</a>";
@@ -333,6 +351,12 @@
               inner_html +=
                 '<a href="tripy-Scene.html?id=' +
                 data.data[0].product_info[i].id +
+                "&user_id=" +
+                user_id +
+                "&email=" +
+                email +
+                "&password=" +
+                password +
                 '" class="t1-m-1 cl-3 hov-link2 trans-02">';
               inner_html += data.data[0].product_info[i].name;
               inner_html += "</a>";
@@ -385,7 +409,7 @@
           $("#logout").empty();
           var logout_html = "";
           logout_html +=
-            "<button onclick='Logout()' style='font-weight: bold'>登出</button>";
+              "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
 
           $("#login").append(inner_html);
           $("#logout").append(logout_html);
@@ -400,11 +424,6 @@
           inner_html += "<img src='images/icons/newlogo.png' alt='LOGO' /></a>";
 
           $("#index").append(inner_html);
-        }
-
-        function reloadIndex() {
-          // 使用 location.reload() 重新載入 index.html
-          location.reload();
         }
 
         function Logout() {

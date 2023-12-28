@@ -51,7 +51,7 @@ public class Member_Controller extends HttpServlet{
         /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
         if(email.isEmpty() || password.isEmpty() || name.isEmpty() || sex.isEmpty() || idcard.isEmpty()) {
             /** 以字串組出JSON格式之資料 */
-            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
+            String resp = "{\"status\": \'300\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
             /** 透過JsonReader物件回傳到前端（以字串方式） */
             jsr.response(resp, response);
         }

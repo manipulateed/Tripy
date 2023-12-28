@@ -3,6 +3,8 @@
 <head>
 	<title>tripy</title>
 	<meta charset="UTF-8">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="statics/js/jquery-3.4.1.min.js"></script>
   	<script src="statics/js/jquery-confirm.js"></script>
@@ -75,7 +77,7 @@
 				<div class="limiter-menu-desktop container">					
 					<!-- Logo desktop -->		
 					<div class="logo">
-						<a href="index.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
+						<a href="index-admin.html"><img src="images/icons/newlogo.png" alt="LOGO"></a>
 					</div>
 
 					<!-- Menu desktop -->
@@ -83,9 +85,27 @@
 						<ul class="main-menu respon-sub-menu">	
 
 							<li>
-								<a href="tripy-login.html" style="font-weight: bold;">我的帳號</a>
+								<a href="tripy-SeeAllScene.html" style="font-weight: bold;">所有景點</a>
 								
 							</li>
+							<li>
+								<a href="tripy-AddNewScene.html" style="font-weight: bold;">新增景點</a>
+								
+							</li>
+							<li>
+								<a href="tripy-ModifyScene.html" style="font-weight: bold;">修改景點</a>
+								
+							</li>
+							<li>
+								<a href="tripy-SeeAllMember.html" style="font-weight: bold;">所有會員</a>
+								
+							</li>
+							<li>
+								<a href="tripy-SeeAllAdmin.html" style="font-weight: bold;">所有管理員</a>
+							</li>
+							
+             				<li id="logout">
+                			</li>
 
 						</ul>
 					</div>		
@@ -117,6 +137,11 @@
 						</button>
 	                </div>
 	                <div class="button-wrapper">
+	                    <button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5 active-2" id="edit_scene">
+	                	<a style="text-decoration: none; color: inherit;">修改景點</a>
+						</button>
+	                </div>
+	                <div class="button-wrapper">
 	                    <button class="t1-m-6 cl-16 hov-btn3 trans-02 p-rl-10 p-tb-3 m-all-5 active-2" id="seeAllMember">
 		                <a style="text-decoration: none; color: inherit;">查看所有會員</a>
 						</button>
@@ -126,22 +151,46 @@
 	                	<a style="text-decoration: none; color: inherit;">查看所有管理員</a>
 						</button>
 	                </div>
+	                
 	            </div>
 	        </div>
 	    </div>
 	</div>
 	
 	<script>
+		var url_string = window.location.href;
+      	var url = new URL(url_string);
+		console.log(url.searchParams.get("user_id") + url.searchParams.get("email") + url.searchParams.get("password"));
+      	var user_id = url.searchParams.get("user_id");
+      	if (user_id == "" || user_id == "null") {
+        	user_id = null;
+      	}
+      	var email = url.searchParams.get("email");
+      	if (email == "" || email == "null") {
+        	email = null;
+      	}
+      	var password = url.searchParams.get("password");
+      	if ((password = "" || password == "null")) {
+        	password = null;
+      	}
+      	
 		
 		$(document).ready(function() {
     		$('#scene').click(function() {
-        	window.location.href = "tripy-City.html";
+	        	var url = "tripy-SeeAllScene.html?user_id=" + user_id + "&email=" + email +"&password=" + password;
+		    window.history.pushState({}, '', url);		
+		    window.location.href = url;
+		    
 		    });
 		
 		    $('#add_scene').click(function() {
 		        window.location.href = "tripy-AddNewScene.html";
 		    });
 		
+			$('#edit_scene').click(function() {
+		        window.location.href = "tripy-ModifyScene.html";
+		    });
+		    
 		    $('#seeAllMember').click(function() {
 		        window.location.href = "tripy-SeeAllMember.html";
 		    });
@@ -150,15 +199,67 @@
 		        window.location.href = "tripy-SeeAllAdmin.html";
 		    });
 		});
+		
+		
+		
+		//logout
+		$("#logout").empty();
+        var logout_html = "";
+        logout_html += "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#logout").append(logout_html);
+        
+        
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
+        });
+      }
 
 	</script>
 	
 	
 	
 
-	<footer>
-		
-	</footer>
 
 
 <!--===============================================================================================-->	

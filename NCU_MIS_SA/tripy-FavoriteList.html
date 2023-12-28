@@ -76,7 +76,7 @@
         <div class="wrap-menu-desktop">
           <div class="limiter-menu-desktop container">
             <!-- Logo desktop -->
-            <div class="logo">
+            <div class="logo" id="index">
               <a href="index.html"
                 ><img src="images/icons/newlogo.png" alt="LOGO"
               /></a>
@@ -85,25 +85,11 @@
             <!-- Menu desktop -->
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
-                <li id="scene">
-                  <a href="tripy-City.html" style="font-weight: bold">景點</a>
-                </li>
-
-                <li id="plan">
-                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
-                    >觀光行程</a
-                  >
-                </li>
-
-                <li id="CL">
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
-                    >我的收藏</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
-                </li>
+                <li id="city"></li>
+                <li id="plan"></li>
+                <li id="FL"></li>
+                <li id="login"></li>
+                <li id="logout"></li>
               </ul>
             </div>
           </div>
@@ -140,15 +126,6 @@
             <!-- 清單div -->
             <div id="Try">
               <div class="row justify-content-between align-items-center">
-                <div class="col-auto p-b-50" name="back">
-                  <a
-                    href="tripy-City.html"
-                    class="size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20"
-                  >
-                    返回
-                    <i class="fa fa-long-arrow-left m-l-15"></i>
-                  </a>
-                </div>
                 <div
                   class="col-auto flex-col-c-c p-b-50"
                   style="position: absolute; left: 360px"
@@ -167,10 +144,8 @@
               </div>
 
               <!-- 新增清單 -->
-              <div id="collectlist" class="container">
-               
-              </div>
-            
+              <div id="collectlist" class="container"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -238,17 +213,24 @@
 
     <script type="text/javascript">
       var url_string = window.location.href;
-      	var url = new URL(url_string);      
-		var user_id = url.searchParams.get("user_id");
-				if(user_id == ""){
-					user_id = null;
-				}
+      var url = new URL(url_string);
+      var user_id = url.searchParams.get("user_id");
+      if (user_id == "") {
+        user_id = null;
+      }
       var email = url.searchParams.get("email");
       var password = url.searchParams.get("email");
-     
-    //  user_id = 4;
+      // 將user_id變成字串
       var user_id_str = user_id.toString();
-      
+
+      $(document).ready(function () {
+        getAllCL(user_id);
+        showCity();
+        showIndex();
+        showPlan();
+        showFL();
+        showName();
+      });
 
       //新增清單
       function createCList() {
@@ -464,8 +446,6 @@
         });
       }
 
-      getAllCL(user_id);
-
       // 更新收藏清單表格
       function updateTable(data) {
         $("#collectlist").empty();
@@ -475,9 +455,13 @@
             "<div class='CollectList'>" +
             "<b>" +
             "<a href='tripy-FavoriteList-detail.html?CL_id=" +
-            value["id"] +"&user_id="+user_id+
-            "&email=" +email+
-            "&password=" +password+  
+            value["id"] +
+            "&user_id=" +
+            user_id +
+            "&email=" +
+            email +
+            "&password=" +
+            password +
             "' class='collectionlist' style='color: black'>" +
             value["name"] +
             "</a>" +
@@ -496,8 +480,108 @@
 
         $("#collectlist").append(collectlist_html);
       }
-      
-      
+
+      function showCity() {
+        $("#city").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-City.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>景點</a>";
+
+        $("#city").append(inner_html);
+      }
+
+      function showPlan() {
+        $("#plan").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-StartPlanning.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>我的行程</a>";
+
+        $("#plan").append(inner_html);
+      }
+
+      function showFL() {
+        $("#FL").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-FavoriteList.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>我的收藏</a>";
+
+        $("#FL").append(inner_html);
+      }
+
+      function showName() {
+        $("#login").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-MemberDetail.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>會員資料</a>";
+
+        $("#logout").empty();
+        var logout_html = "";
+        logout_html +=
+          "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#login").append(inner_html);
+        $("#logout").append(logout_html);
+      }
+
+      function showIndex() {
+        $("#index").empty();
+        var inner_html = "";
+        inner_html += "<a href='index.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>";
+        inner_html += "<img src='images/icons/newlogo.png' alt='LOGO' /></a>";
+
+        $("#index").append(inner_html);
+      }
+
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>

@@ -76,7 +76,7 @@
         <div class="wrap-menu-desktop">
           <div class="limiter-menu-desktop container">
             <!-- Logo desktop -->
-            <div class="logo">
+            <div class="logo" id="index">
               <a href="index.html"
                 ><img src="images/icons/newlogo.png" alt="LOGO"
               /></a>
@@ -85,26 +85,11 @@
             <!-- Menu desktop -->
             <div class="menu-desktop">
               <ul class="main-menu respon-sub-menu">
-                <li id="scene">
-                  <a href="tripy-Scene.html" style="font-weight: bold"
-                    >景點</a>
-                </li>
-
-                <li id="plan">
-                  <a href="tripy-StartPlanning.html" style="font-weight: bold"
-                    >觀光行程</a
-                  >
-                </li>
-
-                <li id="CL">
-                  <a href="tripy-FavoriteList.html" style="font-weight: bold"
-                    >我的收藏</a
-                  >
-                </li>
-
-                <li>
-                  <a href="tripy-login.html" style="font-weight: bold">登入</a>
-                </li>
+                <li id="city"></li>
+                <li id="plan"></li>
+                <li id="FL"></li>
+                <li id="login"></li>
+                <li id="logout"></li>
               </ul>
             </div>
           </div>
@@ -141,9 +126,7 @@
             <div>
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto p-b-50" name="back" id="back">
-					<!--返回-->
-                   
-                 
+                  <!--返回-->
                 </div>
                 <div
                   class="col-auto flex-col-c-c p-b-50"
@@ -232,9 +215,16 @@
       var id_str = CL_id.toString();
       var list_name = "";
 
-      function getAll() {
+      $(document).ready(function () {
+        getListName(id_str);
         getCLItem(CL_id);
-      }
+        showBack();
+        showCity();
+        showIndex();
+        showPlan();
+        showFL();
+        showName();
+      });
 
       function getListName(CL_id) {
         // 發出POST的GET請求取得所有會員列表
@@ -260,7 +250,6 @@
           },
         });
       }
-      getListName(id_str);
 
       function getCLItem(CL_id) {
         // 發出POST的GET請求取得所有會員列表
@@ -288,18 +277,20 @@
         });
       }
 
-      getAll();
-
       function updateTable(data) {
         $("#CLScene").empty();
         var CLScene_html = "";
         $.each(data, function (index, value) {
           CLScene_html +=
             "<li class='flex-wr-sb-c bo-b-1 bcl-14 m-b-18' id='tainan_2'>" +
-            "<a href='tripy-SceneInfo.html?user_id="+user_id+
-            "&email=" +email+
-            "&password=" +password+
-            "&scene_id=" +value.scene.id+
+            "<a href='tripy-SceneInfo.html?user_id=" +
+            user_id +
+            "&email=" +
+            email +
+            "&password=" +
+            password +
+            "&scene_id=" +
+            value.scene.id +
             "' class='t1-s-2 cl-5 hov-link2 trans-02 p-tb-3'>" +
             "<span name='left' style='margin-left: 20px'>" +
             " </span>" +
@@ -394,50 +385,125 @@
           }
         });
       }
-      
-      //去找上一頁的user_id的各個function
-      
-       				function back(){
-		 				 $("#back").empty();
-		 				 var inner_html=""
-						 inner_html += "<a href='tripy-FavoriteList.html?user_id="+user_id+
-						 "&email=" +email+
-            			 "&password=" +password+					
-						 "' class='size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20'>"+"返回"+"<i class='fa fa-long-arrow-left m-l-15'></i>"+"</a>";
-	 		 			 $("#back").append(inner_html)
-	 		 		}back();	
-	 		 			 
-	 		 		function back_scene(){
-		 				 $("#scene").empty();
-		 				 var inner_html=""
-						 inner_html += "<a href='tripy-City.html?user_id="+user_id+
-						 "&email=" +email+
-           				 "&password=" +password+
-						 "'style='font-weight: bold'>景點</a>";
-						  $("#scene").append(inner_html)
-	 		 		}back_scene();	
-	 		 			 
-	 		 		function back_plan(){
-		 				 $("#plan").empty();
-		 				 var inner_html=""
-						 inner_html += "<a href='tripy-StartPlanning.html?user_id="+user_id+
-						 "&email=" +email+
-           				 "&password=" +password+
-						 "'style='font-weight: bold'>我的行程</a>";
-						  $("#plan").append(inner_html)
-	 		 		}back_plan();
-	 		 			 
-	 		 		function back_CL(){
-		 				 $("#CL").empty();
-		 				 var inner_html=""
-						 inner_html += "<a href='tripy-FavoriteList.html?user_id="+user_id+
-						 "&email=" +email+
-           				 "&password=" +password+
-						 "'style='font-weight: bold'>我的收藏</a>";
-						  $("#CL").append(inner_html)
-	 		 		}back_CL();
-	 		 			 
-	 
+
+      function showBack() {
+        $("#back").empty();
+        var inner_html = "";
+        inner_html +=
+          "<a href='tripy-FavoriteList.html?user_id=" +
+          user_id +
+          "&email=" +
+          email +
+          "&password=" +
+          password +
+          "'";
+        inner_html +=
+          "class='size-a-1 d-inline-flex flex-c-c bg-11 t1-s-2 text-uppercase cl-0 hov-btn1 trans-02 m-t-20'>返回";
+        inner_html += " <i class='fa fa-long-arrow-left m-l-15'></i></a>";
+        $("#back").append(inner_html);
+      }
+
+      function showCity() {
+        $("#city").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-City.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>景點</a>";
+
+        $("#city").append(inner_html);
+      }
+
+      function showPlan() {
+        $("#plan").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-StartPlanning.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>我的行程</a>";
+
+        $("#plan").append(inner_html);
+      }
+
+      function showFL() {
+        $("#FL").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-FavoriteList.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>我的收藏</a>";
+
+        $("#FL").append(inner_html);
+      }
+
+      function showName() {
+        $("#login").empty();
+        var inner_html = "";
+        inner_html += "<a href='tripy-MemberDetail.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>會員資料</a>";
+
+        $("#logout").empty();
+        var logout_html = "";
+        logout_html +=
+          "<a href='#' onclick='Logout()' style='font-weight: bold'>登出</a> ";
+
+        $("#login").append(inner_html);
+        $("#logout").append(logout_html);
+      }
+
+      function showIndex() {
+        $("#index").empty();
+        var inner_html = "";
+        inner_html += "<a href='index.html?user_id=" + user_id;
+        inner_html += "&email=" + email + "&password=" + password + "'";
+        inner_html += "style='font-weight: bold'>";
+        inner_html += "<img src='images/icons/newlogo.png' alt='LOGO' /></a>";
+
+        $("#index").append(inner_html);
+      }
+
+      function Logout() {
+        swal({
+          title: `確認要登出嗎`,
+          icon: "warning",
+          dangerMode: true,
+
+          buttons: {
+            Btn: false,
+            confirm: {
+              text: "確認",
+              visible: true,
+            },
+            cancel: {
+              text: "取消",
+              visible: true,
+            },
+          },
+        }).then((value) => {
+          if (value != null) {
+            user_id = null;
+            email = null;
+            password = null;
+            swal("您已成功登出", {
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "確定",
+                  value: true,
+                  visible: true,
+                  className: "btn-primary",
+                  closeModal: true,
+                },
+              },
+            }).then((value) => {
+              if (value) {
+                // 導向到新的頁面
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            swal.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>
