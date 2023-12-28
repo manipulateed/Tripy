@@ -365,11 +365,11 @@ public class SceneHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tripy`.`tbl_scene_info` WHERE `Scene_Name` LIKE '%?%' ";
+            String sql = "SELECT * FROM `tripy`.`tbl_scene_info` WHERE `Scene_Name` LIKE ?";
          
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, keyword);
+            pres.setString(1, "%"+keyword+"%");
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -391,6 +391,7 @@ public class SceneHelper {
                 String phone = rs.getString("Scene_Phone");
                 String opentime = rs.getString("Scene_OpenTime");
                 String image = rs.getString("Scene_Image");
+                int city_id = rs.getInt("Scene_City");
                 ArrayList<String> images = new ArrayList<String>();
                 if(image != null) {
                     String[] images_ = image.split(","); 
@@ -401,8 +402,11 @@ public class SceneHelper {
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
+                JSONObject search = new JSONObject();
+                search.put("scene",s.getSceneAllInfo());
+                search.put("city_id",city_id);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-                jsa.put(s.getSceneAllInfo());
+                jsa.put(search);
             }
             
         } catch (SQLException e) {
