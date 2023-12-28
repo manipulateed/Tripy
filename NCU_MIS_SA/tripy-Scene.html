@@ -4,6 +4,7 @@
     <title>tripy</title>
     <meta charset="UTF-8" />
     <script src="statics/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="statics/js/jquery-confirm.js"></script>
     <script src="statics/js/big.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -259,7 +260,7 @@
           function submit() {
             var context = $("#context").val();
 
-            if (context.trim() === "") {
+            if (context.trim() === "" || context.trim() === "搜尋" || context.trim()=== null) {
               Swal.fire({
                 icon: "error",
                 title: "搜尋內容不能為空!",
@@ -270,7 +271,7 @@
                 $.ajax({
                   type: "GET",
                   url: "api/scene.do",
-                  data: "keyword="+context,
+                  data: "keyword=" + context,
                   crossDomain: true,
                   cache: false,
                   dataType: "json",
@@ -279,12 +280,18 @@
                     if (response.status == 200) {
                       $("#panel").html("");
                       	var inner_html = "";	
-			
-			            $.each(response.response.data, function (k, v) {
-			              inner_html += getSearch(v);
-			            });
-			
-			            $("#panel").append(inner_html);
+						if(response.response.row > 0){
+							$.each(response.response.data, function (k, v) {
+			              		inner_html += getSearch(v);
+				            });
+				
+				            $("#panel").append(inner_html);
+						}
+						else{
+							 $("#panel").text("查無搜尋結果");
+						}
+			           
+			            $("#title").text("搜尋結果");
                     }
                   },
                   error: function () {
@@ -300,16 +307,16 @@
 	        table_html += '<div class="flex-col-s-c">';
 	        table_html += '<div class="w-full pos-relative wrap-pic-w m-b-16">';
 	        table_html +=
-	          '<img src="images/' + data.Scene_info.name + '.jpg" alt="IMG" height= "280px">';
+	          '<img src="images/' + data.scene.Scene_info.name + '.jpg" alt="IMG" height= "280px">';
 	        table_html +=
 	          '<div class="s-full ab-t-l flex-col-c-c hov-1 p-tb-30 p-rl-15">';
 	        table_html +=
 	          '<a href="tripy-SceneInfo.html?city_id=' +
-	          id +
+	          data.city_id +
 	          "&user_id=" +
 	          user_id +
 	          "&scene_id=" +
-	          data.id +
+	          data.scene.Scene_info.id +
 	          "&email=" +
 	          email +
 	          "&password=" +
@@ -321,14 +328,14 @@
 	        table_html += "</div>";
 	        table_html +=
 	          '<a href="tripy-SceneInfo.html?city_id=' +
-	          id +
+	          data.city_id +
 	          "&user_id="+user_id+"&scene_id=" +
-	          data.Scene_info.id +
+	          data.scene.Scene_info.id +
 	          "&email=" +
 	          email +
 	          "&password=" +
 	          '" class="t1-m-1 cl-3 hov-link2 trans-02">';
-	        table_html += data.Scene_info.name;
+	        table_html += data.scene.Scene_info.name;
 	        table_html += "</a>";
 	        table_html += "</div>";
 	        table_html += "</div>";
