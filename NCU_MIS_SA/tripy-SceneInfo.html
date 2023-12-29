@@ -430,10 +430,10 @@
             comment_html += '<div class="wrap-cmt">';
             comment_html += '<div class="item-cmt main-cmt flex-wr-sb-s">';
             comment_html += '<div class="cmt-text">';
-            comment_html += '<p class="t1-s-2 cl-3 m-b-9">';
+            comment_html += '<p class="t1-s-2 cl-3 m-b-9 p-rl-20 bo-l-1 bcl-12">';
             comment_html += data.Context;
             comment_html += "</p>";
-            comment_html += '<div class="t1-s-2">';
+            comment_html += '<div class="t1-s-2 ">';
             comment_html += '<span class="d-inline-block cl-7 p-r-5 m-tb-1">';
             comment_html += data.User.name;
             comment_html += "</span>";
@@ -489,7 +489,7 @@
               timeout: 5000,
               success: function (response) {
                 if (response.status == 200) {
-                  swal
+                  Swal
                     .fire({
                       icon: "success",
                       title: "成功!",
@@ -503,7 +503,7 @@
                       }
                     });
                 } else if (response.status == 400) {
-                  swal
+                  Swal
                     .fire({
                       icon: "warning",
                       title: "失敗",
@@ -631,49 +631,39 @@
           }
 
           function Logout() {
-            swal({
-              title: `確認要登出嗎`,
-              icon: "warning",
-              dangerMode: true,
-
-              buttons: {
-                Btn: false,
-                confirm: {
-                  text: "確認",
-                  visible: true,
-                },
-                cancel: {
-                  text: "取消",
-                  visible: true,
-                },
-              },
-            }).then((value) => {
-              if (value != null) {
-                user_id = null;
-                email = null;
-                password = null;
-                swal("您已成功登出", {
-                  icon: "success",
-                  buttons: {
-                    confirm: {
-                      text: "確定",
-                      value: true,
-                      visible: true,
-                      className: "btn-primary",
-                      closeModal: true,
-                    },
-                  },
-                }).then((value) => {
-                  if (value) {
-                    // 導向到新的頁面
-                    window.location.href = "index.html";
-                  }
-                });
-              } else {
-                swal.close();
-              }
-            });
-          }
+		        Swal.fire({
+		          title: "確認要登出",
+		          icon: "warning",
+		          dangerMode: true,
+				 	confirmButtonText: "Yes",
+              		showCancelButton: true,
+             		 cancelButtonText: "No",
+		        }).then((value) => {
+		          if (value.isConfirmed) {
+		            user_id = null;
+		            email = null;
+		            password = null;
+		            Swal.fire({
+		              title:"您已成功登出",
+		              icon: "success",
+		              buttons: {
+		                confirm: {
+		                  text: "確定",
+		                  value: true,
+		                  visible: true,
+		                  className: "btn-primary",
+		                  closeModal: true,
+		                },
+		              },
+		            }).then((value) => {
+		              if (value.isConfirmed) {
+		                // 導向到新的頁面
+		                window.location.href = "index.html";
+		              }
+		            });
+		          }
+		        });
+		      }
         </script>
       </div>
     </div>

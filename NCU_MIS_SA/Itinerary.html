@@ -154,7 +154,7 @@
             }
             .size-a-104 {
                 width: 150px;
-                height: 40px;
+                height: 35px;
             }
             .bo-tbl-1{
                 border-left: 1px solid;
@@ -180,9 +180,16 @@
                                 台南好好玩
                             </div>
                          
-                            <div id="ItineraryLabel" onclick="selectedDate()" class="m-l-60 d-inline-flex flex-row-c-c size-a-104 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">
-                                <i class="fs-14 cl-0 fa fa-calendar-check-o m-r-2"></i>
-                                選擇日期
+                            <div class="d-inline-flex flex-row-c-c">
+                                <div id="ItineraryLabel" onclick="selectedDate()" class="p-t-7 m-t-5 m-l-55  size-a-104 p-rl-15 t1-s-2  cl-0 bg-11 hov-btn1 trans-02">
+                                    <i class="p-l-17 fs-14 cl-0 fa fa-calendar-check-o m-r-2"></i>
+                                    選擇日期
+                                </div>
+
+                                <div id="ItineraryLabel" onclick="selectedOrder()" class="p-t-7 m-t-5 m-l-50 size-a-104 p-rl-15 t1-s-2  cl-0 bg-11 hov-btn1 trans-02">
+                                    <i class="p-l-17 fs-14 cl-0 fa fa-check m-r-2"></i>
+                                    確定排序
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,16 +232,16 @@
 					<!-- 搜尋 -->
 					<div>
 						<!-- Search -->
-						<form class="flex-wr-c-c m-b-45">
-							<input class="size-a-21 bg-none t1-s-5 cl-6 plh-6 bo-tbl-1 bcl-11 p-rl-20" type="text" name="search" placeholder="搜尋...">
+						<form class="flex-wr-c-c m-b-45" method="post" action="" id="form">
+							<input class="size-a-21 bg-none t1-s-5 cl-6 plh-6 bo-tbl-1 bcl-11 p-rl-20"id = "context"  type="text" name="search" placeholder="搜尋...">
 
 							<button class="size-a-22 fs-18 cl-0 bg-11 hov-btn1 trans-02">
 								<i class="fa fa-search"></i>
 							</button>
 						</form>
 					</div>
-                    <div class="p-b-30 " style="width: 100%; height: 440px; overflow: auto;">
-                        <div class="item-cmt main-cmt flex-wr-sb-s bcl-07">
+                    <div id="SearchResult" class="p-b-30 " style="width: 100%; height: 440px; overflow: auto;">
+                        <!-- <div class="item-cmt main-cmt flex-wr-sb-s bcl-07">
                             <div class="cmt-pic m-b-2 p-t-20 p-l-10">
                                 <img src="images/南機場夜市.jpg" alt="IMG">
                             </div>
@@ -252,7 +259,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> -->
                         
                     </div>
 				</div>
@@ -405,13 +412,20 @@
                 endDate =new Date(Itdata.collect_List_info.end);
                 var inputDate = new Date(PlanDate + "T08:00:00");
                 var Itinerary_html = "";
-                $.each(response.response.data, function (index, value) {
+                var dataArray = response.response.data;
+
+                // 將數組按照 value.date_order 升序排序
+                dataArray.sort(function(a, b) {
+                    return a.date_order - b.date_order;
+                });
+
+                $.each(dataArray, function (index, value) {
                    // var itineraryDate = new Date(value.date);
 
                     // 檢查日期是否在 start 和 end 之間
                     if (inputDate >= startDate && inputDate <= endDate) {
                         if (PlanDate === value.date) {
-                            Itinerary_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
+                            Itinerary_html += '<div id="'+value.scene.id+'" draggable="true" class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
                             Itinerary_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">';
                             Itinerary_html += '<img src="images/'+ value.scene.name +'.jpg" alt="IMG">';
                             Itinerary_html += '</div>';
@@ -424,7 +438,11 @@
                             Itinerary_html += value.scene.name;
                             Itinerary_html += '</p></div><div class="bold-chinese-text p-t-5"><p class="t1-s-1 cl-5">';
                             Itinerary_html += value.scene.address;
-                            Itinerary_html += '</p></div></div></div>';
+                            Itinerary_html += '</p></div></div>';
+                            Itinerary_html += '<button onclick="DeleteFromIITable(' + value.id + ')" class="flex-wr-sb-c m-t-35">';
+                            Itinerary_html += '<i class="fa fa-times"></i>';
+                            Itinerary_html += '</button></div>';
+
                             console.log("符合日期範圍的元素:", inputDate);
                         }
                         console.log("符合日期範圍的元素:", inputDate);
@@ -439,6 +457,7 @@
                 SelectedDate = PlanDate;
                 console.log("SelectedDate:", PlanDate);
                 $("#ItineraryTable").append(Itinerary_html);
+                setupDraggableElements();
             }
         else {
                 // unsuccessful
@@ -451,28 +470,151 @@
     });
 }
     
-//         var selectedDate = function (){
-//             $.ajax({
-//             type: "GET", //注意！！
-//             url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
-//             data: {
-//                 "user_id": user_id,
-//                 "id": list_id
-//                 },
-//             crossDomain: true,
-//             cache: false,
-//             dataType: "json",
-//             timeout: 10000,
-//             success: function (response) {
-//                 if (response.status == 200) {
-//                     updateNewIITable(response.response.data);
-//                 }
-//             },
-//             error: function () {
-//                 alert("無法連線到伺服器！");
-//             },
-//             });
-//         }
+        var DeleteFromIITable = function (ItineraryItem_id){
+            swal({
+                title: "刪除行程",
+                text: "確定要刪除此行程嗎?",
+                buttons: {
+                    confirm: {
+                        text: "Yes",
+                        value: true,
+                        visible: true,
+                        className: "btn-primary",
+                        closeModal: true
+                    },
+                    cancel: {
+                        text: "No",
+                        value: null,
+                        visible: true,
+                        className: "btn-secondary",
+                        closeModal: true,
+                    }
+                }
+            }).then((result) => {
+                if (result) {
+                    var jsonString = JSON.stringify({ id: ItineraryItem_id });
+                    $.ajax({
+                        type: "Delete", //注意！！
+                        url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryItem.do", 
+                        data: jsonString,
+                        crossDomain: true,
+                        cache: false,
+                        dataType: "json",
+                        timeout: 10000,
+                        success: function (response) {
+                            if (response.status == 200) {
+                                swal("刪除成功", {
+                                    icon: "success",
+                                    buttons: {
+                                    confirm: {
+                                        text: "確定",
+                                        value: true,
+                                        visible: true,
+                                        className: "btn-primary",
+                                        closeModal: true,
+                                    },
+                                    },
+                                })
+                                $.ajax({
+                                        type: "GET", //注意！！
+                                        url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryList.do",
+                                        data: {
+                                            "user_id": user_id,
+                                            "id": list_id
+                                            },
+                                        crossDomain: true,
+                                        cache: false,
+                                        dataType: "json",
+                                        timeout: 10000,
+                                        success: function (response) {
+                                            if (response.status == 200) {
+                                                updateNewIITable(response.response.data,SelectedDate);
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("無法連線到伺服器！");
+                                        },
+                                    });
+                            }
+                        },
+                        error: function () {
+                            alert("無法連線到伺服器！");
+                        },
+                    });
+                } else {
+                    swal.close();
+                }
+            });
+        }
+
+        var selectedOrder = function () {
+           // console.log('selectedOrder新的順序:', itemsOrder);
+            swal({
+                title: "確定排序",
+                text: "確定此順序嗎?",
+                buttons: {
+                    confirm: {
+                        text: "Yes",
+                        value: true,
+                        visible: true,
+                        className: "btn-primary",
+                        closeModal: true
+                    },
+                    cancel: {
+                        text: "No",
+                        value: null,
+                        visible: true,
+                        className: "btn-secondary",
+                        closeModal: true,
+                    }
+                }
+            }).then((result) => {
+                if (result) {
+                    itemsOrder.forEach((item, index) => {
+                        var data_object = {
+                            "iti_id": list_id,      
+                            "sc_id": parseInt(item),
+                            "date": SelectedDate,
+                            "order": parseInt(index)+1,
+                        };
+                        console.log('data_object:', data_object);
+                        // 將JSON格式轉換成字串
+                        var data_string = JSON.stringify(data_object);
+                        $.ajax({
+                            type: "PUT", //注意！！
+                            url: "http://localhost:8090/NCU_MIS_SA/api/ItineraryItem.do", 
+                            data: data_string,        
+                            crossDomain: true,
+                            cache: false,
+                            dataType: "json",
+                            timeout: 10000,
+                            success: function (response) {
+                                if (response.status == 200) {
+                                    swal("刪除成功", {
+                                        icon: "success",
+                                        buttons: {
+                                        confirm: {
+                                            text: "確定",
+                                            value: true,
+                                            visible: true,
+                                            className: "btn-primary",
+                                            closeModal: true,
+                                        },
+                                        },
+                                    })
+                                }
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            },
+                        });
+                    });
+                } else {
+                    swal.close();
+                }
+            });
+        }
+
         var selectedDate = function () {
 			swal({
 			title: "選擇日期",
@@ -642,6 +784,7 @@
             var Itinerary_html = "";
                 Itinerary_html += '<i class="fs-14 cl-0 fa fa-chevron-left m-r-2"></i>';
                 Itinerary_html += data.collect_List_info.name;   
+                Itinerary_html += data.collect_List_info.start + '~' + data.collect_List_info.end;  
 
             $("#ItineraryLabel").append(Itinerary_html);
         }
@@ -653,7 +796,6 @@
         function AddCLtoIITable(data){
             console.log("成功，景點ID:", data);
 			swal({
-                icon: "question",
                 title: "加入行程",
                 text: "確定要新增至行程嗎?",
                 buttons: {
@@ -796,18 +938,137 @@
 
         // // =============================================================
         // //拖曳收藏清單
+
+            let itemsOrder = [];//順序
+
+            function setupDraggableElements() {
+                let items = document.querySelectorAll('#ItineraryTable > div');
+                items.forEach(item => {
+                    $(item).prop('draggable', true);
+                    item.addEventListener('dragstart', dragStart);
+                    item.addEventListener('drop', dropped);
+                    item.addEventListener('dragenter', cancelDefault);
+                    item.addEventListener('dragover', cancelDefault);
+                });
+                itemsOrder = Array.from(items).map(item => item.id);
+                console.log('最初順序:', itemsOrder);
+            }
+
+            // 創建新元素
+            setupDraggableElements();
+
+            function dragStart (e) {
+            var index = $(e.target).index()
+            e.dataTransfer.setData('text/plain', index)
+            }
+
+            function dropped (e) {
+                cancelDefault(e)
+                
+                // get new and old index
+                let oldIndex = e.dataTransfer.getData('text/plain')
+                let target = $(e.target)
+                let newIndex = target.index()
+                
+                // remove dropped items at old place
+                let dropped = $(this).parent().children().eq(oldIndex).remove()
+
+                // insert the dropped items at new place
+                if (newIndex < oldIndex) {
+                    target.before(dropped)
+                } else {
+                    target.after(dropped)
+                }
+
+                itemsOrder = Array.from(document.querySelectorAll('#ItineraryTable > div')).map(item => item.id);
+
+                // 在控制台上顯示新順序
+                console.log('新的順序:', itemsOrder);
+            }
+
+            function cancelDefault (e) {
+                e.preventDefault()
+                e.stopPropagation()
+                return false
+            }
+
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            submit();
+	     });
+	
+          function submit() {
+            var context = $("#context").val();
+
+            if (context.trim() === "" || context.trim() === "搜尋" || context.trim()=== null) {
+              Swal.fire({
+                icon: "error",
+                title: "搜尋內容不能為空!",
+                confirmButtonText: "OKay",
+              });
+            } else {
+               // 發出POST的AJAX請求
+                $.ajax({
+                  type: "GET",
+                  url: "api/scene.do",
+                  data: "keyword=" + context,
+                  crossDomain: true,
+                  cache: false,
+                  dataType: "json",
+                  timeout: 5000,
+                  success: function (response) {
+                    if (response.status == 200) {
+                      $("#SearchResult").empty();
+                      	var inner_html = "";	
+						if(response.response.row > 0){
+							$.each(response.response.data, function (k, v) {
+			              		inner_html += getSearch(v);
+				            });
+				
+				            $("#SearchResult").append(inner_html);
+						}
+						else{
+							 $("#SearchResult").text("查無搜尋結果");
+						}
+			           
+			            $("#title").text("搜尋結果");
+                    }
+                  },
+                  error: function () {
+                    alert("無法連線到伺服器！");
+                  },
+                });
+              }
+            }   
+      function getSearch(data){
+		  var table_html = "";
+	        table_html += '<div class="item-cmt main-cmt flex-wr-sb-s bcl-07">';
+            table_html += '<div class="cmt-pic m-b-2 p-t-20 p-l-10">';
+            table_html += '<img src="images/' + data.scene.Scene_info.name + '.jpg" alt="IMG">';     
+            table_html += '</div><div class="cmt-text"><div class="bold-chinese-text p-t-25"><p class="t1-s-2 cl-3">';
+            table_html += data.scene.Scene_info.name;               
+            table_html += '</p></div><div class="bold-chinese-text p-t-5"><p class="t1-s-1 cl-5">';               
+            table_html += data.scene.Scene_info.address;
+            table_html += '</p></div></div>';                
+            table_html +='<button onclick="AddCLtoIITable(' + data.scene.Scene_info.id + ')" class="flex-wr-sb-c m-t-35">';             
+            table_html += '<i class="fa fa-plus"></i>';
+            table_html += "</button></div>";             
+	        return table_html;
+	  }      
+
+
         // let dropTarget = document.querySelector('#ItineraryTable')
         // dropTarget.addEventListener('drop', dropped)
         // dropTarget.addEventListener('dragenter', cancelDefault)
         // dropTarget.addEventListener('dragover', cancelDefault)
         
-        // // let items = document.querySelectorAll('#Collection_panel > div');
-        // // items.forEach(item => {
-        // //     $(item).prop('draggable', true);
-        // //     item.addEventListener('dragstart', dragStart);
-        // //     item.addEventListener('dragenter', cancelDefault);
-        // //     item.addEventListener('dragover', cancelDefault);
-        // // });
+        // let items = document.querySelectorAll('#Collection_panel > div');
+        // items.forEach(item => {
+        //     $(item).prop('draggable', true);
+        //     item.addEventListener('dragstart', dragStart);
+        //     item.addEventListener('dragenter', cancelDefault);
+        //     item.addEventListener('dragover', cancelDefault);
+        // });
 
         // function dragStart(e) {
         //     var index = $(e.target).index();

@@ -106,7 +106,7 @@ public class ItineraryListController extends HttpServlet {
         ArrayList<Member_> m = new  ArrayList<Member_>();
         for (int i = 0; i < Collaborators.length(); i++) {
             // 根據需要從資料庫中取得協作者的資訊，例如使用 UserHelper
-            int collaborator_Id =  Integer.parseInt(Collaborators.getJSONObject(0).getString("collaborator"));
+            int collaborator_Id =  Integer.parseInt(Collaborators.getJSONObject(i).getString("collaborator"));
             Member_ collaborator = mh.getById(collaborator_Id);
             m.add(collaborator);
         }
