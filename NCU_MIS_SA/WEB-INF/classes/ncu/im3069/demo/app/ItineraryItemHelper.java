@@ -75,7 +75,7 @@ public class ItineraryItemHelper {
 			conn = DBMgr.getConnection();
 			
 			/** SQL指令 */
-			String sql = "DELETE FROM `tripy`.`tbl_Itinerary` WHERE `Itinerary_Id` = ? LIMIT 1";
+			String sql = "DELETE FROM `tripy`.`tbl_Itinerary` WHERE `Itinerary_Id` = ?";
 			
 			/** 將參數回填至SQL指令當中 */
 			pres = conn.prepareStatement(sql);

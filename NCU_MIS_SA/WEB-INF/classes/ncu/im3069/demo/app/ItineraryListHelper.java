@@ -346,6 +346,16 @@ public class ItineraryListHelper {
             
             /** 執行刪除之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
+            
+            String sql2 = "DELETE FROM `tripy`.`tbl_il_user` WHERE `IL_User_ILId` = ?";
+            
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql2);
+            pres.setInt(1, ItineraryionList_Id);
+                     
+            
+            /** 執行刪除之SQL指令並記錄影響之行數 */
+            row = pres.executeUpdate();
 
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
@@ -395,19 +405,15 @@ public class ItineraryListHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `tripy`.`tbl_Itinerary_List` SET `IL_Name` = ?, `IL_Start`=?, `IL_End`=? `WHERE `IL_Id` = ?";
+            String sql = "Update `tripy`.`tbl_Itinerary_List` SET `IL_Name` = ? WHERE `IL_Id` = ?";
             /** 取得所需之參數 */
             String name = il.getName();
             int id = il.getId();
-            Date start = il.getStart();        
-            Date end = il.getEnd();
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, name); 
             pres.setInt(2, id);
-            pres.setDate(3, (java.sql.Date) start);
-            pres.setDate(4, (java.sql.Date) end);
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 

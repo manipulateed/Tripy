@@ -101,7 +101,7 @@
     
                 <div class="row justify-content-center">
                     <div class="col-sm-10 col-md-6 p-b-30" id="message">
-						<img class="max-s-full" src="" alt="IMG">
+						<img id="image" class="max-s-full"  alt="IMG">
 						
 						<form id="upload_form" enctype="multipart/form-data">
 							新增圖片: <input type="file" name="photo" id="fileInput" /><br>
@@ -123,14 +123,38 @@
 								processData: false,
 								contentType: false,
 								success: function(response) {
-									//$("#message").html(response);
-									alert("成功");
-								},
-								error: function(error) {
-									$("#message").html("Error uploading file.");
-								}
-							});
-						}
+									Swal.fire({
+				                      icon: "success",
+				                      title: "成功!",
+				                      text: "",
+				                      confirmButtonText: "Great",
+				                    })
+
+									console.log("檔案名稱:",response);
+
+									var name = String(decodeURIComponent(response));
+									console.log("檔案名稱:",name);
+									setTimeout(function () {
+					                setimage(name);
+					            }, 2000);
+					        },
+					        error: function (error) {
+					            $("#message").html("Error uploading file.");
+					        },
+					    });
+					}
+					
+					function setimage(name) {
+					    $("#image").attr("src", "images/" + name);
+					    $("#image").css({
+					        "background-image": 'url("images/' + name + '")',
+					        "background-size": "cover",
+					        width: "100%",
+					        height: "100%",
+					        position: "relative",
+					        "z-index": "1",
+					    });
+					}
 					</script>
                     
     
@@ -211,38 +235,7 @@
                 
                 <script>
 					
-				//pic
-				$("#form_file_upload").submit(function(e){
-					e.preventDefault();
-					var formObj = $(this);
-					var formURL = formObj.attr("action");
-					var formData = new FormData(this);
-					$.ajax({
-						url: formURL,
-						type: 'POST',
-						data: formData,
-						contentType: false,
-						cache: false,
-						processData: false,
-						enctype: "multipart/form-data",
-						dataType:"json",
-						beforeSend: function(){
-							$('.submit').attr("disabled", "disabled"); //submit btn
-							$('#submit_file').css("opacity",".5");
-						},
-						success:function(data){
-							if(data.success){
-								alert(data.message);
-							}
-							if(data.error){
-								alert(data.message);
-							}
-							$('.submit').removeAttr("disabled"); //submit btn
-							$('#submit2').css("opacity","");
-						}
-					})
-				})
-				//pic end		
+				
 							
 					var url_string = window.location.href;
                 	var url = new URL(url_string);
