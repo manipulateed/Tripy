@@ -244,12 +244,12 @@
 			var table_html = "";
 			table_html +=   '<div class="col-lg-4 p-b-50 isotope-item self">';
 			table_html +=	'<div class="bg-0 h-full">';
-			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&ItineraryList_id='+data.id+'" class="hov-img0 of-hidden">';
+			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&email='+email+'&password='+password+'&ItineraryList_id='+data.id+'" class="hov-img0 of-hidden">';
 			table_html +=	'<img src="images/台南.jpg" alt="IMG" height= "200px">';
 			table_html +=	'</a>';
 			table_html +=	'<div class="bg-0 p-t-20">';
 			table_html +=	'<h4 class="p-b-12">';
-			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&ItineraryList_id='+data.id+'" id="name" class="t1-m-1 cl-3 hov-link2 trans-02">';
+			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&email='+email+'&password='+password+'&ItineraryList_id='+data.id+'" id="name" class="t1-m-1 cl-3 hov-link2 trans-02">';
 			table_html +=	data.name;
 			table_html +=	'</a>';
 			table_html +=	'</h4>';
@@ -271,7 +271,7 @@
 			table_html +=	'<a href="javascript:void(0)" class="t1-s-2 cl-11 hov-link3">刪除</a>';		
 			table_html +=	'</div>';
 			table_html +=	'</div>';	
-			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&ItineraryList_id='+data.id+'" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">開始規劃</a>';
+			table_html +=	'<a href="Itinerary.html?user_id='+user_id+'&email='+email+'&password='+password+'&ItineraryList_id='+data.id+'" class="d-inline-flex flex-c-c size-a-1 p-rl-15 t1-s-2 text-uppercase cl-0 bg-11 hov-btn1 trans-02">開始規劃</a>';
 			table_html +=	'</div>';		
 			table_html +=	'</div>';
 			table_html +=	'</div>';
@@ -336,11 +336,16 @@
 					if (planName !== "" && startDate !== "" && endDate !== "") {
 						// 使用 JSON.stringify 將陣列轉換成 JSON 字串
 						const collaboratorArray = collaboratorString.split(',');
-
+						const cDate = new Date(startDate);
+						cDate.setDate(cDate.getDate()+1);
+						const n_sd = cDate.toISOString().split('T')[0];
+						const dDate = new Date(endDate);
+						dDate.setDate(dDate.getDate()+1);
+						const n_ed = dDate.toISOString().split('T')[0];
 						var data_object = {
 							"name": planName,
-							"start": startDate,
-							"end": endDate,
+							"start": n_sd,
+							"end": n_ed,
 							"Collaborators": collaboratorArray.map(collaborator => ({ collaborator })),
 							"user_id":user_id
 						};

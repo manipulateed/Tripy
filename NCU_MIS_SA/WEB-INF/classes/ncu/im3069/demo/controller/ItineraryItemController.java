@@ -102,7 +102,8 @@ public class ItineraryItemController extends HttpServlet{
         /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
         String list_id = jsr.getParameter("list_id");
         String item_id = jsr.getParameter("id");
-        
+        String date = jsr.getParameter("date");
+       
         if (list_id.isEmpty()) {
        	 /** 透過ItineraryItemHelper物件的getByCollectionID()方法自資料庫取回該名之資料，回傳之資料為JSONObject物件 */
            JSONObject query = itih.getByItineraryItemID(Integer.parseInt(item_id));
@@ -117,8 +118,21 @@ public class ItineraryItemController extends HttpServlet{
            jsr.response(resp, response);
        }
        else {   
+    	   JSONObject query = new JSONObject();
+    	   if(!date.equals("") || !date.isEmpty()) {
+    		   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    	        java.util.Date d_ = null;
+    	        try {    
+    	        	d_ = format.parse(date);
+    	        } catch (Exception e) {
+    	        	e.printStackTrace();
+    	        } 
+    	        query = itih.getAllByItineraryListID(d_,Integer.parseInt(list_id));
+    	   }else {
+    		   	query = itih.getAllByItineraryListID(Integer.parseInt(list_id));
+    	   }
            /** 透過CollectionItemHelper物件之getAllByCollectionListId()方法取回所有景點之資料，回傳之資料為JSONObject物件 */
-       		JSONObject query = itih.getAllByItineraryListID(Integer.parseInt(list_id));
+       		
        	
            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
            JSONObject resp = new JSONObject();
@@ -174,9 +188,9 @@ public class ItineraryItemController extends HttpServlet{
     	/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        
         /** 取出經解析到JSONObject之Request參數 */
-        int sc_id = jso.getInt("sc_id");
+        int sc_id = jso.getInt("scene_id");
+ 	
         //Itinerary
         int iti_id = jso.getInt("iti_id");        
         String date = jso.getString("date");   

@@ -75,7 +75,7 @@ public class ItineraryItemHelper {
 			conn = DBMgr.getConnection();
 			
 			/** SQL指令 */
-			String sql = "DELETE FROM `tripy`.`tbl_Itinerary` WHERE `Itinerary_Id` = ?";
+			String sql = "DELETE FROM `tripy`.`tbl_Itinerary` WHERE `Itinerary_Id` = ? LIMIT 1";
 			
 			/** 將參數回填至SQL指令當中 */
 			pres = conn.prepareStatement(sql);
@@ -136,13 +136,18 @@ public class ItineraryItemHelper {
   
             /** 取得所需之參數 */
             int scene_id = iti.getScene().getId();
+            java.util.Date utilDate = iti.getDate(); // Assuming iti is an object of type java.util.Date
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            // pres.setDate(3, sqlDate);
+
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setInt(1, itineraryList_id);
             pres.setInt(2, scene_id);
-            pres.setDate(3, (java.sql.Date)iti.getDate());
+            pres.setDate(3, sqlDate);
             pres.setInt(4, iti.getDate_order());
+          
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -219,7 +224,89 @@ public class ItineraryItemHelper {
                 /** 將 ResultSet 之資料取出 */
                 int itinerary_Id = rs.getInt("Itinerary_Id");
                 int scene_id = rs.getInt("Scene");
-                java.util.Date date = rs.getDate("Itinerary_Day");
+                java.sql.Date  date = rs.getDate("Itinerary_Day");
+                
+
+                int order = rs.getInt("Itinerary_Day_Order");
+                
+                /** 將每一筆收藏景點資料產生一名新collectionItem物件 */
+                iti = new ItineraryItem(itinerary_Id, scene_id, date, order);
+                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                jsa.put(iti.getItineraryItemData());
+            }
+            
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+        
+        /** 紀錄程式結束執行時間 */
+        long end_time = System.nanoTime();
+        /** 紀錄程式執行時間 */
+        long duration = (end_time - start_time);
+        
+        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        JSONObject response = new JSONObject();
+        response.put("sql", exexcute_sql);
+        response.put("row", row);
+        response.put("time", duration);
+        response.put("data", jsa);
+
+        return response;   
+    }
+    /**
+     * 取回行程清單中的所有行程
+     *
+     * @return the JSONObject 回傳SQL執行結果與自資料庫取回之所有資料
+     */
+    public JSONObject getAllByItineraryListID(Date d, int itineraryList_id){
+    	/** 新建一個 collectionItem 物件之 colli 變數，用於紀錄每一位查詢回收藏清單之所有收藏景點資料 */
+        ItineraryItem iti = null;
+        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
+        JSONArray jsa = new JSONArray();
+        /** 記錄實際執行之SQL指令 */
+        String exexcute_sql = "";
+        /** 紀錄程式開始執行時間 */
+        long start_time = System.nanoTime();
+        /** 紀錄SQL總行數 */
+        int row = 0;
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+    	java.sql.Date sqlDate =  new java.sql.Date(d.getTime());
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT * FROM `tripy`.`tbl_Itinerary` WHERE `Itinerary_IL` = ? AND `Itinerary_Day` = ?";
+            
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+            pres.setInt(1, itineraryList_id);
+            pres.setDate(2, sqlDate);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 紀錄真實執行的SQL指令，並印出 **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+            
+            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
+            while(rs.next()) {
+                /** 每執行一次迴圈表示有一筆資料 */
+                row += 1;
+                
+                /** 將 ResultSet 之資料取出 */
+                int itinerary_Id = rs.getInt("Itinerary_Id");
+                int scene_id = rs.getInt("Scene");
+                java.sql.Date  date = rs.getDate("Itinerary_Day");
+                
+
                 int order = rs.getInt("Itinerary_Day_Order");
                 
                 /** 將每一筆收藏景點資料產生一名新collectionItem物件 */
@@ -287,7 +374,7 @@ public class ItineraryItemHelper {
             	/** 將 ResultSet 之資料取出 */
                 int itinerary_Id = rs.getInt("Itinerary_Id");
                 int scene_id = rs.getInt("Scene");
-                java.util.Date date = rs.getDate("Itinerary_Day");
+                java.sql.Date date = rs.getDate("Itinerary_Day");
                 int order = rs.getInt("Itinerary_Day_Order");
                 
                 /** 將每一筆收藏景點資料產生一名新collectionItem物件 */
@@ -353,7 +440,7 @@ public class ItineraryItemHelper {
             	/** 將 ResultSet 之資料取出 */
                 int itinerary_Id = rs.getInt("Itinerary_Id");
                 int scene_id = rs.getInt("Scene");
-                java.util.Date date = rs.getDate("Itinerary_Day");
+                java.sql.Date date = rs.getDate("Itinerary_Day");
                 int order = rs.getInt("Itinerary_Day_Order");
                 
                 /** 將每一筆收藏景點資料產生一名新collectionItem物件 */
@@ -450,21 +537,19 @@ public class ItineraryItemHelper {
             
             /** SQL指令 */
             //String sql = "Update `tripy`.`tbl_Itinerary` SET `Scene` = ?, `Itinerary_Day` = ?, `Itinerary_Day_Order` = ? , WHERE `Itinerary_Id` = ?";
-            String sql = "UPDATE `tripy`.`tbl_Itinerary` SET `Scene` = ?, `Itinerary_Day` = ?, `Itinerary_Day_Order` = ? WHERE `Itinerary_Id` = ?";
+            String sql = "UPDATE `tripy`.`tbl_Itinerary` SET `Itinerary_Day_Order` = ? WHERE `Itinerary_Id` = ?";
 
             /** 取得所需之參數 */
-            int sc_id = iti.getScene().getId();
-            Date day = iti.getDate();   
-            java.sql.Date sqlDate = new java.sql.Date(day.getTime());
- 
+            //    int sc_id = iti.getScene().getId();
+            //    Date day = iti.getDate();   
+            //java.sql.Date sqlDate = new java.sql.Date(day.getTime());
+
             int day_order = iti.getDate_order();
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, sc_id);
-            pres.setDate(2, sqlDate);
-            pres.setInt(3, day_order);
-            pres.setInt(4, iti.getId());
+            pres.setInt(1, day_order);
+            pres.setInt(2, iti.getId());
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 
