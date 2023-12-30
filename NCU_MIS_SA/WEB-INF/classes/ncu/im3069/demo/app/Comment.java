@@ -45,7 +45,7 @@ public class Comment {
 	}
 	
 	public JSONObject getCommentData() {
-        /** 透過JSONObject將該項產品所需之資料全部進行封裝*/
+        /** 透過JSONObject將所需之資料全部進行封裝*/
 		Member_ m = mh.getById(this.user_id);
         JSONObject jso = new JSONObject();
         jso.put("Context", getContext());

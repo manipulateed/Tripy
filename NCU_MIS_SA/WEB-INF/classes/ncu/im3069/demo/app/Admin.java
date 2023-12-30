@@ -3,33 +3,25 @@ package ncu.im3069.demo.app;
 import org.json.JSONObject;
 
 public class Admin {
-	/** id，會員編號 */
+	/** id，編號 */
     private int id;
     
-    /** email，會員電子郵件信箱 */
+    /** email，電子郵件信箱 */
     private String email;
     
-    /** name，會員姓名 */
+    /** name，姓名 */
     private String name;
     
-    /** password，會員密碼 */
+    /** password，密碼 */
     private String password;
     
     private String sex;
     
     private String idcard;
     
-    /** mh，MemberHelper之物件與Member相關之資料庫方法（Sigleton） */
+
     private AdminHelper Admh =  AdminHelper.getHelper();
     
-    /**
-     * 實例化（Instantiates）一個新的（new）Member物件<br>
-     * 採用多載（overload）方法進行，此建構子用於建立會員資料時，產生一名新的會員
-     *
-     * @param email 會員電子信箱
-     * @param password 會員密碼
-     * @param name 會員姓名
-     */
     public Admin(String name, String email, String password, String sex, String idcard) {
         setEmail(email);
         setName(name);
@@ -38,15 +30,6 @@ public class Admin {
         setIdCard(idcard);
     }
 
-    /**
-     * 實例化（Instantiates）一個新的（new）Member物件<br>
-     * 採用多載（overload）方法進行，此建構子用於更新會員資料時，產生一名會員同時需要去資料庫檢索原有更新時間分鐘數與會員組別
-     * 
-     * @param id 會員編號
-     * @param email 會員電子信箱
-     * @param password 會員密碼
-     * @param name 會員姓名
-     */
     public Admin(int id, String name, String email, String password, String sex, String idcard) {
     	setId(id);
     	setEmail(email);
@@ -76,11 +59,6 @@ public class Admin {
         return this.sex;
     }
     
-    /**
-     * 取得會員資料之會員組別
-     *
-     * @return the status 回傳會員組別
-     */
     public String getIdCard() {
         return this.idcard;
     }
@@ -110,13 +88,8 @@ public class Admin {
     }
     
     
-    /**
-     * 取得該名會員所有資料
-     *
-     * @return the data 取得該名會員之所有資料並封裝於JSONObject物件內
-     */
     public JSONObject getAdminData() {
-        /** 透過JSONObject將該名會員所需之資料全部進行封裝*/ 
+        /** 透過JSONObject將所需之資料全部進行封裝*/ 
         JSONObject jso = new JSONObject();
         jso.put("id", getId());
         jso.put("name", getName());

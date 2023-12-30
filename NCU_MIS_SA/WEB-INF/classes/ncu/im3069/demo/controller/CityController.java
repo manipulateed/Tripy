@@ -15,7 +15,6 @@ public class CityController extends HttpServlet {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-    /** ph，ProductHelper 之物件與 Product 相關之資料庫方法（Sigleton） */
     private CityHelper Cith =  CityHelper.getHelper();
 
     public CityController() {
@@ -40,7 +39,6 @@ public class CityController extends HttpServlet {
         JSONObject resp = new JSONObject();
         if(!id.isEmpty()) {       	
         
-	        /** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
 	        JSONObject query = Cith.getById(Integer.parseInt(id));
 	      	resp.put("status", "200");
 	      	resp.put("message", "單一城市資料取得成功");
@@ -50,7 +48,6 @@ public class CityController extends HttpServlet {
 	        jsr.response(resp, response);
         }
         else {
-        	/** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
 	        JSONObject query = Cith.getAll();
 	      	resp.put("status", "200");
 	      	resp.put("message", "多個城市資料取得成功");

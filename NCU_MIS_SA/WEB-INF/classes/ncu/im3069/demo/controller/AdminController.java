@@ -93,9 +93,7 @@ public class AdminController extends HttpServlet{
 		            /** 透過JsonReader物件回傳到前端（以字串方式） */
 		            jsr.response(resp, response);
 		        }
-		        /** 透過MemberHelper物件的checkDuplicate()檢查該會員電子郵件信箱是否有重複 */
 		        else if (!Admh.checkDuplicate(m)) {
-		            /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
 		            JSONObject data = Admh.create(m);
 		            
 		            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -133,9 +131,7 @@ public class AdminController extends HttpServlet{
 	        String email = jsr.getParameter("email");
 	        String password = jsr.getParameter("password");
 	        
-	        /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
 	        if (email.isEmpty()) {
-	            /** 透過MemberHelper物件之getAll()方法取回所有會員之資料，回傳之資料為JSONObject物件 */
 	            JSONObject query = Admh.getAll();
 	            
 	            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -148,7 +144,6 @@ public class AdminController extends HttpServlet{
 	            jsr.response(resp, response);
 	        }
 	        else {
-	            /** 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料，回傳之資料為JSONObject物件 */
 	            JSONObject query = Admh.getByEmail(email,password);
 	            
 	            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -179,7 +174,6 @@ public class AdminController extends HttpServlet{
 	        /** 取出經解析到JSONObject之Request參數 */
 	        int id = jso.getInt("id");
 	        
-	        /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
 	        JSONObject query = Admh.deleteById(id);
 	        
 	        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -214,10 +208,8 @@ public class AdminController extends HttpServlet{
 	        String sex = jso.getString("sex");
 	        String idcard = jso.getString("idcard");
 
-	        /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
 	        Admin m = new Admin(id, name, email, password, sex, idcard);
 	        
-	        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
 	        JSONObject data = m.update();
 	        
 	        /** 新建一個JSONObject用於將回傳之資料進行封裝 */

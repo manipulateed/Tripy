@@ -58,7 +58,6 @@ public class SceneController extends HttpServlet {
 //            	images.add(images_[i]);
 //            }
 //        }
-        /** 建立一個新的會員物件 */
         Scene m = new Scene(name, address, detail, opentime, phone, images);
         
         /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
@@ -68,9 +67,7 @@ public class SceneController extends HttpServlet {
             /** 透過JsonReader物件回傳到前端（以字串方式） */
             jsr.response(resp, response);
         }
-        /** 透過MemberHelper物件的checkDuplicate()檢查該會員電子郵件信箱是否有重複 */
         else if (!Sceh.checkDuplicate(m)) {
-            /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
             JSONObject data = Sceh.createByCityId(city_id, m);
             
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -106,9 +103,7 @@ public class SceneController extends HttpServlet {
         String id = jsr.getParameter("id");
         String keyword = jsr.getParameter("keyword");
 
-        /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
         if (id.isEmpty() && keyword.isEmpty()) {
-            /** 透過MemberHelper物件之getAll()方法取回所有會員之資料，回傳之資料為JSONObject物件 */
             JSONObject query = Sceh.getAll();
             
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -121,7 +116,6 @@ public class SceneController extends HttpServlet {
             jsr.response(resp, response);
         }
         else if(!id.isEmpty() && keyword.isEmpty()){
-            /** 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料，回傳之資料為JSONObject物件 */
             JSONObject query = Sceh.getById(Integer.parseInt(id));
             
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -134,7 +128,6 @@ public class SceneController extends HttpServlet {
             jsr.response(resp, response);
         }
         else {
-        	/** 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料，回傳之資料為JSONObject物件 */
             JSONObject query = Sceh.getByKeyWord(keyword);
             
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
@@ -166,7 +159,6 @@ public class SceneController extends HttpServlet {
         /** 取出經解析到JSONObject之Request參數 */
         int id = jso.getInt("id");
         
-        /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
         JSONObject query1 = Sceh.deleteByID(id);
         Comh.deleteBySceneId(id);
         
@@ -212,10 +204,8 @@ public class SceneController extends HttpServlet {
         }
         
               
-        /** 建立一個新的會員物件 */
         Scene m = new Scene(id, name, address, detail, opentime, phone, images);
         
-        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
         JSONObject data = m.update();
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
