@@ -18,12 +18,12 @@ public class CommentHelper {
 	
 	/**
      * 靜態方法<br>
-     * 實作Singleton（單例模式），僅允許建立一個MemberHelper物件
+     * 實作Singleton（單例模式），僅允許建立一個CommentHelper物件
      *
-     * @return the helper 回傳MemberHelper物件
+     * @return the helper 回傳CommentHelper物件
      */
     public static CommentHelper getHelper() {
-        /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
+        /** Singleton檢查是否已經有CommentHelper物件，若無則new一個，若有則直接回傳 */
         if(Comh == null) Comh = new CommentHelper();
         
         return Comh;

@@ -15,7 +15,6 @@ public class DistrictController extends HttpServlet {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-    /** ph，ProductHelper 之物件與 Product 相關之資料庫方法（Sigleton） */
     private DistrictHelper Dish =  DistrictHelper.getHelper();
 
     public DistrictController() {
@@ -40,16 +39,13 @@ public class DistrictController extends HttpServlet {
         /** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();
 
-        /** 判斷該字串是否存在，若存在代表要取回個別訂單之資料，否則代表要取回全部資料庫內訂單之資料 */
         if (!id.isEmpty()) {
-          /** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
           JSONObject query = Dish.getById(Integer.parseInt(id));
           resp.put("status", "200");
           resp.put("message", "單一地區資料取得成功");
           resp.put("response", query);
         }
         else {
-          /** 透過 orderHelper 物件之 getAll() 方法取回所有訂單之資料，回傳之資料為 JSONObject 物件 */
           JSONObject query = Dish.getAll();
           resp.put("status", "200");
           resp.put("message", "所有地區取得成功");

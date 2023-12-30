@@ -25,21 +25,21 @@ public class SceneHelper {
     
     /**
      * 靜態方法<br>
-     * 實作Singleton（單例模式），僅允許建立一個MemberHelper物件
+     * 實作Singleton（單例模式），僅允許建立一個SceneHelper物件
      *
-     * @return the helper 回傳MemberHelper物件
+     * @return the helper 回傳SceneHelper物件
      */
     public static SceneHelper getHelper() {
-        /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
+        /** Singleton檢查是否已經有SceneHelper物件，若無則new一個，若有則直接回傳 */
         if(Sceh == null) Sceh = new SceneHelper();
         
         return Sceh;
     }
     
     /**
-     * 透過會員編號（ID）刪除會員
+     * 透過編號（ID）刪除
      *
-     * @param id 會員編號
+     * @param id 編號
      * @return the JSONObject 回傳SQL執行結果
      */
     public JSONObject deleteByID(int id) {
@@ -97,14 +97,12 @@ public class SceneHelper {
     }
     
     /**
-     * 取回所有會員資料
+     * 取回所有資料
      *
      * @return the JSONObject 回傳SQL執行結果與自資料庫取回之所有資料
      */
     public JSONObject getAll() {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Scene s = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -152,9 +150,9 @@ public class SceneHelper {
                     }
                 }
                 
-                /** 將每一筆會員資料產生一名新Member物件 */
+                /** 將每一筆資料產生物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出該資料並封裝至 JSONsonArray 內 */
                 jsa.put(s.getSceneAllInfo());
             }
 
@@ -174,7 +172,7 @@ public class SceneHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -191,7 +189,6 @@ public class SceneHelper {
      */
     public ArrayList<Scene> getCitySceneByCityId(int id) {
     	ArrayList<Scene> result = new ArrayList<Scene>();
-        /** 新建一個 City 物件之 result 變數，用於紀錄每一位查詢回之評論 */
     	Scene scene = null;
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -232,9 +229,9 @@ public class SceneHelper {
                     	images.add(images_[i]);
                     }
                 }
-                /** 將每一筆會員資料產生一名新Member物件 */
+                /** 將每一筆資料產生新物件 */
                 scene = new Scene(scene_id, name, address, detail, opentime, phone, images);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出該資料並封裝至 JSONsonArray 內 */
                 result.add(scene);
             }
 
@@ -252,16 +249,8 @@ public class SceneHelper {
         return result;
     }
     
-    /**
-     * 透過會員編號（ID）取得會員資料(登入)
-     *
-     * @param id 會員編號
-     * @return the JSON object 回傳SQL執行結果與該會員編號之會員資料
-     */
     public JSONObject getById(int id) {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Scene s = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -289,7 +278,7 @@ public class SceneHelper {
             System.out.println(exexcute_sql);
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+            /** 正確來說資料庫只會有一筆該編號之資料，因此其實可以不用使用 while 迴圈 */
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
@@ -309,9 +298,9 @@ public class SceneHelper {
                     	images.add(images_[i]);
                     }
                 }
-                /** 將每一筆會員資料產生一名新Member物件 */
+                /** 將每一筆資料產生新物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出該資料並封裝至 JSONsonArray 內 */
                 jsa.put(s.getSceneAllInfo());
             }
             
@@ -331,7 +320,7 @@ public class SceneHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -341,16 +330,9 @@ public class SceneHelper {
         return response;
     }
     
-    /**
-     * 透過會員編號（ID）取得會員資料(登入)
-     *
-     * @param id 會員編號
-     * @return the JSON object 回傳SQL執行結果與該會員編號之會員資料
-     */
+
     public JSONObject getByKeyWord(String keyword) {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Scene s = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -378,7 +360,7 @@ public class SceneHelper {
             System.out.println(exexcute_sql);
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
@@ -400,12 +382,12 @@ public class SceneHelper {
                     }
                 }
                 
-                /** 將每一筆會員資料產生一名新Member物件 */
+                /** 將每一筆資料產生新物件 */
                 s = new Scene(scene_id, name, address, detail, opentime, phone, images);
                 JSONObject search = new JSONObject();
                 search.put("scene",s.getSceneAllInfo());
                 search.put("city_id",city_id);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出該資料並封裝至 JSONsonArray 內 */
                 jsa.put(search);
             }
             
@@ -425,7 +407,7 @@ public class SceneHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -439,8 +421,8 @@ public class SceneHelper {
     /**
      * 檢查該景點是否重複有重複名稱
      *
-     * @param s 一名會員之Scene物件
-     * @return boolean 若重複註冊回傳False，若該信箱不存在則回傳True
+     * @param s Scene物件
+     * @return boolean 若重複回傳False，若不存在則回傳True
      */
     public boolean checkDuplicate(Scene s){
         /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
@@ -479,17 +461,14 @@ public class SceneHelper {
             DBMgr.close(rs, pres, conn);
         }
         
-        /** 
-         * 判斷是否已經有一筆該電子郵件信箱之資料
-         * 若無一筆則回傳False，否則回傳True 
-         */
+
         return (row == 0) ? false : true;
     }
     
     /**
      * 建立該景點至資料庫
      *
-     * @param s 一名會員之Scene物件
+     * @param s Scene物件
      * @return the JSON object 回傳SQL指令執行之結果
      */
     public JSONObject createByCityId(int city_id, Scene s) {
@@ -558,9 +537,9 @@ public class SceneHelper {
     }
     
     /**
-     * 更新一名會員之會員資料
+     * 更新資料
      *
-     * @param m 一名會員之Member物件
+     * @param m 一物件
      * @return the JSONObject 回傳SQL指令執行結果與執行之資料
      */
     public JSONObject update(Scene s) {

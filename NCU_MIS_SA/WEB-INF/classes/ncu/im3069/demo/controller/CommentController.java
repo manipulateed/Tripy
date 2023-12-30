@@ -43,9 +43,7 @@ public class CommentController extends HttpServlet {
        
        
         if (!user_id.isEmpty()) {
-        	/** 建立一個新的會員物件 */
             Comment m = new Comment(context, Integer.parseInt(user_id));
-        	/** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
 	        JSONObject data = Comh.createCommentBySceneId(Integer.parseInt(scene_id), m);
 	        
 	        /** 新建一個JSONObject用於將回傳之資料進行封裝 */

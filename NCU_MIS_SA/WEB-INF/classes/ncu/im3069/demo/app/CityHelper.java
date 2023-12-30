@@ -19,12 +19,12 @@ public class CityHelper {
 	
 	/**
      * 靜態方法<br>
-     * 實作Singleton（單例模式），僅允許建立一個MemberHelper物件
+     * 實作Singleton（單例模式），僅允許建立一個CityHelper物件
      *
-     * @return the helper 回傳MemberHelper物件
+     * @return the helper 回傳CityHelper物件
      */
     public static CityHelper getHelper() {
-        /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
+        /** Singleton檢查是否已經有CityHelper物件，若無則new一個，若有則直接回傳 */
         if(Cityh == null) Cityh = new CityHelper();
         
         return Cityh;
@@ -68,9 +68,7 @@ public class CityHelper {
                 int city_id = rs.getInt("City_Id");
                 String name = rs.getString("City_Name");
                 
-                /** 將每一筆評論資料產生一名新Comment物件 */
                 city = new City(city_id, name);
-                /** 取出該名評論之資料並封裝至 JSONsonArray 內 */
                 result.add(city);
             }
 
@@ -133,13 +131,7 @@ public class CityHelper {
 
         return city.getId();
     }
-    
-    /**
-     * 透過會員編號（ID）取得會員資料(登入)
-     *
-     * @param id 會員編號
-     * @return the JSON object 回傳SQL執行結果與該會員編號之會員資料
-     */
+
     public JSONObject getById(int id) {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         City city = null;
@@ -170,7 +162,7 @@ public class CityHelper {
             System.out.println(exexcute_sql);
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+            /** 正確來說資料庫只會有一筆資料，因此其實可以不用使用 while 迴圈 */
             /** 每執行一次迴圈表示有一筆資料 */
             while(rs.next()) {
 	            row += 1;
@@ -179,9 +171,7 @@ public class CityHelper {
 	            int city_id = rs.getInt("City_Id");
 	            String name = rs.getString("City_Name");
 	            
-	            /** 將每一筆評論資料產生一名新Comment物件 */
 	            city = new City(city_id, name);
-	            /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
 	            jsa.put(city.getCityAllInfo());
             };
         } catch (SQLException e) {
@@ -200,7 +190,7 @@ public class CityHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -210,16 +200,9 @@ public class CityHelper {
         return response;
     }
 
-    /**
-     * 透過會員編號（ID）取得會員資料(登入)
-     *
-     * @param id 會員編號
-     * @return the JSON object 回傳SQL執行結果與該會員編號之會員資料
-     */
     public JSONObject getAll() {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
+
         City city = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -246,7 +229,7 @@ public class CityHelper {
             System.out.println(exexcute_sql);
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+            /** 正確來說資料庫只會有一筆該編號之資料，因此其實可以不用使用 while 迴圈 */
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
@@ -255,9 +238,8 @@ public class CityHelper {
                 int city_id = rs.getInt("City_Id");
                 String name = rs.getString("City_Name");
                 
-                /** 將每一筆評論資料產生一名新Comment物件 */
                 city = new City(city_id, name);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出資料並封裝至 JSONsonArray 內 */
                 jsa.put(city.getCityAllInfo());
             }
             
@@ -277,7 +259,7 @@ public class CityHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);

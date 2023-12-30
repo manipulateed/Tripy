@@ -11,7 +11,7 @@ public class AdminHelper {
 		// TODO Auto-generated constructor stub
 	}
 	
-	/** 靜態變數，儲存MemberHelper物件 */
+	/** 靜態變數，儲存AdminHelper 物件 */
     private static AdminHelper Admh;
     
     /** 儲存JDBC資料庫連線 */
@@ -22,21 +22,21 @@ public class AdminHelper {
     
     /**
      * 靜態方法<br>
-     * 實作Singleton（單例模式），僅允許建立一個MemberHelper物件
+     * 實作Singleton（單例模式），僅允許建立一個AdminHelper 物件
      *
-     * @return the helper 回傳MemberHelper物件
+     * @return the helper 回傳AdminHelper 物件
      */
     public static AdminHelper getHelper() {
-        /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
+        /** Singleton檢查是否已經有AdminHelper 物件，若無則new一個，若有則直接回傳 */
         if(Admh == null) Admh = new AdminHelper();
         
         return Admh;
     }
     
     /**
-     * 透過會員編號（ID）刪除會員
+     * 透過編號（ID）刪除
      *
-     * @param id 會員編號
+     * @param id 編號
      * @return the JSONObject 回傳SQL執行結果
      */
     public JSONObject deleteById(int id) {
@@ -97,9 +97,8 @@ public class AdminHelper {
      * @return the JSONObject 回傳SQL執行結果與自資料庫取回之所有資料
      */
     public JSONObject getAll() {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
+
         Admin m = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -139,9 +138,9 @@ public class AdminHelper {
                 String sex = rs.getString("Gender");
                 String idcard = rs.getString("User_IDCard");
                 
-                /** 將每一筆會員資料產生一名新Member物件 */
+                /** 將每一筆資料產生新物件 */
                 m = new Admin(admin_id, name, email, password, sex, idcard);
-                /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                /** 取出資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getAdminData());
             }
 
@@ -176,9 +175,7 @@ public class AdminHelper {
      *
      */
     public JSONObject getByEmail(String Email,String Password) {
-        /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Admin m = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -210,7 +207,7 @@ public class AdminHelper {
             System.out.println(exexcute_sql);
             
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
+            /** 正確來說資料庫只會有一筆該編號之資料，因此其實可以不用使用 while 迴圈 */
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
@@ -225,9 +222,9 @@ public class AdminHelper {
                 character = rs.getString("User_Character");
                 
                 if(character.equals("管理員")) {
-                	/** 將每一筆會員資料產生一名新Member物件 */
+                	/** 將每一筆資料產生一名新Member物件 */
                     m = new Admin(user_id, name, email, password, sex, idcard);
-                    /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
+                    /** 取出該名之資料並封裝至 JSONsonArray 內 */
                     jsa.put(m.getAdminData());
                 }
                 else {
@@ -257,7 +254,7 @@ public class AdminHelper {
         /** 紀錄程式執行時間 */
         long duration = (end_time - start_time);
         
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+        /** 將SQL指令、花費時間、影響行數與所有資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -269,9 +266,9 @@ public class AdminHelper {
     }
     
     /**
-     * 檢查該名會員之電子郵件信箱是否重複註冊
+     * 檢查該電子郵件信箱是否重複註冊
      *
-     * @param m 一名會員之Member物件
+     * @param m 物件
      * @return boolean 若重複註冊回傳False，若該信箱不存在則回傳True
      */
     public boolean checkDuplicate(Admin m){
@@ -317,13 +314,7 @@ public class AdminHelper {
          */
         return (row == 0) ? false : true;
     }
-    
-    /**
-     * 建立該名會員至資料庫
-     *
-     * @param m 一名會員之Member物件
-     * @return the JSON object 回傳SQL指令執行之結果
-     */
+
     public JSONObject create(Admin m) {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -397,9 +388,9 @@ public class AdminHelper {
     }
     
     /**
-     * 更新一名會員之會員資料
+     * 更新資料
      *
-     * @param m 一名會員之Member物件
+     * @param m 一物件
      * @return the JSONObject 回傳SQL指令執行結果與執行之資料
      */
     public JSONObject update(Admin m) {
