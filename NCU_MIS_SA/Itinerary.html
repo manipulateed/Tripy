@@ -613,7 +613,7 @@
                                         timeout: 10000,
                                         success: function (response) {
                                             if (response.status == 200) {
-                                                window.location.href = "Itinerary.html?user_id="+ user_id + "&ItineraryList_id=" + list_id;
+                                                window.location.href = "Itinerary.html?user_id="+ user_id + "&ItineraryList_id=" + list_id+"&email="+email+"&password="+password;
                                                 //updateNewIITable(response.response.data,SelectedDate);
                                             }
                                         },
